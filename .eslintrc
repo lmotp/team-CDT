@@ -1,3 +1,9 @@
 {
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto"
+    }
+  ],
   "extends": ["plugin:prettier/recommended", "react-app"]
 }

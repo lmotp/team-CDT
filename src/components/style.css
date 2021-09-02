@@ -1,0 +1,14 @@
+button {
+  background: none;
+  outline: none;
+  margin-bottom: 20px;
+  padding: 10px 5px;
+}
+
+.onTag {
+  border: burlywood 1px solid;
+}
+
+.offTag {
+  border: black 1px solid;
+}
