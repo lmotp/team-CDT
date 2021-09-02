@@ -1,0 +1,17 @@
+.gnb {
+  width: 273px;
+  height: 1799px;
+  padding: 50px 25px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.gnb-title img {
+  width: 122px;
+  height: 122px;
+}
+
+.gnb-title h1 {
+  font-size: 20px;
+  text-align: center;
+}
