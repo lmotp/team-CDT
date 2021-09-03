@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { useHashTagDispatch } from '../Context';
-import './style.css';
+import { useHashTagDispatch } from '../../Context';
 
 function HashTagButton({ hashTag, hashId, tagStatus }) {
   const dispatch = useHashTagDispatch();

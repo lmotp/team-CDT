@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import React from 'react';
 import GnbTitle from './GnbTitle.js';
 import SearchInput from './SearchInput.js';
 import WriteButton from './WriteButton.js';

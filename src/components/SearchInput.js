@@ -1,5 +1,5 @@
-import react, { useState } from 'react';
+import React from 'react';
 
-export default function SearchInput({}) {
+export default function SearchInput() {
   return <div className="search-input"></div>;
 }

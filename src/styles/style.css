@@ -12,3 +12,13 @@ button {
 .offTag {
   border: black 1px solid;
 }
+
+.hashTagContents img {
+  width: 500px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.hashTagContents {
+  margin-bottom: 30px;
+}
