@@ -7,7 +7,6 @@ import '../styles/style.css';
 function Share() {
   const state = useHashTagState();
   const contents = useHashContents();
-  console.log(state, contents);
 
   return (
     <div>

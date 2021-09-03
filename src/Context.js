@@ -10,21 +10,21 @@ const initalHasTag = [
 const hashContents = [
   {
     id: 1,
-    tag: '#감성카페',
+    tag: ['#감성카페', '#프랜차이즈'],
     title: '스타벅스',
     image:
       'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
   },
   {
     id: 2,
-    tag: '#이쁜카페',
+    tag: ['#이쁜카페', '#분위기 좋은 카페'],
     title: '망원다방',
     image:
       'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80',
   },
   {
     id: 3,
-    tag: '#분위기 좋은 카페',
+    tag: ['#분위기 좋은 카페', '#프랜차이즈'],
     title: '빽다방',
     image:
       'https://images.unsplash.com/photo-1493857671505-72967e2e2760?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',

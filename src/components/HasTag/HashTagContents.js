@@ -7,7 +7,7 @@ function HashTagContents({ hashTag }) {
   return (
     <div>
       {hashContents
-        .filter((contents) => contents.tag === hashTag)
+        .filter((contents) => contents.tag[0].includes(hashTag))
         .map((contents) => (
           <div className="hashTagContents" key={contents.id}>
             <h2>{contents.title}</h2>
