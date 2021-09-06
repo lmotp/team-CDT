@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import logo from './../images/logo.jpg';
 
 export default function GnbTitle() {
