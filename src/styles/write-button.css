@@ -1,0 +1,19 @@
+.write-button {
+  width: 100%;
+  height: 60px;
+  margin-top: 10px;
+  background-color: burlywood;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.write-icon {
+  font-size: 20px;
+  margin-right: 5px;
+  transform: translateY(1px);
+}
+
+.write-button h3 {
+  font-size: 20px;
+}
