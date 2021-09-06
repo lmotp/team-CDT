@@ -3,11 +3,10 @@ import { useHashContents } from '../../Context';
 
 function HashTagContents({ hashTag }) {
   const hashContents = useHashContents();
-
   return (
     <div>
       {hashContents
-        .filter((contents) => contents.tag[0].includes(hashTag))
+        .filter((contents) => contents.tag.includes(hashTag))
         .map((contents) => (
           <div className="hashTagContents" key={contents.id}>
             <h2>{contents.title}</h2>

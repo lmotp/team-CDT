@@ -1,12 +1,16 @@
 import React from 'react';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import HashTagContents from '../components/HasTag/HashTagContents';
-import { useHashTagState, useHashContents } from '../Context';
+import { useHashContents, useHashTagState } from '../Context';
 import '../styles/style.css';
 
 function Share() {
   const state = useHashTagState();
-  const contents = useHashContents();
+  const contetns = useHashContents();
+
+  const wow = state.filter((contents) => contents.status).map((contetns) => contetns.tag);
+  const wow2 = contetns.filter((contetns, id) => contetns.tag.includes(wow));
+  console.log(wow, wow2);
 
   return (
     <div>
