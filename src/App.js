@@ -6,6 +6,7 @@ import './styles/reset.css';
 import './styles/gnb.css';
 import './styles/search-input.css';
 import './styles/write-button.css';
+import './styles/gnb-menu.css';
 
 function App() {
   return (
