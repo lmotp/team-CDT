@@ -1,12 +1,17 @@
 import './App.css';
-import react from 'react';
+import React from 'react';
 import HeaderGnb from './components/HeaderGnb';
+import { Context } from './Context';
+import Share from './pages/Share';
 
 function App() {
   return (
-    <div className="container">
-      <HeaderGnb></HeaderGnb>
-    </div>
+    <Context>
+      <div className="container">
+        <Share />
+        <HeaderGnb></HeaderGnb>
+      </div>
+    </Context>
   );
 }
 
