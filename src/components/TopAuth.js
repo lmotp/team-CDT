@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './../styles/top-auth.css';
-
 export default function TopAuth() {
   return (
     <>

@@ -2,6 +2,9 @@ import './App.css';
 import react from 'react';
 import HeaderGnb from './components/HeaderGnb';
 
+import './styles/base/reset.css';
+import './styles/base/visually-hidden.css';
+
 function App() {
   return (
     <div className="container">

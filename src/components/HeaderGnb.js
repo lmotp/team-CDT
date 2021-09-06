@@ -5,11 +5,13 @@ import WriteButton from './WriteButton.js';
 import GnbMenu from './GnbMenu.js';
 import TopAuth from './TopAuth.js';
 
-import './../styles/reset.css';
-import './../styles/gnb.css';
-import './../styles/search-input.css';
-import './../styles/write-button.css';
-import './../styles/gnb-menu.css';
+import './../styles/base/reset.css';
+import './../styles/base/visually-hidden.css';
+import './../styles/layouts/gnb.css';
+import './../styles/layouts/search-input.css';
+import './../styles/layouts/write-button.css';
+import './../styles/layouts/gnb-menu.css';
+import './../styles/layouts/top-auth.css';
 
 export default function HeaderGnb() {
   const [inputValue, setInputValue] = useState('');
