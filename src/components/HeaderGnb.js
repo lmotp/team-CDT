@@ -4,6 +4,12 @@ import SearchInput from './SearchInput.js';
 import WriteButton from './WriteButton.js';
 import GnbMenu from './GnbMenu.js';
 
+import './../styles/reset.css';
+import './../styles/gnb.css';
+import './../styles/search-input.css';
+import './../styles/write-button.css';
+import './../styles/gnb-menu.css';
+
 export default function HeaderGnb() {
   const [inputValue, setInputValue] = useState('');
 
