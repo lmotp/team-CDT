@@ -3,6 +3,7 @@ import GnbTitle from './GnbTitle.js';
 import SearchInput from './SearchInput.js';
 import WriteButton from './WriteButton.js';
 import GnbMenu from './GnbMenu.js';
+import TopAuth from './TopAuth.js';
 
 import './../styles/reset.css';
 import './../styles/gnb.css';
@@ -35,6 +36,7 @@ export default function HeaderGnb() {
         <SearchInput value={inputValue} onChange={handleInputValue} onClick={handleSearchButton}></SearchInput>
         <WriteButton onClick={handleWriteButton}></WriteButton>
         <GnbMenu></GnbMenu>
+        <TopAuth></TopAuth>
       </header>
     </>
   );
