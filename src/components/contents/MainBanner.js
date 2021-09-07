@@ -20,13 +20,41 @@ export default function MainBanner() {
   const [translate, setTranslate] = useState(0);
 
   const handleRightArrow = () => {
-    listRef.current.style.transform = `translateX(${translate - 460}px)`;
-    setTranslate(translate - 460);
+    if (translate === 0) {
+      listRef.current.style.transform = `translateX(${translate - 460}px)`;
+      setTranslate(translate - 460);
+      bannerNaviRef1.current.classList.remove('is-active');
+      bannerNaviRef2.current.classList.add('is-active');
+    } else if (translate === -460) {
+      listRef.current.style.transform = `translateX(${translate - 460}px)`;
+      setTranslate(translate - 460);
+      bannerNaviRef2.current.classList.remove('is-active');
+      bannerNaviRef3.current.classList.add('is-active');
+    } else if (translate === -920) {
+      listRef.current.style.transform = `translateX(${translate - 460}px)`;
+      setTranslate(translate - 460);
+      bannerNaviRef3.current.classList.remove('is-active');
+      bannerNaviRef4.current.classList.add('is-active');
+    }
   };
 
   const handleLeftArrow = () => {
-    listRef.current.style.transform = `translateX(${translate + 460}px)`;
-    setTranslate(translate + 460);
+    if (translate === -1380) {
+      listRef.current.style.transform = `translateX(${translate + 460}px)`;
+      setTranslate(translate + 460);
+      bannerNaviRef4.current.classList.remove('is-active');
+      bannerNaviRef3.current.classList.add('is-active');
+    } else if (translate === -920) {
+      listRef.current.style.transform = `translateX(${translate + 460}px)`;
+      setTranslate(translate + 460);
+      bannerNaviRef3.current.classList.remove('is-active');
+      bannerNaviRef2.current.classList.add('is-active');
+    } else if (translate === -460) {
+      listRef.current.style.transform = `translateX(${translate + 460}px)`;
+      setTranslate(translate + 460);
+      bannerNaviRef2.current.classList.remove('is-active');
+      bannerNaviRef1.current.classList.add('is-active');
+    }
   };
 
   const handlebannerNavi = (e) => {
