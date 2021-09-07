@@ -1,0 +1,23 @@
+.sub-banner {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.sub-banner-list {
+  display: flex;
+  justify-content: center;
+}
+
+.sub-banner-list-item {
+  margin-right: 3px;
+}
+
+.sub-banner-list-item:last-child {
+  margin-right: 3px;
+}
+
+.sub-banner-list-item img {
+  width: 298px;
+  height: 100px;
+  object-fit: cover;
+}
