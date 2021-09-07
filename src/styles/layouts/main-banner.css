@@ -1,0 +1,58 @@
+.main-banner {
+  position: relative;
+  width: 900px;
+  margin: 50px 0 50px 63.5px;
+  overflow: hidden;
+}
+
+.main-banner-list {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  transition: all 1s;
+}
+
+.main-banner-list-item img {
+  width: 440px;
+  height: 300px;
+  margin-right: 20px;
+}
+
+.banner-navi {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.banner-navi li {
+  width: 50px;
+  height: 5px;
+  margin-right: 10px;
+  background-color: #ccc;
+}
+
+.banner-navi li:last-child {
+  margin-right: 0px;
+}
+
+.banner-navi .is-active {
+  background-color: #222;
+}
+
+.arrow-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #ccc;
+}
+
+.arrow-left {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 0px;
+  color: #ccc;
+}

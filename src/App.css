@@ -1,4 +1,5 @@
 .container {
+  display: flex;
   position: relative;
   width: 1300px;
   margin: 0 auto;
