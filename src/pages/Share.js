@@ -1,27 +1,26 @@
 import React from 'react';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import HashTagContents from '../components/HasTag/HashTagContents';
-import { useHashContents, useHashTagState } from '../Context';
-import '../styles/style.css';
+import Modal from '../components/Modal/Modal';
+import { useHashTagState } from '../Context';
+import '../styles/share.css';
 
 function Share() {
   const state = useHashTagState();
-  const contetns = useHashContents();
-
-  const wow = state.filter((contents) => contents.status).map((contetns) => contetns.tag);
-  const wow2 = contetns.filter((contetns, id) => contetns.tag.includes(wow));
-  console.log(wow, wow2);
 
   return (
-    <div>
+    <div className="share-wrap">
       {state.map((hashTag) => (
         <HashTagButton key={hashTag.id} tagStatus={hashTag.status} hashTag={hashTag.tag} hashId={hashTag.id} />
       ))}
-      {state
-        .filter((contents) => contents.status)
-        .map((contents) => (
-          <HashTagContents key={contents.id} hashTag={contents.tag} />
-        ))}
+      <div className="share-contents-wrap">
+        {state
+          .filter((contents) => contents.status)
+          .map((contents) => (
+            <HashTagContents key={contents.id} hashTag={contents.tag} />
+          ))}
+      </div>
+      <Modal />
     </div>
   );
 }
