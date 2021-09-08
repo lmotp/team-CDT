@@ -7,7 +7,7 @@ import './../../styles/layouts/contents.css';
 
 export default function ContentsHeader() {
   return (
-    <div className="banner-box">
+    <div className="section-top">
       <MainBanner></MainBanner>
       <SubBanner></SubBanner>
     </div>

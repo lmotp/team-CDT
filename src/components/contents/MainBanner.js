@@ -18,6 +18,23 @@ export default function MainBanner() {
   const bannerNaviRef4 = useRef();
 
   const [translate, setTranslate] = useState(0);
+  const imgs = [
+    { src: slide1, alt: '메가커피 배너' },
+    { src: slide2, alt: '스타벅스 배너' },
+    { src: slide3, alt: '래빗커피 배너' },
+    { src: slide4, alt: '컴포즈커피 배너' },
+    { src: slide5, alt: '빽다방 배너' },
+  ];
+
+  const imgSlide = imgs.map((img, index) => {
+    return (
+      <li key={index} className="main-banner-list-item">
+        <a href="/">
+          <img src={img.src} alt={img.alt} />
+        </a>
+      </li>
+    );
+  });
 
   const handleRightArrow = () => {
     if (translate === 0) {
@@ -132,31 +149,7 @@ export default function MainBanner() {
   return (
     <div className="main-banner">
       <ul ref={listRef} className="main-banner-list">
-        <li className="main-banner-list-item">
-          <a href="/">
-            <img src={slide1} alt="메가커피 배너" />
-          </a>
-        </li>
-        <li className="main-banner-list-item">
-          <a href="/">
-            <img src={slide2} alt="스타벅스 커피 배너" />
-          </a>
-        </li>
-        <li className="main-banner-list-item">
-          <a href="/">
-            <img src={slide3} alt="래빗 커피 배너" />
-          </a>
-        </li>
-        <li className="main-banner-list-item">
-          <a href="/">
-            <img src={slide4} alt="컴포즈 커피 배너" />
-          </a>
-        </li>
-        <li className="main-banner-list-item">
-          <a href="/">
-            <img src={slide5} alt="빽다방 커피 배너" />
-          </a>
-        </li>
+        {imgSlide}
       </ul>
 
       <ul className="banner-navi">
