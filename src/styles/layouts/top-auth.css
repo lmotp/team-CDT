@@ -1,0 +1,36 @@
+.top-auth {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1027px;
+  height: 87px;
+  border-bottom: 1px solid #ccc;
+}
+
+.inner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 30px 30px 30px 0;
+}
+
+.top-auth button {
+  font-size: 18px;
+}
+
+.top-auth .user-icon {
+  font-size: 25px;
+}
+
+.nickname {
+  margin-left: 10px;
+}
+
+.profile {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.login {
+  margin-left: 10px;
+}

@@ -13,7 +13,9 @@ export default function GnbMenu() {
   const noticeList = noticeListItems.map((item, index) => {
     return (
       <li className="list-item" key={index}>
-        <a href="/">{item}</a>
+        <a href="/" aria-label="리스트 아이템">
+          {item}
+        </a>
       </li>
     );
   });
@@ -21,7 +23,9 @@ export default function GnbMenu() {
   const communityList = communityListItems.map((item, index) => {
     return (
       <li className="list-item" key={index}>
-        <a href="/">{item}</a>
+        <a href="/" aria-label="리스트 아이템">
+          {item}
+        </a>
       </li>
     );
   });
@@ -29,7 +33,9 @@ export default function GnbMenu() {
   const recommendList = recommendListItems.map((item, index) => {
     return (
       <li className="list-item" key={index}>
-        <a href="/">{item}</a>
+        <a href="/" aria-label="리스트 아이템">
+          {item}
+        </a>
       </li>
     );
   });
@@ -37,7 +43,9 @@ export default function GnbMenu() {
   const videoList = videoListItems.map((item, index) => {
     return (
       <li className="list-item" key={index}>
-        <a href="/">{item}</a>
+        <a href="/" aria-label="리스트 아이템">
+          {item}
+        </a>
       </li>
     );
   });
@@ -45,7 +53,9 @@ export default function GnbMenu() {
   const managementList = managementListItems.map((item, index) => {
     return (
       <li className="list-item" key={index}>
-        <a href="/">{item}</a>
+        <a href="/" aria-label="리스트 아이템">
+          {item}
+        </a>
       </li>
     );
   });
@@ -54,7 +64,7 @@ export default function GnbMenu() {
   const menu = menus.map((item, index) => {
     return (
       <li key={index} className="gnb-menu-item-chevron-down" onClick={handleChevron}>
-        <a href="/" className="gnb-menu-item">
+        <a href="/" className="gnb-menu-item" aria-label="목록리스트">
           <i className={`fas fa-flag ${item}-icon`}></i>
           <span>{item}</span>
           <i className="fas fa-chevron-down chevron"></i>
@@ -67,6 +77,7 @@ export default function GnbMenu() {
   return (
     <>
       <nav className="gnb-menu">
+        <h2 className="visually-hidden">메뉴</h2>
         <ul className="gnb-menu-list">{menu}</ul>
       </nav>
     </>

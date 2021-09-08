@@ -1,5 +1,7 @@
 .container {
+  display: flex;
+  position: relative;
   width: 1300px;
   margin: 0 auto;
-  display: flex;
+  border-right: 1px solid #ccc;
 }
