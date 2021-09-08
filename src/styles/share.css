@@ -15,11 +15,11 @@ button {
 
 .share-wrap {
   padding-left: 20px;
-  padding-top: 50px;
+  padding-top: 120px;
 }
 
 .share-contents-wrap {
-  margin-top: 30px;
+  margin-top: 10px;
   width: 1000px;
   display: flex;
   justify-content: flex-start;
