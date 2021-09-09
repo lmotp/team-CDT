@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import BoardItem from './BoardItem';
 
@@ -11,6 +11,41 @@ export default function MainNews() {
   const [counterEye, setCounterEye] = useState(0);
   const [counterLike, setCounterLike] = useState(0);
   const [counterCm, setCounterCm] = useState(0);
+
+  const newsCollectionRef = useRef();
+  const newsOrderRef = useRef();
+  const leftController = useRef();
+  const rightController = useRef();
+
+  const handleRightController = (e) => {
+    if (newsOrderRef.current.textContent === '1 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(-900px)';
+      newsOrderRef.current.textContent = '2 / 4';
+      leftController.current.style.color = '#333';
+    } else if (newsOrderRef.current.textContent === '2 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(-1800px)';
+      newsOrderRef.current.textContent = '3 / 4';
+    } else if (newsOrderRef.current.textContent === '3 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(-2700px)';
+      newsOrderRef.current.textContent = '4 / 4';
+      e.target.style.color = '#ccc';
+    }
+  };
+
+  const handleLeftController = (e) => {
+    if (newsOrderRef.current.textContent === '4 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(-1800px)';
+      newsOrderRef.current.textContent = '3 / 4';
+      rightController.current.style.color = '#333';
+    } else if (newsOrderRef.current.textContent === '3 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(-900px)';
+      newsOrderRef.current.textContent = '2 / 4';
+    } else if (newsOrderRef.current.textContent === '2 / 4') {
+      newsCollectionRef.current.style.transform = 'translateX(0px)';
+      newsOrderRef.current.textContent = '1 / 4';
+      e.target.style.color = '#ccc';
+    }
+  };
 
   const boardList = [
     {
@@ -82,11 +117,26 @@ export default function MainNews() {
   return (
     <div className="main-news">
       <h2>주요소식</h2>
-      <ul className="main-news-list">{board}</ul>
+      <div ref={newsCollectionRef} className="news-collection">
+        <ul className="main-news-list">{board}</ul>
+        <ul className="main-news-list">{board}</ul>
+        <ul className="main-news-list">{board}</ul>
+        <ul className="main-news-list">{board}</ul>
+      </div>
       <div className="controller">
-        <p className="main-news-order">1 / 4</p>
-        <i class="far fa-caret-square-left square-arrow-left"></i>
-        <i class="far fa-caret-square-right square-arrow-right"></i>
+        <p ref={newsOrderRef} className="main-news-order">
+          1 / 4
+        </p>
+        <i
+          ref={leftController}
+          onClick={handleLeftController}
+          className="far fa-caret-square-left square-arrow-left"
+        ></i>
+        <i
+          ref={rightController}
+          onClick={handleRightController}
+          className="far fa-caret-square-right square-arrow-right"
+        ></i>
       </div>
     </div>
   );
