@@ -2,3 +2,17 @@
   width: 1027px;
   margin-top: 87px;
 }
+
+.section-top {
+  width: 100%;
+}
+
+.section-bottom {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.section-footer {
+  width: 100%;
+  margin-top: 30px;
+}

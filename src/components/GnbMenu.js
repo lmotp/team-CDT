@@ -9,59 +9,31 @@ export default function GnbMenu() {
       e.target.className = 'gnb-menu-item-chevron-down';
     }
   };
-  const noticeListItems = ['1', '2', '3', '4'];
-  const noticeList = noticeListItems.map((item, index) => {
+
+  const listItems = [
+    { value: 'notice list items', items: ['1', '2', '3', '4'] },
+    { value: 'community list item', items: ['5', '6', '7', '8'] },
+    { value: 'recommend list item', items: ['a', 'b', 'c', 'd'] },
+    { value: 'video list item', items: ['e', 'f', 'g', 'h'] },
+    { value: 'management list item', items: ['i', 'j', 'k', 'l'] },
+  ];
+  const menuList = listItems.map((item, index) => {
     return (
-      <li className="list-item" key={index}>
-        <a href="/" aria-label="리스트 아이템">
-          {item}
-        </a>
-      </li>
+      <>
+        {item.items.map((smallItem) => {
+          return (
+            <li className="list-item" key={index}>
+              <a href="/" aria-label={item.value}>
+                {smallItem}
+              </a>
+            </li>
+          );
+        })}
+      </>
     );
   });
-  const communityListItems = ['5', '6', '7', '8'];
-  const communityList = communityListItems.map((item, index) => {
-    return (
-      <li className="list-item" key={index}>
-        <a href="/" aria-label="리스트 아이템">
-          {item}
-        </a>
-      </li>
-    );
-  });
-  const recommendListItems = ['a', 'b', 'c', 'd'];
-  const recommendList = recommendListItems.map((item, index) => {
-    return (
-      <li className="list-item" key={index}>
-        <a href="/" aria-label="리스트 아이템">
-          {item}
-        </a>
-      </li>
-    );
-  });
-  const videoListItems = ['e', 'f', 'g', 'h'];
-  const videoList = videoListItems.map((item, index) => {
-    return (
-      <li className="list-item" key={index}>
-        <a href="/" aria-label="리스트 아이템">
-          {item}
-        </a>
-      </li>
-    );
-  });
-  const managementListItems = ['z', 'x', 'c', 'v'];
-  const managementList = managementListItems.map((item, index) => {
-    return (
-      <li className="list-item" key={index}>
-        <a href="/" aria-label="리스트 아이템">
-          {item}
-        </a>
-      </li>
-    );
-  });
-  const menuList = [noticeList, communityList, recommendList, videoList, managementList];
-  const menus = ['Notice', 'Community', 'Recommend', 'Video', 'Management'];
-  const menu = menus.map((item, index) => {
+  const menuTitle = ['Notice', 'Community', 'Recommend', 'Video', 'Management'];
+  const menu = menuTitle.map((item, index) => {
     return (
       <li key={index} className="gnb-menu-item-chevron-down" onClick={handleChevron}>
         <a href="/" className="gnb-menu-item" aria-label="목록리스트">
