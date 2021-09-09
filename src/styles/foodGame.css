@@ -1,0 +1,46 @@
+.foodGame-wrap {
+  width: 79.23%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.foodGame-wrap .foodGame-button-wrap {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.foodGame-wrap .foodGame-button-wrap button {
+  background: beige;
+  text-align: center;
+  width: 50%;
+}
+
+/* Result 페이지  */
+
+.foodGame-wrap.result {
+  padding-top: 50px;
+}
+
+.foodGame-wrap.result img {
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+.foodGame-wrap.result h2 {
+  margin-bottom: 12px;
+}
+
+.foodGame-wrap.result p {
+  margin-bottom: 20px;
+}
+
+.foodGame-wrap.result button {
+  border: burlywood 1px solid;
+}
