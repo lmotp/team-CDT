@@ -5,6 +5,8 @@ import HeaderGnb from './components/HeaderGnb';
 import Contents from './components/contents/Contents';
 import Share from './pages/Share';
 import NotFound from './pages/NotFound';
+import FoodGame from './components/foodGame/FoodGame';
+import FoodGameResult from './components/foodGame/FoodGameResult';
 import './App.css';
 import './styles/base/reset.css';
 import './styles/base/visually-hidden.css';
@@ -18,6 +20,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={Contents} />
             <Route path="/share" component={Share} />
+            <Route exact path="/foodgame" component={FoodGame} />
+            <Route exact path="/foodgame/:count" component={FoodGameResult} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
