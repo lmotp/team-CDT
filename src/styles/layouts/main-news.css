@@ -2,13 +2,21 @@
   position: relative;
   width: 900px;
   margin: 50px 0 50px 63.5px;
+  overflow: hidden;
 }
 
 .main-news h2 {
   font-size: 20px;
 }
 
+.news-collection {
+  display: flex;
+  width: 400%;
+  transition: all 0.5s;
+}
+
 .main-news-list {
+  width: 100%;
   margin-top: 10px;
   border-top: 1px solid #ccc;
 }
