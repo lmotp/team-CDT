@@ -20,7 +20,6 @@ function FoodGame() {
       array[target[i]] += 1;
     }
 
-    console.log(array);
     if (count === 6) {
       const result = array.indexOf(Math.max(...array));
       history.push(`/foodgame/${result}`);
@@ -36,7 +35,6 @@ function FoodGame() {
 
   return (
     <div className="foodGame-wrap">
-      <div>{count + 1}/7</div>
       <h1>{foodGameExample[count].question}</h1>
       <div className="foodGame-button-wrap">
         {foodGameExample[count].answer.map((answer, index) => (
@@ -45,6 +43,7 @@ function FoodGame() {
           </button>
         ))}
       </div>
+      <div>{count + 1} / 7</div>
     </div>
   );
 }

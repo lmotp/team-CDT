@@ -10,12 +10,11 @@ function FoodGameResult() {
   console.log(result[count]);
 
   return (
-    <div className="foodGame-wrap">
+    <div className="foodGame-wrap result">
       <img src={result[count].image} alt={result[count].drink} />
       <div>
         <h2>
-          {result[count].brand} &nbsp;
-          <span>{result[count].drink}</span>
+          {result[count].brand} - <span>{result[count].drink}</span>
         </h2>
       </div>
       <p> {result[count].tmi}</p>
