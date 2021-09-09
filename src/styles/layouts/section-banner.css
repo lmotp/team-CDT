@@ -1,0 +1,17 @@
+.section-banner {
+  display: flex;
+  width: 900px;
+  margin: 50px 0 50px 63.5px;
+  padding-top: 30px;
+  border-top: 1px solid #ccc;
+}
+
+.section-banner img {
+  width: 440px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.section-banner-item:first-child {
+  margin-right: 20px;
+}

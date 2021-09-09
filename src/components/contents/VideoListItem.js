@@ -25,9 +25,9 @@ export default function VideoListItem(props) {
               <span class="menu-color">[영상콘텐츠]</span>
               {videoItem.desc}
             </p>
+            <div className="video-overay" aria-hidden></div>
           </a>
           <ArticleInfo eye={videoItem.eye} like={videoItem.like} date={videoItem.date} />
-          <div className="video-overay" aria-hidden></div>
         </li>
       </>
     );
