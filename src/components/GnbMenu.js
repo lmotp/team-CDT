@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function GnbMenu() {
   const handleChevron = (e) => {
@@ -11,7 +12,7 @@ export default function GnbMenu() {
   };
 
   const listItems = [
-    { value: 'notice list items', items: ['1', '2', '3', '4'] },
+    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice' },
     { value: 'community list item', items: ['5', '6', '7', '8'] },
     { value: 'recommend list item', items: ['a', 'b', 'c', 'd'] },
     { value: 'video list item', items: ['e', 'f', 'g', 'h'] },
@@ -23,9 +24,9 @@ export default function GnbMenu() {
         {item.items.map((smallItem) => {
           return (
             <li className="list-item" key={index}>
-              <a href="/" aria-label={item.value}>
+              <Link to={item.url} aria-label={item.value}>
                 {smallItem}
-              </a>
+              </Link>
             </li>
           );
         })}
