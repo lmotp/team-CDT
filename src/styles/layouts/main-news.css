@@ -21,7 +21,7 @@
   border-top: 1px solid #ccc;
 }
 
-.controller {
+.main-news-controller {
   display: flex;
   position: absolute;
   top: 0;
@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.controller i {
+.main-news-controller i {
   font-size: 30px;
 }
 
