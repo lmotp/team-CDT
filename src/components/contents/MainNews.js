@@ -123,7 +123,7 @@ export default function MainNews() {
         <ul className="main-news-list">{board}</ul>
         <ul className="main-news-list">{board}</ul>
       </div>
-      <div className="controller">
+      <div className="main-news-controller">
         <p ref={newsOrderRef} className="main-news-order">
           1 / 4
         </p>

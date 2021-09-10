@@ -1,0 +1,31 @@
+.board {
+  position: relative;
+  width: 900px;
+  margin: 50px 0 50px 63.5px;
+}
+
+.board-list {
+  width: 100%;
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.board-controller {
+  display: flex;
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.board-controller i {
+  font-size: 30px;
+}
+
+.square-arrow-left {
+  color: #ccc;
+}
+
+.board-order {
+  font-size: 18px;
+}
