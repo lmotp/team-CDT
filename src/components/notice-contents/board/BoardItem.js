@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './../../styles/layouts/board-item.css';
+import './../../../styles/layouts/notice-board/board-item.css';
 
 import ArticleInfo from './ArticleInfo';
 
@@ -9,8 +9,8 @@ export default function BoardItem(props) {
     <li className="main-news-list-item">
       <a href="/">
         <p>
-          <span class="menu-color">{props.title}</span>
-          {props.desc}
+          <span class="menu-color">{props.menu}</span>
+          {props.title}
           <span className="new-icon"></span>
         </p>
         <div className="thumb">

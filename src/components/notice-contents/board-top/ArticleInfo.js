@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './../../styles/layouts/info.css';
+import './../../../styles/layouts/notice-board/info.css';
 
 export default function ArticleInfo(props) {
   return (

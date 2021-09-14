@@ -1,0 +1,49 @@
+.board-controller i {
+  font-size: 30px;
+}
+
+.board-arrow-left {
+  color: #ccc;
+}
+
+.board-order {
+  font-size: 18px;
+}
+
+.board-top {
+  position: relative;
+  width: 100%;
+  background-color: rgb(241, 234, 234);
+  padding-bottom: 20px;
+}
+
+.board-top-collection {
+  width: 900px;
+  overflow: hidden;
+  margin: 0 63.5px;
+}
+
+.board-top-list {
+  display: flex;
+  width: 400%;
+  height: 150px;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.board-top-controller {
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  right: 63.5px;
+  align-items: center;
+}
+
+.board-top-controller i {
+  font-size: 30px;
+}
+
+.board-top-order {
+  margin-right: 10px;
+  font-size: 14px;
+}
