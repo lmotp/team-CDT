@@ -1,15 +1,15 @@
-button {
+.hashButton {
   background: none;
   outline: none;
   margin-bottom: 20px;
   padding: 10px 5px;
 }
 
-.onTag {
+.hashButton.onTag {
   border: black 1px solid;
 }
 
-.offTag {
+.hashButton.offTag {
   border: burlywood 1px solid;
 }
 

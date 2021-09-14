@@ -28,6 +28,7 @@ function FoodGame() {
           .fill(0)
           .map((v) => v),
       );
+
       return;
     }
     setCount(count + 1);
@@ -38,7 +39,7 @@ function FoodGame() {
       <h1>{foodGameExample[count].question}</h1>
       <div className="foodGame-button-wrap">
         {foodGameExample[count].answer.map((answer, index) => (
-          <button id={index} key={index} onClick={countPlus}>
+          <button className="foodGameButton" id={index} key={index} onClick={countPlus}>
             {answer.value}
           </button>
         ))}

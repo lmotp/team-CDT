@@ -12,6 +12,7 @@ import './../styles/layouts/search-input.css';
 import './../styles/layouts/write-button.css';
 import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
+import { Link } from 'react-router-dom';
 
 export default function HeaderGnb() {
   const [inputValue, setInputValue] = useState('');
@@ -36,7 +37,10 @@ export default function HeaderGnb() {
       <header className="gnb">
         <GnbTitle></GnbTitle>
         <SearchInput value={inputValue} onChange={handleInputValue} onClick={handleSearchButton}></SearchInput>
-        <WriteButton onClick={handleWriteButton}></WriteButton>
+        <WriteButton onClick={handleWriteButton} write={'글쓰기'}></WriteButton>
+        <Link to="foodgame">
+          <WriteButton write={'오늘 뭐 먹지?'}></WriteButton>
+        </Link>
         <GnbMenu></GnbMenu>
         <TopAuth></TopAuth>
       </header>

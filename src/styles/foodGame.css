@@ -16,10 +16,13 @@
   flex-direction: column;
 }
 
-.foodGame-wrap .foodGame-button-wrap button {
+.foodGame-wrap .foodGame-button-wrap .foodGameButton {
   background: beige;
   text-align: center;
   width: 50%;
+  outline: none;
+  margin-bottom: 20px;
+  padding: 10px 5px;
 }
 
 /* Result 페이지  */
@@ -43,4 +46,7 @@
 
 .foodGame-wrap.result button {
   border: burlywood 1px solid;
+  background: none;
+  outline: none;
+  padding: 10px 5px;
 }
