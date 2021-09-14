@@ -1,11 +1,11 @@
 import React from 'react';
 import logo from './../../images/logo.jpg';
 
-import './../../styles/layouts/footer.css';
+import './../../styles/layouts/notice-board/footer.css';
 
 export default function Footer() {
   return (
-    <div className="footer">
+    <div className="notice-board-footer">
       <p>
         <a href="">이용약관 | </a>
         <a href="">개인정보 처리방침 | </a>
