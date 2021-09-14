@@ -30,6 +30,10 @@
   font-size: 30px;
 }
 
+.list-paging {
+  height: 50px;
+}
+
 .list-paging button {
   font-size: 17px;
   margin-right: 18px;
