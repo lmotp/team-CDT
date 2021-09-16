@@ -81,6 +81,10 @@
   margin-bottom: 4px;
 }
 
+.form-category-wrap .brackets-box .main-brackets:disabled {
+  color: #a5a5a5;
+}
+
 /* 화살표 */
 .form-category-wrap .brackets-box .main-brackets::after {
   content: '';
@@ -124,7 +128,7 @@
 
 .uploadForm-title-wrap .textarea-wrap {
   width: 100%;
-  height: 40px;
+  height: 44px;
   border: 1px solid #d1d1d1;
   display: flex;
 }
@@ -134,6 +138,13 @@
   padding: 11px 12px 10px;
   resize: none;
   outline: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  font-size: 14px;
+}
+
+.uploadForm-title-wrap .textarea-wrap textarea::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 /* 업로드폼 툴박스 부분 */
@@ -157,34 +168,84 @@
   background: rgb(238, 238, 238);
 }
 
-/* 업로드폼 콘텐츠 부분 */
+/* 업로드폼 콘텐츠 부분 (대부분이 SummerNote 수정한것 ) */
 .uploadForm-wrap .content-wrap {
   padding: 0 30px;
 }
 
-.uploadForm-wrap .content-wrap .content-placeholder {
-  padding: 30px;
-  font-size: 14px;
+.note-statusbar {
+  display: none;
+}
+
+.note-editor.note-frame,
+.note-editor.note-airframe {
+  border: none;
+  margin-bottom: 0;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable,
+.note-editor.note-frame .note-placeholder {
+  padding: 20px;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable p {
+  margin: 0;
+}
+
+.note-editor.note-frame .note-status-output:empty {
+  border-bottom: 1px solid #ccc;
+}
+
+/* 업로드폼 해쉬태그 부분 */
+.hashTag-wrap {
+  border-bottom: 1px solid #ccc;
+  margin: 0 30px;
+}
+
+.hashTag-wrap .upload-hashTag-box {
+  border-bottom: 1px solid #ccc;
+  padding-left: 14px;
+  line-height: 50px;
+  height: 50px;
+  color: burlywood;
+  display: flex;
+}
+
+.hashTag-wrap .upload-hashTag-box span::before {
+  content: '#';
+  margin-right: 2px;
+}
+
+.hashTag-wrap .upload-hashTag-box .value-wrap + .value-wrap {
+  margin-left: 20px;
+}
+
+.hashTag-wrap .upload-hashTag-box .fa-times-circle {
   color: #ccc;
-  position: absolute;
-  z-index: -9999;
 }
 
-.uploadForm-wrap .content-wrap textarea {
+.hashTag-wrap input {
+  height: 50px;
   width: 100%;
-  height: 100%;
-  padding: 30px;
-  resize: none;
+  padding-left: 14px;
   outline: none;
-  word-wrap: break-word;
-  word-break: break-all;
-  z-index: 999;
-  /* display: none; */
-  position: absolute;
 }
 
-.uploadForm-wrap .content-wrap .content-edittalbe {
-  padding: 30px;
-  font-size: 14px;
-  height: 100%;
+/* 업로드폼 버튼박스 부분 */
+.button-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button-box button {
+  width: 105px;
+  height: 45px;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+
+.button-box button.button-cancel {
+  margin-right: 10px;
+  color: #999;
+  border-color: #999;
 }

@@ -46,6 +46,9 @@ const initalComment = [
   },
 ];
 
+const initalUpload = [];
+const initalTest = [];
+
 const hashContents = [
   {
     id: 1,
@@ -221,6 +224,26 @@ function commentReducer(state, action) {
   }
 }
 
+function uploadReducer(state, action) {
+  switch (action.type) {
+    case 'HASHTAG_ADD':
+      return [...state, { id: action.id, value: action.value }];
+    case 'HASHTAG_DELTE':
+      return state.filter((hashTag) => hashTag.id !== action.id);
+    default:
+      throw new Error('액션타입이 빔 맞았습니다!!!!');
+  }
+}
+
+function testReducer(state, action) {
+  switch (action.type) {
+    case 'SUBMIT':
+      return console.log('나는 해쉬태그', action.content);
+    default:
+      throw new Error('액션타입이 안맞습니다..........');
+  }
+}
+
 const hashTagStateContext = createContext();
 const hashTagDispatchContext = createContext();
 const hashContentsContext = createContext();
@@ -228,10 +251,16 @@ const foodGameExampleContext = createContext();
 const foodGameResultContext = createContext();
 const commentDispatchContext = createContext();
 const commentStateContext = createContext();
+const uploadDispatchContext = createContext();
+const uploadStateContext = createContext();
+const testDispatchContext = createContext();
+const testStateContext = createContext();
 
 export function Context({ children }) {
   const [state, dispatch] = useReducer(reducer, initalHasTag);
   const [commentState, commentDispatch] = useReducer(commentReducer, initalComment);
+  const [uploadState, uploadDispatch] = useReducer(uploadReducer, initalUpload);
+  const [testState, testDispatch] = useReducer(testReducer, initalTest);
 
   return (
     <hashTagStateContext.Provider value={state}>
@@ -239,9 +268,17 @@ export function Context({ children }) {
         <hashContentsContext.Provider value={hashContents}>
           <commentDispatchContext.Provider value={commentDispatch}>
             <commentStateContext.Provider value={commentState}>
-              <foodGameExampleContext.Provider value={example}>
-                <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
-              </foodGameExampleContext.Provider>
+              <testDispatchContext.Provider value={testDispatch}>
+                <testStateContext.Provider value={testState}>
+                  <uploadDispatchContext.Provider value={uploadDispatch}>
+                    <uploadStateContext.Provider value={uploadState}>
+                      <foodGameExampleContext.Provider value={example}>
+                        <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
+                      </foodGameExampleContext.Provider>
+                    </uploadStateContext.Provider>
+                  </uploadDispatchContext.Provider>
+                </testStateContext.Provider>
+              </testDispatchContext.Provider>
             </commentStateContext.Provider>
           </commentDispatchContext.Provider>
         </hashContentsContext.Provider>
@@ -276,4 +313,19 @@ export const useCommentState = () => {
 
 export const useCommentDispatch = () => {
   return useContext(commentDispatchContext);
+};
+
+export const useUploadState = () => {
+  return useContext(uploadStateContext);
+};
+
+export const useUploadDispatch = () => {
+  return useContext(uploadDispatchContext);
+};
+export const useTestState = () => {
+  return useContext(testStateContext);
+};
+
+export const useTestDispatch = () => {
+  return useContext(testDispatchContext);
 };
