@@ -1,20 +1,12 @@
 import React from 'react';
 
-const UploadFormButtonBox = () => {
+const UploadFormButtonBox = ({ cancelClick, uploadClick }) => {
   return (
-    <div className="uploadForm-toolbox">
-      <button>
-        <i class="fas fa-bold"></i>
+    <div className="button-box">
+      <button onClick={cancelClick} className="button-cancel">
+        취소
       </button>
-      <button>
-        <i class="fas fa-italic"></i>
-      </button>
-      <button>
-        <i class="fas fa-underline"></i>
-      </button>
-      <button>
-        <i class="fas fa-strikethrough"></i>
-      </button>
+      <button onClick={uploadClick}>등록</button>
     </div>
   );
 };

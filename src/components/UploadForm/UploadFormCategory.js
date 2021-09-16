@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const noticeBoard = [
   { id: 1, category: '주요소식' },
@@ -12,46 +12,17 @@ const bracketsBox = [
   { id: 2, bracket: '진행 중 이벤트' },
 ];
 
-const UploadFormCategory = () => {
-  const [category, setCategory] = useState('게시판을 선택해 주세요.');
-  const [brackets, setBrackets] = useState('말머리를 선택');
-  const [disabled, setDisabled] = useState(true);
-  const [mainCategoryStatus, setMainCategoryStatus] = useState(false);
-  const [mainBracketsStatus, setMainBracketsStatus] = useState(false);
-
-  // 카테고리 바꾸기 로직
-  const changeCategory = () => {
-    setMainCategoryStatus(!mainCategoryStatus);
-  };
-
-  const categoryValueChange = (e) => {
-    const changeCategory = e.target.innerText;
-    console.log();
-
-    if (changeCategory === '주요소식') {
-      setDisabled(false);
-    } else {
-      setBrackets('말머리를 선택');
-      setMainBracketsStatus(false);
-      setDisabled(true);
-    }
-
-    setCategory(changeCategory);
-    setMainCategoryStatus(!mainCategoryStatus);
-  };
-
-  // 말머리 바꾸기 로직
-  const changeBrackets = () => {
-    setMainBracketsStatus(!mainBracketsStatus);
-  };
-
-  const bracketsValueChange = (e) => {
-    const changeBrackets = e.target.innerText;
-
-    setBrackets(changeBrackets);
-    setMainBracketsStatus(!mainBracketsStatus);
-  };
-
+const UploadFormCategory = ({
+  category,
+  brackets,
+  disabled,
+  changeCategory,
+  categoryValueChange,
+  changeBrackets,
+  bracketsValueChange,
+  mainCategoryStatus,
+  mainBracketsStatus,
+}) => {
   return (
     <div className="form-category-wrap">
       <div className="select-box">
