@@ -230,6 +230,8 @@ function uploadReducer(state, action) {
       return [...state, { id: action.id, value: action.value }];
     case 'HASHTAG_DELTE':
       return state.filter((hashTag) => hashTag.id !== action.id);
+    case 'ALL_DELTE':
+      return [];
     default:
       throw new Error('액션타입이 빔 맞았습니다!!!!');
   }
@@ -238,7 +240,17 @@ function uploadReducer(state, action) {
 function testReducer(state, action) {
   switch (action.type) {
     case 'SUBMIT':
-      return console.log('나는 해쉬태그', action.content);
+      return [
+        ...state,
+        {
+          id: action.content.id,
+          hashTag: action.content.hashTag,
+          title: action.content.title,
+          category: action.content.category,
+          brackets: action.content.brackets,
+          value: action.content.value,
+        },
+      ];
     default:
       throw new Error('액션타입이 안맞습니다..........');
   }
