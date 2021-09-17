@@ -8,9 +8,7 @@ const UploadFormHashTag = () => {
   const state = useUploadState();
 
   const spaceControl = (e) => {
-    if (value === '') {
-      e.preventDefault();
-    } else if (e.code === 'Space') {
+    if (e.code === 'Space') {
       e.preventDefault();
       dispatch({ type: 'HASHTAG_ADD', id: state.length + 1, value });
       setValue('');

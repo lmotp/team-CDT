@@ -10,12 +10,10 @@ import './../../../styles/layouts/notice-board/board.css';
 
 import eventThumb from './../../../images/event.png';
 import updateThumb from './../../../images/update.png';
-
 export default function Board() {
   const [newData, setNewData] = useState([]);
   const [initialBoard, setInitialBoard] = useState(true);
   const [order, setOrder] = useState(0);
-
   const boardCollectionRef = useRef();
   const boardList = [
     {

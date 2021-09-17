@@ -112,7 +112,7 @@
 
 .comment-form-wrap .pagiNation-wrap button.active {
   background: burlywood;
-  color: #fff;
+  color: #fff !important;
 }
 
 .comment-form-wrap .pagiNation-wrap button:hover {
