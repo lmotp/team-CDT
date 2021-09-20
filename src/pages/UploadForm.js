@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import UploadFormButtonBox from '../components/UploadForm/UploadFormButtonBox';
 import UploadFormCategory from '../components/UploadForm/UploadFormCategory';
@@ -88,15 +88,14 @@ const UploadForm = () => {
 
   // 썸머노트 컨텐츠 이벤트 !!
   const onImageUpload = (images, insertImage) => {
+    const formdata = new FormData();
+
     for (let i = 0; i < images.length; i++) {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        console.log(reader.result);
-        insertImage(reader.result);
-      };
-
-      reader.readAsDataURL(images[i]);
+      formdata.append('image', images[i]);
+      axios
+        .post('/test', formdata)
+        .then((res) => insertImage(res.data))
+        .catch((err) => console.log(err));
     }
   };
 
