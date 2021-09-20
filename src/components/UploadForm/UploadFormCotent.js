@@ -1,7 +1,7 @@
 import React from 'react';
+import ReactSummernote from 'react-summernote';
 
 // imports for summernote
-import ReactSummernote from 'react-summernote';
 import 'react-summernote/dist/react-summernote.css';
 import 'react-summernote/lang/summernote-ko-KR';
 import 'bootstrap/js/modal';
@@ -29,8 +29,8 @@ const UploadFormCotent = ({ onImageUpload, onChange }) => {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview']],
+            ['insert', ['picture']],
+            ['view', ['fullscreen']],
           ],
           disableResizeEditor: true,
         }}
