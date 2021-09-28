@@ -1,8 +1,18 @@
 const express = require('express');
-const app = express();
-const PORT = 3095;
-
+const mysql = require('mysql');
 const multer = require('multer');
+const app = express();
+const PORT = 3095 || process.env.DB_PORT;
+
+require('dotenv').config();
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: './uploads',
@@ -11,6 +21,9 @@ const upload = multer({
     },
   }),
 });
+
+connection.connect();
+
 app.use('/image', express.static('./uploads'));
 
 app.use(express.json());
