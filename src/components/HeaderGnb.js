@@ -14,7 +14,7 @@ import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
 import { Link } from 'react-router-dom';
 
-export default function HeaderGnb() {
+export default function HeaderGnb({ login, setLogin }) {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputValue = (e) => {
@@ -42,7 +42,7 @@ export default function HeaderGnb() {
           <WriteButton write={'오늘 뭐 먹지?'}></WriteButton>
         </Link>
         <GnbMenu></GnbMenu>
-        <TopAuth></TopAuth>
+        <TopAuth login={login} setLogin={setLogin}></TopAuth>
       </header>
     </>
   );
