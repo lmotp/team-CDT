@@ -1,5 +1,251 @@
 .uploadForm-wrap {
   width: 79%;
   margin-top: 87px;
-  background: blue;
+}
+
+/* 업로드폼 카데고리 부분 */
+.uploadForm-wrap .form-category-wrap {
+  width: 100%;
+  display: flex;
+  padding: 14px 30px 12px;
+  justify-content: space-between;
+}
+
+/* 카테고리 박스 */
+.uploadForm-wrap .form-category-wrap .select-box {
+  width: 77%;
+  position: relative;
+}
+
+.form-category-wrap .select-box button {
+  width: 100%;
+  height: 40px;
+  text-align: left;
+  padding-left: 14px;
+}
+
+.form-category-wrap .select-box .main-category {
+  border: 1px solid #d1d1d1;
+  margin-bottom: 4px;
+}
+
+/* 화살표 */
+.form-category-wrap .select-box .main-category::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  width: 14px;
+  height: 100%;
+  opacity: 0.4;
+  background: url(https://dszw1qtcnsa5e.cloudfront.net/bin/live/console-community-view/assets/web/pc/arrow-select.gif) 0
+    center no-repeat;
+  transition: all 0.4s;
+}
+
+/* 화살표 토글 */
+.form-category-wrap .select-box .main-category.on::after {
+  opacity: 1;
+  transform: rotateX(180deg);
+}
+
+/* 카테고리 토글박스 */
+.form-category-wrap .select-box .categories-box {
+  width: 100%;
+  border: 1px solid #d1d1d1;
+  position: absolute;
+  background: white;
+  z-index: 999;
+}
+
+.form-category-wrap .select-box .categories-box .select {
+  color: burlywood;
+}
+
+/* 브라켓박스 */
+.uploadForm-wrap .form-category-wrap .brackets-box {
+  width: 20%;
+  position: relative;
+}
+
+.form-category-wrap .brackets-box button {
+  width: 100%;
+  height: 40px;
+  text-align: left;
+  padding-left: 14px;
+}
+
+.form-category-wrap .brackets-box .main-brackets {
+  border: 1px solid #d1d1d1;
+  margin-bottom: 4px;
+}
+
+.form-category-wrap .brackets-box .main-brackets:disabled {
+  color: #a5a5a5;
+}
+
+/* 화살표 */
+.form-category-wrap .brackets-box .main-brackets::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  width: 14px;
+  height: 100%;
+  opacity: 0.4;
+  background: url(https://dszw1qtcnsa5e.cloudfront.net/bin/live/console-community-view/assets/web/pc/arrow-select.gif) 0
+    center no-repeat;
+  transition: all 0.4s;
+}
+
+/* 화살표 토글 */
+.form-category-wrap .brackets-box .main-brackets.on::after {
+  opacity: 1;
+  transform: rotateX(180deg);
+}
+
+/* 브라켓 토글박스 */
+.form-category-wrap .brackets-box .brackets-button-box {
+  width: 100%;
+  border: 1px solid #d1d1d1;
+  position: absolute;
+  background: white;
+  z-index: 999;
+}
+
+.form-category-wrap .brackets-box .brackets-button-box .select {
+  color: burlywood;
+}
+
+/* 업로드타이블 부분 */
+.uploadForm-wrap .uploadForm-title-wrap {
+  margin: 0 30px;
+  padding: 14px 0;
+  border-top: 1px solid #ccc;
+}
+
+.uploadForm-title-wrap .textarea-wrap {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #d1d1d1;
+  display: flex;
+}
+
+.uploadForm-title-wrap .textarea-wrap textarea {
+  width: 100%;
+  padding: 11px 12px 10px;
+  resize: none;
+  outline: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  font-size: 14px;
+}
+
+.uploadForm-title-wrap .textarea-wrap textarea::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+/* 업로드폼 툴박스 부분 */
+.uploadForm-wrap .uploadForm-toolbox {
+  height: 40px;
+  margin: 0 30px;
+  padding-left: 5px;
+  background: #f5f5fd;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+
+.uploadForm-wrap .uploadForm-toolbox button {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-top: 7.5px;
+  margin-right: 5px;
+}
+
+.uploadForm-wrap .uploadForm-toolbox button:hover {
+  background: rgb(238, 238, 238);
+}
+
+/* 업로드폼 콘텐츠 부분 (대부분이 SummerNote 수정한것 ) */
+.uploadForm-wrap .content-wrap {
+  padding: 0 30px;
+}
+
+.note-statusbar {
+  display: none;
+}
+
+.note-editor.note-frame,
+.note-editor.note-airframe {
+  border: none;
+  margin-bottom: 0;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable,
+.note-editor.note-frame .note-placeholder {
+  padding: 20px;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable p {
+  margin: 0;
+}
+
+.note-editor.note-frame .note-status-output:empty {
+  border-bottom: 1px solid #ccc;
+}
+
+/* 업로드폼 해쉬태그 부분 */
+.hashTag-wrap {
+  border-bottom: 1px solid #ccc;
+  margin: 0 30px;
+}
+
+.hashTag-wrap .upload-hashTag-box {
+  border-bottom: 1px solid #ccc;
+  padding-left: 14px;
+  line-height: 50px;
+  height: 50px;
+  color: burlywood;
+  display: flex;
+}
+
+.hashTag-wrap .upload-hashTag-box span::before {
+  content: '#';
+  margin-right: 2px;
+}
+
+.hashTag-wrap .upload-hashTag-box .value-wrap + .value-wrap {
+  margin-left: 20px;
+}
+
+.hashTag-wrap .upload-hashTag-box .fa-times-circle {
+  color: #ccc;
+}
+
+.hashTag-wrap input {
+  height: 50px;
+  width: 100%;
+  padding-left: 14px;
+  outline: none;
+}
+
+/* 업로드폼 버튼박스 부분 */
+.button-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button-box button {
+  width: 105px;
+  height: 45px;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+
+.button-box button.button-cancel {
+  margin-right: 10px;
+  color: #999;
+  border-color: #999;
 }

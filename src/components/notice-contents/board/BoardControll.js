@@ -64,6 +64,7 @@ export default function BoardControll({ order, setOrder }) {
       return value + 5;
     });
     setButtonValue(newButtonValue);
+    setOrder((newButtonValue[0] - 1) * 10);
     buttonRef5.current.classList.remove('on');
     buttonRef4.current.classList.remove('on');
     buttonRef3.current.classList.remove('on');
@@ -78,6 +79,7 @@ export default function BoardControll({ order, setOrder }) {
       return value - 5;
     });
     setButtonValue(newButtonValue);
+    setOrder((newButtonValue[4] - 1) * 10);
     buttonRef5.current.classList.add('on');
     buttonRef4.current.classList.remove('on');
     buttonRef3.current.classList.remove('on');
