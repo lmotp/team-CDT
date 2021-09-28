@@ -32,9 +32,9 @@ export function App() {
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
             <Route path="/notice" component={NoticeContents} />
-            <Route path="/" component={NotFound} />
             <Route path="/user" render={() => <Login login={login} setLogin={setLogin} />} />
             <Route path="/auth" component={Auth} />
+            <Route path="/" component={NotFound} />
           </Switch>
         </div>
       </HashRouter>
