@@ -1,31 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function TopAuth() {
+function TopAuth({ login, setLogin }) {
+  const handleLogout = () => {
+    const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+    setLogin({ checkLogin: !yesLogout });
+  };
   return (
     <>
-      <div className="top-auth">
-        <div className="inner">
-          <button type="text" aria-label="유저 로그인 버튼">
-            <i class="far fa-user user-icon"></i>
-          </button>
-          <button type="text" className="login">
-            로그인
-          </button>
+      {login.checkLogin ? (
+        <div className="top-auth">
+          <div className="inner">
+            <a href="/" className="profile" aria-label="유저 프로필">
+              <i class="far fa-user-circle user-icon"></i>
+              <span className="nickname">{login.nickname}</span>
+            </a>
+            <button type="button" className="logout" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </div>
         </div>
-      </div>
-
-      {/* 로그인 후
-      <div className="top-auth">
-        <div className="inner">
-          <a href="/" className="profile" aria-label="유저 프로필">
-            <i class="far fa-user-circle user-icon"></i>
-            <span className="nickname">닉네임</span>
-          </a>
-          <button type="button" className="logout">
-            로그아웃
-          </button>
+      ) : (
+        <div className="top-auth">
+          <div className="inner">
+            <button type="text" aria-label="유저 로그인 버튼">
+              <i class="far fa-user user-icon"></i>
+            </button>
+            <button type="text" className="login">
+              <Link to="/user">로그인</Link>
+            </button>
+          </div>
         </div>
-      </div>*/}
+      )}
     </>
   );
 }
+
+export default TopAuth;
