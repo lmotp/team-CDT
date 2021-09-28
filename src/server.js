@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql');
 const multer = require('multer');
 const port = process.env.PORT || 5000;
 const app = express();
@@ -7,13 +6,6 @@ const app = express();
 const auth = [];
 
 require('dotenv').config();
-
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-});
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -26,7 +18,6 @@ const upload = multer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-connection.connect();
 
 app.use('/image', express.static('./uploads'));
 
