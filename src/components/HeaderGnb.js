@@ -13,7 +13,7 @@ import './../styles/layouts/write-button.css';
 import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
 
-export default function HeaderGnb() {
+export default function HeaderGnb({ login, setLogin }) {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputValue = (e) => {
@@ -38,7 +38,7 @@ export default function HeaderGnb() {
         <SearchInput value={inputValue} onChange={handleInputValue} onClick={handleSearchButton}></SearchInput>
         <WriteButton onClick={handleWriteButton}></WriteButton>
         <GnbMenu></GnbMenu>
-        <TopAuth></TopAuth>
+        <TopAuth login={login} setLogin={setLogin}></TopAuth>
       </header>
     </>
   );
