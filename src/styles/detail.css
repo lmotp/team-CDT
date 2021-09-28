@@ -1,8 +1,8 @@
-textarea {
+.detail-wrap textarea {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-textarea::-webkit-scrollbar {
+.detail-wrap textarea::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
 
@@ -59,6 +59,7 @@ textarea::-webkit-scrollbar {
 .detail-wrap section p {
   line-height: 1.5;
   font-size: 14px;
+  white-space: pre-wrap;
 }
 
 /* 디테일 댓글 등록부분  */
@@ -111,7 +112,7 @@ textarea::-webkit-scrollbar {
 
 .comment-form-wrap .pagiNation-wrap button.active {
   background: burlywood;
-  color: #fff;
+  color: #fff !important;
 }
 
 .comment-form-wrap .pagiNation-wrap button:hover {

@@ -10,11 +10,11 @@ import FoodGameResult from './components/foodGame/FoodGameResult';
 import NoticeContents from './components/notice-contents/NoticeContents';
 import Login from './components/login/Login';
 import Auth from './components/login/Auth';
+import DetailPage from './pages/DetailPage';
+import UploadForm from './pages/UploadForm';
 import './App.css';
 import './styles/base/reset.css';
 import './styles/base/visually-hidden.css';
-import DetailPage from './pages/DetailPage';
-import UploadForm from './pages/UploadForm';
 
 export function App() {
   const [login, setLogin] = useState({ checkLogin: false });
@@ -22,7 +22,7 @@ export function App() {
   return (
     <Context>
       <HashRouter>
-        <div className="container">
+        <div className="contain">
           <HeaderGnb login={login} setLogin={setLogin} />
           <Switch>
             <Route exact path="/" component={Contents} />
