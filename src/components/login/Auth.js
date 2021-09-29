@@ -41,7 +41,7 @@ export default function Auth() {
           <h2>회원가입</h2>
         </header>
         <form className="auth-content-list" onSubmit={submitJoin}>
-          <div className="auth-content-list-item">
+          <p className="auth-content-list-item">
             <label for="username">아이디</label>
             <input
               type="text"
@@ -50,8 +50,10 @@ export default function Auth() {
               value={username.inputValue}
               onChange={username.handleInputValue}
             ></input>
-            <p className="idError">이미 사용중이거나 탈퇴한 아이디입니다.</p>
-          </div>
+            {authData.length === 0 || authData[0].username !== username.inputValue ? null : (
+              <span className="idError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
+            )}
+          </p>
           <p className="auth-content-list-item">
             <label for="pwd">비밀번호</label>
             <input type="text" id="pwd" name="pwd" value={pwd.inputValue} onChange={pwd.handleInputValue}></input>
