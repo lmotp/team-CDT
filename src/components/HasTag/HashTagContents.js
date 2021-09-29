@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHashContents } from '../../Context';
-import Modal from '../Modal/Modal';
+import Modals from '../Modal/Modals';
 import ModalContents from '../Modal/ModalContents';
 
 function HashTagContents({ hashTag }) {
@@ -23,9 +23,9 @@ function HashTagContents({ hashTag }) {
           <div className="hashTagContents" key={contents.id}>
             <h2>{contents.title}</h2>
             <img onClick={openModal} src={contents.image} alt={contents.tag} />
-            <Modal modalOpen={modalOpen} close={closeModal}>
+            <Modals modalOpen={modalOpen} close={closeModal}>
               <ModalContents contents={contents} closeModal={closeModal} />
-            </Modal>
+            </Modals>
             <div>{contents.tag}</div>
           </div>
         ))}

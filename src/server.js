@@ -1,15 +1,26 @@
 const express = require('express');
 const multer = require('multer');
-const port = process.env.PORT || 5000;
+const mysql = require('mysql');
 const app = express();
 
 const auth = [];
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
+
+const port = process.env.DB_PORT || 5000;
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+connection.connect();
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: './uploads',
+    destination: __dirname + '/uploads',
     filename: function (req, file, cb) {
       cb(null, new Date().valueOf() + '-' + file.originalname);
     },
@@ -19,11 +30,32 @@ const upload = multer({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/image', express.static('./uploads'));
+app.use('/image', express.static(__dirname + '/uploads'));
 
-app.post('/test', upload.single('image'), (req, res) => {
+app.post('/thumbnail', upload.single('image'), (req, res) => {
   const image = `/image/${req.file.filename}`;
   res.send(image);
+});
+
+app.post('/uploadform', (req, res) => {
+  const { id, title, category, brackets, value, hashTag } = req.body;
+  const params = [id, title, value, hashTag, category, brackets];
+  connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?)', params, (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(row);
+  });
+});
+
+app.post('/detail', (req, res) => {
+  const { id } = req.body;
+  connection.query('SELECT * FROM post WHERE post_id=?', [id], (err, row) => {
+    if (err) {
+      console.log('나는 디테일 에러', err);
+    }
+    res.send(row);
+  });
 });
 
 app.post('/user/login', (req, res) => {

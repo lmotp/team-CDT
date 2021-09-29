@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/modal.css';
 
-const Modal = ({ modalOpen, close, children }) => {
+const Modals = ({ modalOpen, close, children }) => {
   return (
     <div className={modalOpen ? 'openModal modal' : null}>
       {modalOpen ? (
@@ -17,4 +17,4 @@ const Modal = ({ modalOpen, close, children }) => {
     </div>
   );
 };
-export default Modal;
+export default Modals;

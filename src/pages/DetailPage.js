@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DetailHeader from '../components/Detail/DetailHeader';
 import '../styles/detail.css';
 import slide5 from '../images/bback.jpg';
@@ -6,8 +6,10 @@ import DetailContent from '../components/Detail/DetailContent';
 import DetailComment from '../components/Detail/DetailComment';
 import DetailCommentSection from '../components/Detail/DetailCommentSection';
 import DetailList from '../components/Detail/DetailList';
+import axios from 'axios';
 
 function DetailPage() {
+  const [contents, setContents] = useState('');
   const today = new Date();
   const time = today.getHours();
   const minutes = today.getMinutes();
@@ -28,6 +30,10 @@ function DetailPage() {
     },
   ];
 
+  useEffect(() => {
+    axios.post('/detail', { id: 8 }).then((res) => setContents(res.data[0]));
+  }, []);
+
   return (
     <div className="detail-wrap">
       <DetailHeader
@@ -40,7 +46,7 @@ function DetailPage() {
         time={time}
         minutes={minutes}
       />
-      <DetailContent />
+      <DetailContent contents={contents} />
       <DetailComment />
       <DetailCommentSection date={value[0].date} time={time} minutes={minutes} />
       <DetailList category={value[0].category} />

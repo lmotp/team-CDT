@@ -1,10 +1,13 @@
 import React from 'react';
 import latteImg from '../../images/녹차라떼.png';
 
-function DetailContent() {
+function DetailContent({ contents }) {
+  console.log(contents);
+  const wow = contents.hashTag.split(',');
+  console.log(wow);
   return (
     <section>
-      <img src={latteImg} alt="라떼이미지"></img>
+      {/* <img src={latteImg} alt="라떼이미지"></img>
       <p>
         아무 말이나 쓰고싶지만은 아는 단어가 극히 한정적이여서 아무 말도 못하고 그냥 끄적이기만 하는 내 심정을
         <br />
@@ -15,7 +18,11 @@ function DetailContent() {
         <br /> 진짜 노리치는 왜 아스날한테 졌지? 이길만헀는데 아르테타 이러다가 경질 안당하는거아니야?
         <br /> 라고 헐레벌떡 뛰어온 '너는 아르테타'이다. 가나라마바사아자차카파하헤헤으헤으헤으헤으헤오 아주 진짜 왜케
         학원만 가면은 정신을 못차리는거지? 진짜 의아해서 미치겠네 유일하게 학원만가면은 정신을 못차리네
-      </p>
+      </p> */}
+      <div dangerouslySetInnerHTML={{ __html: contents.content }}></div>
+      {wow.map((v, i) => (
+        <span key={i}>#{v}</span>
+      ))}
     </section>
   );
 }
