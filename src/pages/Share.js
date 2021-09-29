@@ -1,7 +1,6 @@
 import React from 'react';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import HashTagContents from '../components/HasTag/HashTagContents';
-import Modal from '../components/Modal/Modal';
 import { useHashTagState } from '../Context';
 import '../styles/share.css';
 
@@ -24,7 +23,6 @@ function Share() {
               .filter((contents) => [])
               .map((contents) => <HashTagContents key={contents.id} hashTag={contents.tag} />)}
       </div>
-      <Modal />
     </div>
   );
 }
