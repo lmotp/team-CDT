@@ -19,7 +19,7 @@
 .board-controller {
   display: flex;
   position: absolute;
-  bottom: 0;
+  bottom: -30px;
   left: 50%;
   height: 50px;
   align-items: center;
@@ -28,10 +28,6 @@
 
 .board-controller i {
   font-size: 30px;
-}
-
-.list-paging {
-  height: 50px;
 }
 
 .list-paging button {
