@@ -84,7 +84,13 @@ function Login({ login, setLogin, history }) {
             <button type="button" className="button">
               비밀번호 찾기
             </button>
-            <button type="button" className="button">
+            <button
+              type="button"
+              className="button"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               <Link to="/auth">회원가입</Link>
             </button>
           </div>

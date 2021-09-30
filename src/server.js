@@ -40,7 +40,7 @@ app.post('/user/login', (req, res) => {
 app.post('/auth/join', (req, res) => {
   console.log(req.body);
   auth.push(req.body);
-  res.send(auth[0]);
+  res.send(auth);
 });
 
 app.listen(port, () => {
