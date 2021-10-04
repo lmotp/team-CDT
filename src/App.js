@@ -27,7 +27,7 @@ export function App() {
           <Switch>
             <Route exact path="/" component={Contents} />
             <Route path="/share" component={Share} />
-            <Route path="/detailpage" component={DetailPage} />
+            <Route exact path="/detailpage/:post_id" component={DetailPage} />
             <Route path="/uploadform" component={UploadForm} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />

@@ -4,7 +4,7 @@ import DetailCommentForm from './DetailCommentForm';
 import '../../styles/detail.css';
 import DetailPagination from './DetailPagination';
 
-function DetailCommentSection({ date, time, minutes }) {
+function DetailCommentSection({ date }) {
   const commentState = useCommentState();
   const postPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,8 +28,6 @@ function DetailCommentSection({ date, time, minutes }) {
           profileImg={comment.profileImg}
           heartCount={comment.heartCount}
           comment={comment.comment}
-          time={time}
-          minutes={minutes}
         />
       ))}
 

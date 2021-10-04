@@ -50,12 +50,16 @@ app.post('/uploadform', (req, res) => {
 
 app.post('/detail', (req, res) => {
   const { id } = req.body;
-  connection.query('SELECT * FROM post WHERE post_id=?', [id], (err, row) => {
-    if (err) {
-      console.log('나는 디테일 에러', err);
-    }
-    res.send(row);
-  });
+  connection.query(
+    'SELECT * FROM post LEFT JOIN testauth_id ON post.auth_id = testauth_id.auth_id where post_id = ?',
+    [id],
+    (err, row) => {
+      if (err) {
+        console.log('나는 디테일 에러', err);
+      }
+      res.send(row);
+    },
+  );
 });
 
 app.post('/user/login', (req, res) => {

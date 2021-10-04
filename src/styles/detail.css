@@ -56,10 +56,21 @@
   padding: 60px 20px 140px;
 }
 
+.detail-wrap section .content::after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
 .detail-wrap section p {
   line-height: 1.5;
   font-size: 14px;
   white-space: pre-wrap;
+}
+
+.detail-wrap section .hashTag-box {
+  margin-top: 70px;
+  color: burlywood;
 }
 
 /* 디테일 댓글 등록부분  */
