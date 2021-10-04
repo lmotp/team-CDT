@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Recomment from './Recomment';
 import { useCommentDispatch } from '../../Context';
 
-function DetailCommentForm({ id, date, nickName, profileImg, heartCount, comment, time, minutes }) {
+function DetailCommentForm({ id, date, nickName, profileImg, heartCount, comment }) {
   const commentDispatch = useCommentDispatch();
   const [reComment, setReComment] = useState(false);
   const [changeComment, setChangeComment] = useState(false);
@@ -53,9 +53,7 @@ function DetailCommentForm({ id, date, nickName, profileImg, heartCount, comment
         <div className="content-profile">{nickName}</div>
         <p>{comment}</p>
         <div className="info-wrap">
-          <span className="info-date">
-            {date} &nbsp; {time} : {minutes}
-          </span>
+          <span className="info-date">{date}</span>
           <sapn>
             <i className="far fa-heart heart" onClick={likeHeartHanlder}></i>
             {heartCount}
