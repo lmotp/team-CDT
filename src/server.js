@@ -27,13 +27,10 @@ app.post('/test', upload.single('image'), (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  if (req.body.user_name === 'abc' && req.body.user_pwd === '1111') {
-    console.log('success login');
-    res.send({ checkLogin: true, nickname: req.body.user_name });
-  } else if (auth.length !== 0 || (req.body.user_name === auth[0].username && req.body.user_pwd === auth[0].pwd)) {
+  if (auth.length !== 0 && req.body.user_name === auth[0].username && req.body.user_pwd === auth[0].pwd) {
     res.send({ checkLogin: true, nickname: req.body.user_name });
   } else {
-    res.send({ checkLogin: false, reLogin: false });
+    res.send({ checkLogin: false });
   }
 });
 

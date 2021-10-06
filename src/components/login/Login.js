@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
 
@@ -28,15 +28,15 @@ function Login({ login, setLogin, history }) {
     });
   };
 
-  useEffect(() => {
+  const loginButton = () => {
     if (login.checkLogin === true) {
       history.push('/');
-    } else if (login.reLogin === false) {
+    } else {
       alert('다시 로그인해주세요.');
       pwdRef.current.focus();
       setPwd('');
     }
-  }, [login.checkLogin, login.reLogin]);
+  };
 
   return (
     <div className="login-content">
@@ -74,7 +74,7 @@ function Login({ login, setLogin, history }) {
               onChange={hanldePwd}
             ></input>
           </div>
-          <button type="submit" className="login-submit">
+          <button type="submit" className="login-submit" onClick={loginButton}>
             로그인
           </button>
           <div className="button-list">
