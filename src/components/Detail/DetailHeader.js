@@ -1,11 +1,10 @@
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/ko';
 
-function DetailHeader({ eyeCount, contents }) {
-  console.log(contents);
-  const { bracket, title, category, createdAt, img, nickname } = contents;
-
-  console.log(bracket);
-
+function DetailHeader({ contents }) {
+  const { bracket, title, category, createdAt, img, nickname, views } = contents;
+  const createTime = moment(createdAt).format('YYYY년 MM월 DD일 HH시 mm분');
   return (
     <header>
       <h2>{category}</h2>
@@ -17,9 +16,9 @@ function DetailHeader({ eyeCount, contents }) {
         <img src={img} alt={nickname} />
         <div className="date">
           <div>{nickname}</div>
-          <span>{createdAt}</span>
+          <span>{createTime}</span>
           <i className="far fa-eye eye"></i>
-          <span>{eyeCount}</span>
+          <span>{views}</span>
         </div>
       </div>
     </header>

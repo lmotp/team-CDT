@@ -8,25 +8,47 @@ import DetailList from '../components/Detail/DetailList';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import NotFound from './NotFound';
+import Loading from './Loading';
 
 function DetailPage() {
   const [contents, setContents] = useState('');
+  const [recomments, setRecomments] = useState([]);
+  const [comment, setComment] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { post_id } = useParams();
 
   useEffect(() => {
-    axios.post('/detail', { id: post_id }).then((res) => setContents(res.data[0]));
+    axios.post('/detailpage/views', { postId: post_id }).then((res) => console.log(res));
+    axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
 
-  console.log(contents);
+  useEffect(() => {
+    axios.post('/detailpage/comment/list', { postId: post_id }).then(({ data }) => {
+      setIsLoading(true);
+      setComment(data);
+    });
+    axios.post('/detailpage/recomment/list', { postId: post_id }).then(({ data }) => {
+      setIsLoading(true);
+      setRecomments(data);
+    });
+  }, [post_id, isLoading]);
+
+  const loadingHandler = () => {
+    return setIsLoading(false);
+  };
 
   return (
     <>
       {contents ? (
         <div className="detail-wrap">
-          <DetailHeader eyeCount="20" contents={contents} />
+          <DetailHeader contents={contents} />
           <DetailContent contents={contents} />
-          <DetailComment />
-          <DetailCommentSection date={contents.createdAt} />
+          <DetailComment loadingHandler={loadingHandler} comment={comment} recomments={recomments.length} />
+          {isLoading ? (
+            <DetailCommentSection loadingHandler={loadingHandler} comment={comment} recomments={recomments} />
+          ) : (
+            <Loading />
+          )}
           <DetailList category={contents.category} />
         </div>
       ) : (

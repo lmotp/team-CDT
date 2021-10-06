@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 function DetailContent({ contents }) {
   const [hashTag, setHashTag] = useState([]);
 
+  const textToCopy = window.location.href;
+
   useEffect(() => {
     if (contents) {
       const hashTagSplit = contents.hashTag.split(',');
@@ -17,6 +19,17 @@ function DetailContent({ contents }) {
         {hashTag.map((v, i) => (
           <span key={i}>#{v} </span>
         ))}
+      </div>
+      <div className="button-box">
+        <button className="likes-button">100</button>
+        <button
+          className="url-button"
+          onClick={() => {
+            navigator.clipboard.writeText(textToCopy);
+          }}
+        >
+          URL복사
+        </button>
       </div>
     </section>
   );

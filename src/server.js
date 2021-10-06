@@ -48,15 +48,82 @@ app.post('/uploadform', (req, res) => {
   });
 });
 
-app.post('/detail', (req, res) => {
-  const { id } = req.body;
+app.post('/detailpage', (req, res) => {
+  const { postId } = req.body;
   connection.query(
     'SELECT * FROM post LEFT JOIN testauth_id ON post.auth_id = testauth_id.auth_id where post_id = ?',
-    [id],
+    [postId],
     (err, row) => {
       if (err) {
         console.log('나는 디테일 에러', err);
       }
+      res.send(row);
+    },
+  );
+});
+
+app.post('/detailpage/views', (req, res) => {
+  const { postId } = req.body;
+  connection.query('UPDATE post SET views = views + 1 WHERE post_id = ?;', [Number(postId)], (err, row) => {
+    if (err) {
+      console.log('조회수부분 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.post('/detailpage/comment', (req, res) => {
+  const { comment, postId } = req.body;
+
+  connection.query(
+    'INSERT INTO post_comment VALUES (null,?,NOW(),?,2,NOW())',
+    [Number(postId), comment],
+    (err, row) => {
+      if (err) {
+        console.log('디테일페이지 에러입입니다.', err);
+      }
+      res.send(row);
+    },
+  );
+});
+
+app.post('/detailpage/comment/list', (req, res) => {
+  const { postId } = req.body;
+
+  connection.query(
+    'SELECT comment_id,post_comment.post_id,content,post_comment.createdAt,img,nickname FROM post_comment INNER JOIN testauth_id ON post_comment.auth_id = testauth_id.auth_id WHERE post_id = ?',
+    [Number(postId)],
+    (err, row) => {
+      if (err) {
+        console.log('코멘트리스트 불러올 때 에러입니다.', err);
+      }
+      res.send(row);
+    },
+  );
+});
+
+app.post('/detailpage/recomment', (req, res) => {
+  const { reComment, commentId } = req.body;
+
+  connection.query('INSERT INTO post_recomment VALUES(null,?,2,?,NOW(),NOW())', [commentId, reComment], (err, row) => {
+    if (err) {
+      console.log('대댓글 에러에요', err);
+    }
+    res.send(row);
+  });
+});
+
+app.post('/detailpage/recomment/list', (req, res) => {
+  const { postId } = req.body;
+
+  connection.query(
+    'SELECT post_recomment.comment_id,post_recomment.auth_id,recomment,post_recomment.createdAt,nickname,img FROM post_recomment LEFT JOIN post_comment ON post_recomment.comment_id = post_comment.comment_id LEFT JOIN testauth_id ON post_recomment.auth_id = testauth_id.auth_id WHERE post_id = ?',
+    [Number(postId)],
+    (err, row) => {
+      if (err) {
+        console.log('대댓글 에러', err);
+      }
+
       res.send(row);
     },
   );
