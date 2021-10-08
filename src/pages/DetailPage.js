@@ -18,7 +18,7 @@ function DetailPage() {
   const { post_id } = useParams();
 
   useEffect(() => {
-    axios.post('/detailpage/views', { postId: post_id }).then((res) => console.log(res));
+    axios.post('/detailpage/views', { postId: post_id }).then((res) => console.log('조회수 조회 성공'));
     axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
 
@@ -42,7 +42,7 @@ function DetailPage() {
       {contents ? (
         <div className="detail-wrap">
           <DetailHeader contents={contents} />
-          <DetailContent contents={contents} />
+          <DetailContent contents={contents} postId={post_id} />
           <DetailComment loadingHandler={loadingHandler} comment={comment} recomments={recomments.length} />
           {isLoading ? (
             <DetailCommentSection loadingHandler={loadingHandler} comment={comment} recomments={recomments} />
