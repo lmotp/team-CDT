@@ -51,7 +51,7 @@ app.post('/uploadform', (req, res) => {
 app.post('/detailpage', (req, res) => {
   const { postId } = req.body;
   connection.query(
-    'SELECT * FROM post LEFT JOIN testauth_id ON post.auth_id = testauth_id.auth_id where post_id = ?',
+    'SELECT category,bracket,title,post.createdAt,img,nickname,views,heart,hashTag,content FROM post LEFT JOIN testauth_id ON post.auth_id = testauth_id.auth_id where post_id = ?',
     [postId],
     (err, row) => {
       if (err) {
@@ -125,6 +125,62 @@ app.post('/detailpage/recomment/list', (req, res) => {
       }
 
       res.send(row);
+    },
+  );
+});
+
+app.post('/detailpage/heart', (req, res) => {
+  const { postId } = req.body;
+
+  // console.log(postId, '나다');
+
+  connection.query('SELECT * FROM post_heartbox WHERE post_id = ?', [postId], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.json({ count: row.length });
+  });
+});
+
+app.post('/detailpage/hearted', (req, res) => {
+  const { postId, auth } = req.body;
+
+  connection.query('SELECT * FROM post_heartbox WHERE post_id = ? AND auth_id = ?', [postId, auth], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+
+    let result = false;
+    if (row.length !== 0) {
+      result = true;
+    }
+    console.log(result);
+    res.json({ result, info: row });
+  });
+});
+
+app.post('/detailpage/heart/add', (req, res) => {
+  const { postId, auth } = req.body;
+
+  connection.query('INSERT INTO post_heartbox VALUES (null,?,?,NOW(),NOW())', [auth, postId], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(true);
+  });
+});
+
+app.post('/detailpage/heart/remove', (req, res) => {
+  const { postId, auth, heartId } = req.body;
+
+  connection.query(
+    'DELETE FROM post_heartbox WHERE auth_id = ? AND post_id = ? AND heart_id = ?;',
+    [auth, postId, heartId],
+    (err, row) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(false);
     },
   );
 });

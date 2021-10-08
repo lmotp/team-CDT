@@ -9,7 +9,7 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
   const [reComment, setReComment] = useState(false);
   const [changeComment, setChangeComment] = useState(false);
   const [reCommentValue, setReCommentValue] = useState('');
-
+  const [heart, setHeart] = useState(false);
   const createTime = moment(createdAt).format('YYYY년 MM월 DD일 HH시 mm분');
 
   // 댓글에 댓글추가하기 기능
@@ -51,7 +51,9 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
   };
 
   // 좋아요 누르기
-  const likeHeartHanlder = () => {};
+  const likeHeartHanlder = () => {
+    setHeart(!heart);
+  };
 
   const dangerComment = comment.replace(/\\n/g, '<br/>');
 
@@ -64,7 +66,7 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
         <div className="info-wrap">
           <span className="info-date">{createTime}</span>
           <sapn>
-            <i className="far fa-heart heart" onClick={likeHeartHanlder}></i>
+            <i className={heart ? 'fas fa-heart heart on' : 'far fa-heart heart'} onClick={likeHeartHanlder}></i>
             {heartCount}
           </sapn>
           {!on && (
