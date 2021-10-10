@@ -7,7 +7,8 @@ import useFocus from './../../hooks/useFocus.js';
 import './../../styles/layouts/login/auth.css';
 
 function Auth({ history }) {
-  const authData = [];
+  const [inputFocus, setInputFocus] = useState(false);
+  const [repeatUsername, setRepeatUsername] = useState(false);
 
   const [selectGenderValue, setSelectGenderValue] = useState('');
   const [selectMonthValue, setSelectMonthValue] = useState('');
@@ -20,20 +21,28 @@ function Auth({ history }) {
     const checkRgx = rgx;
     if (checkRgx.test(data.inputValue) /*|| data.inputValue.length === 0*/) {
       dataFs.setTest(true);
+      return true;
     } else if (!checkRgx.test(data.inputValue) /*&& data.inputValue.length !== 0*/) {
       dataFs.setTest(false);
+      return false;
     }
   };
 
   const yearTestCheck = () => {
     const checkRgx = /^[0-9]{4}$/;
-    if (checkRgx.test(bYear.inputValue) && bYear.inputValue.length === 4) {
+    if (checkRgx.test(bYear.inputValue) && bYear.inputValue.length === 4 && monthRef.current.value === 'month') {
       bYearFs.setFocus(false);
       bMonthFs.setFocus(true);
       bYearFs.setTest(true);
-    } else {
-      bYearFs.setFocus(true);
+    } else if (
+      checkRgx.test(bYear.inputValue) &&
+      bYear.inputValue.length === 4 &&
+      monthRef.current.value === 'month' &&
+      bDay.inputValue.length === 0
+    ) {
+      bDayFs.setFocus(true);
       bMonthFs.setFocus(false);
+      bYearFs.setFocus(false);
     }
   };
 
@@ -94,7 +103,7 @@ function Auth({ history }) {
     return testCheck(/^[0-9]{9,11}$/, phoneNumber, pNFs);
   });
 
-  const username = useInput('', usernameFs.setFocus, usernameFs.setTest);
+  const username = useInput('', setInputFocus, usernameFs.setTest);
   const pwd = useInput('', pwdFs.setFocus, pwdFs.setTest);
   const checkPwd = useInput('', checkPwdFs.setFocus, checkPwdFs.setTest);
   const name = useInput('', nameFs.setFocus, nameFs.setTest);
@@ -134,6 +143,33 @@ function Auth({ history }) {
       bMonthFs.setFocus(false);
       bDayFs.setFocus(false);
       bMonthFs.setTest(true);
+    }
+  };
+
+  const blurUsername = async (e) => {
+    const check = () => {
+      return testCheck(/^[a-zA-Z0-9]{5,20}$/gm, username, usernameFs);
+    };
+
+    if (e.target.value.length === 0) {
+      setInputFocus(true);
+    }
+
+    if (check()) {
+      const authUsername = await axios.get('/auth/username').then((res) => {
+        const a = res.data.filter((username) => {
+          return username === e.target.value;
+        })[0];
+        return a;
+      });
+
+      if (authUsername && e.target.value.length !== 0) {
+        setRepeatUsername(true);
+      } else {
+        setRepeatUsername(false);
+      }
+    } else {
+      return;
     }
   };
 
@@ -199,21 +235,17 @@ function Auth({ history }) {
 
   const submitJoin = async (e) => {
     e.preventDefault();
-    await axios
-      .post('/auth/join', {
-        username: username.inputValue,
-        pwd: pwd.inputValue,
-        checkPwd: checkPwd.inputValue,
-        name: name.inputValue,
-        gender: selectGenderValue,
-        birthdayYear: bYear.inputValue,
-        birthdayMonth: selectMonthValue,
-        birthdayDay: bDay.inputValue,
-        phoneNumber: phoneNumber.inputValue,
-      })
-      .then((res) => {
-        authData.push(res.data[0]);
-      });
+    await axios.post('/auth/join', {
+      username: username.inputValue,
+      pwd: pwd.inputValue,
+      checkPwd: checkPwd.inputValue,
+      name: name.inputValue,
+      gender: selectGenderValue,
+      birthdayYear: bYear.inputValue,
+      birthdayMonth: selectMonthValue,
+      birthdayDay: bDay.inputValue,
+      phoneNumber: phoneNumber.inputValue,
+    });
     history.push('/user');
     window.scrollTo(0, 0);
   };
@@ -268,12 +300,14 @@ function Auth({ history }) {
               value={username.inputValue}
               onChange={username.handleInputValue}
               maxLength="20"
-              onBlur={usernameFs.handleFocus}
+              onBlur={blurUsername} // usernameFs.handleFocus
             ></input>
-            {authData.length === 0 || authData[0].username !== username.inputValue ? null : (
+            {/*
+            {authData.length !== 0 && repeatUsername ? (
               <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
-            )}
-            {usernameFs.focus ? <span className="inputError">필수정보입니다.</span> : null}
+            ) : null}*/}
+            {repeatUsername ? <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span> : null}
+            {inputFocus ? <span className="inputError">필수정보입니다.</span> : null}
             {usernameFs.test || username.inputValue.length === 0 ? null : (
               <span className="inputError">5~20자리의 영문 대소문자와 숫자만 사용가능합니다.</span>
             )}
@@ -356,9 +390,7 @@ function Auth({ history }) {
                 onBlur={blurYear}
               ></input>
               <select name="mm" ref={monthRef} onChange={selectMonthChange} onBlur={blurMonth}>
-                <option value="month" selected>
-                  월
-                </option>
+                <option value="month">월</option>
                 <option value="jan">1</option>
                 <option value="feb">2</option>
                 <option value="mar">3</option>
