@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function TopAuth({ login, setLogin }) {
+function TopAuth({ isLogin, setIsLogin, username }) {
+  /*const handleLogout = () => {
+    const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+    setLogin({ ...login, checkLogin: !yesLogout });
+  };
+*/
+
   const handleLogout = () => {
     const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
-    setLogin({ checkLogin: !yesLogout });
+    setIsLogin(!yesLogout);
   };
   return (
     <>
-      {login.checkLogin ? (
+      {isLogin ? (
         <div className="top-auth">
           <div className="inner">
             <a href="/" className="profile" aria-label="유저 프로필">
               <i class="far fa-user-circle user-icon"></i>
-              <span className="nickname">{login.nickname}</span>
+              <span className="nickname">{username}</span>
             </a>
             <button type="button" className="logout" onClick={handleLogout}>
               로그아웃

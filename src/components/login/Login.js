@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
 
 import './../../styles/layouts/login/login.css';
 
-function Login({ login, setLogin, history }) {
-  const [username, setUsername] = useState('');
+function Login({ isLogin, setIsLogin, history, username, setUsername }) {
+  const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
+  const [reLogin, setReLogin] = useState(false);
   const pwdRef = useRef();
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
+  const handleUser_id = (e) => {
+    setUser_id(e.target.value);
   };
   const hanldePwd = (e) => {
     setPwd(e.target.value);
@@ -21,22 +22,25 @@ function Login({ login, setLogin, history }) {
     await axios({
       method: 'post',
       url: '/user/login',
-      data: { user_name: username, user_pwd: pwd },
+      data: { user_name: user_id, user_pwd: pwd },
     }).then((response) => {
       console.log(response.data);
-      setLogin({ ...response.data });
+      setIsLogin(response.data.checkLogin);
+      setReLogin(response.data.reLogin);
+      setUsername(response.data.nickname);
     });
   };
 
-  const loginButton = () => {
-    if (login.checkLogin === true) {
+  useEffect(() => {
+    if (isLogin === true) {
       history.push('/');
-    } else {
-      alert('다시 로그인해주세요.');
+    } else if (reLogin === true) {
+      alert('없는 아이디 또는 비밀번호입니다.');
       pwdRef.current.focus();
       setPwd('');
+      setReLogin(false);
     }
-  };
+  }, [isLogin, reLogin]);
 
   return (
     <div className="login-content">
@@ -53,10 +57,10 @@ function Login({ login, setLogin, history }) {
               type="text"
               id="username"
               name="username"
-              value={username}
+              value={user_id}
               className="login-text"
               placeholder="id"
-              onChange={handleUsername}
+              onChange={handleUser_id}
             ></input>
           </div>
           <div className="login-box">
@@ -74,7 +78,7 @@ function Login({ login, setLogin, history }) {
               onChange={hanldePwd}
             ></input>
           </div>
-          <button type="submit" className="login-submit" onClick={loginButton}>
+          <button type="submit" className="login-submit">
             로그인
           </button>
           <div className="button-list">
