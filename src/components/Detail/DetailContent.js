@@ -17,7 +17,7 @@ function DetailContent({ contents, postId }) {
 
   useEffect(() => {
     axios.post('/detailpage/heart', { postId }).then(({ data }) => setHeartCount(data.count));
-    axios.post('/detailpage/hearted', { postId, auth: 2 }).then(({ data }) => {
+    axios.post('/detailpage/hearted', { postId, auth: 1 }).then(({ data }) => {
       if (data.result) {
         setHeart(true);
         setHeartInfo(data.info[0].heart_id);
@@ -29,15 +29,17 @@ function DetailContent({ contents, postId }) {
 
   const heartHandler = () => {
     if (heart) {
-      axios.post('/detailpage/heart/remove', { postId, auth: 2, heartId: heartInfo }).then(({ data }) => {
+      axios.post('/detailpage/heart/remove', { postId, auth: 1, heartId: heartInfo }).then(({ data }) => {
         setHeart(data);
         setHeartCount(heartCount - 1);
       });
+      axios.post('/detailpage/heart/removeCount', { postId }).then((res) => console.log(res));
     } else {
-      axios.post('/detailpage/heart/add', { postId, auth: 2 }).then(({ data }) => {
+      axios.post('/detailpage/heart/add', { postId, auth: 1 }).then(({ data }) => {
         setHeart(data);
         setHeartCount(heartCount + 1);
       });
+      axios.post('/detailpage/heart/addCount', { postId }).then((res) => console.log(res));
     }
   };
 

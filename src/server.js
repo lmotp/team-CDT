@@ -72,6 +72,16 @@ app.post('/detailpage/views', (req, res) => {
   });
 });
 
+app.post('/detailpage/comment/count', (req, res) => {
+  const { postId, count } = req.body;
+  connection.query('UPDATE post SET count = ? WHERE post_id = ?', [Number(count), Number(postId)], (err, row) => {
+    if (err) {
+      console.log('코멘트갯수 에러', err);
+    }
+    res.send(row);
+  });
+});
+
 app.post('/detailpage/comment', (req, res) => {
   const { comment, postId } = req.body;
 
@@ -132,8 +142,6 @@ app.post('/detailpage/recomment/list', (req, res) => {
 app.post('/detailpage/heart', (req, res) => {
   const { postId } = req.body;
 
-  // console.log(postId, '나다');
-
   connection.query('SELECT * FROM post_heartbox WHERE post_id = ?', [postId], (err, row) => {
     if (err) {
       console.log(err);
@@ -154,7 +162,6 @@ app.post('/detailpage/hearted', (req, res) => {
     if (row.length !== 0) {
       result = true;
     }
-    console.log(result);
     res.json({ result, info: row });
   });
 });
@@ -163,6 +170,17 @@ app.post('/detailpage/heart/add', (req, res) => {
   const { postId, auth } = req.body;
 
   connection.query('INSERT INTO post_heartbox VALUES (null,?,?,NOW(),NOW())', [auth, postId], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(true);
+  });
+});
+
+app.post('/detailpage/heart/addCount', (req, res) => {
+  const { postId } = req.body;
+
+  connection.query('UPDATE post SET heart=heart+1 WHERE post_id=?;', [postId], (err, row) => {
     if (err) {
       console.log(err);
     }
@@ -181,6 +199,49 @@ app.post('/detailpage/heart/remove', (req, res) => {
         console.log(err);
       }
       res.send(false);
+    },
+  );
+});
+
+app.post('/detailpage/heart/removeCount', (req, res) => {
+  const { postId } = req.body;
+
+  connection.query('UPDATE post SET heart=heart-1 WHERE post_id=?;', [postId], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(false);
+  });
+});
+
+app.post('/notice/list', (req, res) => {
+  const { board } = req.body;
+
+  let category;
+  switch (board) {
+    case 'board' && '주요소식':
+      category = '주요소식';
+      break;
+    case 'event' && '이벤트':
+      category = '이벤트';
+      break;
+    case 'free' && '자유게시판':
+      category = '자유게시판';
+      break;
+    case 'video' && '비디오':
+      category = '비디오';
+      break;
+    default:
+      throw new Error('액션타입이 안맞습니다..........');
+  }
+  connection.query(
+    'SELECT post_id,count,heart,nickname,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN testauth_id ON post.auth_id = testauth_id.auth_id WHERE category = ?',
+    [category],
+    (err, row) => {
+      if (err) {
+        console.log('게시판리스트 에러입니다.', err);
+      }
+      res.send(row);
     },
   );
 });

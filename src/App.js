@@ -31,7 +31,7 @@ export function App() {
             <Route path="/uploadform" component={UploadForm} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
-            <Route path="/notice" component={NoticeContents} />
+            <Route exact path="/notice/:board" component={NoticeContents} />
             <Route path="/user" render={() => <Login login={login} setLogin={setLogin} />} />
             <Route path="/auth" component={Auth} />
             <Route path="/" component={NotFound} />

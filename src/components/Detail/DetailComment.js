@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-function DetailComment({ comment, recomments, isLoading, loadingHandler }) {
+function DetailComment({ count, loadingHandler }) {
   const [value, setValue] = useState('');
   const { post_id } = useParams();
 
@@ -29,7 +29,7 @@ function DetailComment({ comment, recomments, isLoading, loadingHandler }) {
 
   return (
     <div className="comment-wrap">
-      <div className="comment-count">댓글 {comment.length + recomments}</div>
+      <div className="comment-count">댓글 {count}</div>
       <div className="comment-wrap-form">
         <form onSubmit={submitHandler}>
           <textarea
