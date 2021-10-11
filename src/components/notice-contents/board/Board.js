@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import BoardSearch from './../search/BoardSearch.js';
 import BoardItem from './BoardItem';
@@ -10,11 +10,21 @@ import './../../../styles/layouts/notice-board/board.css';
 
 import eventThumb from './../../../images/event.png';
 import updateThumb from './../../../images/update.png';
+import axios from 'axios';
+import { useParams } from 'react-router';
+
 export default function Board() {
   const [newData, setNewData] = useState([]);
   const [initialBoard, setInitialBoard] = useState(true);
   const [order, setOrder] = useState(0);
+  const [noticeList, setNoticeList] = useState([]);
   const boardCollectionRef = useRef();
+  const { board } = useParams();
+
+  useEffect(() => {
+    axios.post('/notice/list', { board }).then((res) => setNoticeList(res.data));
+  }, [board]);
+
   const boardList = [
     {
       id: 1,
@@ -150,19 +160,23 @@ export default function Board() {
     },
   ];
 
-  const spliceBoardList = [...boardList].splice(order, 10);
+  const spliceBoardList = [...noticeList].splice(order, 10);
   const spliceSearchBoardList = [...newData].splice(order, 10);
 
-  const board = spliceBoardList.map((boardItem) => {
+  console.log(noticeList);
+
+  const boards = spliceBoardList.map((boardItem) => {
     return (
       <BoardItem
-        menu={boardItem.menu}
+        bracket={boardItem.bracket}
         title={boardItem.title}
         thumb={boardItem.thumb}
-        date={boardItem.date}
-        eye={boardItem.eye}
-        like={boardItem.like}
-        cm={boardItem.cm}
+        date={boardItem.createdAt}
+        eye={boardItem.views}
+        heart={boardItem.heart}
+        count={boardItem.count}
+        postId={boardItem.post_id}
+        nickName={boardItem.nickname}
       />
     );
   });
@@ -170,13 +184,15 @@ export default function Board() {
   const newBoard = spliceSearchBoardList.map((boardItem) => {
     return (
       <BoardItem
-        menu={boardItem.menu}
+        bracket={boardItem.bracket}
         title={boardItem.title}
         thumb={boardItem.thumb}
-        date={boardItem.date}
-        eye={boardItem.eye}
-        like={boardItem.like}
-        cm={boardItem.cm}
+        date={boardItem.createdAt}
+        eye={boardItem.views}
+        heart={boardItem.heart}
+        count={boardItem.count}
+        postId={boardItem.post_id}
+        nickName={boardItem.nickname}
       />
     );
   });
@@ -194,7 +210,7 @@ export default function Board() {
       <div className="board">
         <div ref={boardCollectionRef} className="board-collection">
           <ul className="board-list">
-            {initialBoard ? board : newData.length === 0 ? <div className="not-search">검색 결과 - 0</div> : newBoard}
+            {initialBoard ? boards : newData.length === 0 ? <div className="not-search">검색 결과 - 0</div> : newBoard}
           </ul>
         </div>
       </div>

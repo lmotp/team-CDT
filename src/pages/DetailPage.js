@@ -15,6 +15,7 @@ function DetailPage() {
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const commentCount = comment.length + recomments.length;
   const { post_id } = useParams();
 
   useEffect(() => {
@@ -31,7 +32,10 @@ function DetailPage() {
       setIsLoading(true);
       setRecomments(data);
     });
-  }, [post_id, isLoading]);
+    axios
+      .post('/detailpage/comment/count', { postId: post_id, count: commentCount })
+      .then((res) => console.log('코멘트갯수가져오기 성공'));
+  }, [post_id, isLoading, commentCount]);
 
   const loadingHandler = () => {
     return setIsLoading(false);
@@ -43,7 +47,7 @@ function DetailPage() {
         <div className="detail-wrap">
           <DetailHeader contents={contents} />
           <DetailContent contents={contents} postId={post_id} />
-          <DetailComment loadingHandler={loadingHandler} comment={comment} recomments={recomments.length} />
+          <DetailComment loadingHandler={loadingHandler} count={commentCount} />
           {isLoading ? (
             <DetailCommentSection loadingHandler={loadingHandler} comment={comment} recomments={recomments} />
           ) : (

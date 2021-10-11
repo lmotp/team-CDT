@@ -12,7 +12,7 @@ export default function GnbMenu() {
   };
 
   const listItems = [
-    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice' },
+    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice/board' },
     { value: 'community list item', items: ['5', '6', '7', '8'] },
     { value: 'recommend list item', items: ['a', 'b', 'c', 'd'] },
     { value: 'video list item', items: ['e', 'f', 'g', 'h'] },
