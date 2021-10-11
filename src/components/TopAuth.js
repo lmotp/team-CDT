@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function TopAuth({ isLogin, setIsLogin, username }) {
   /*const handleLogout = () => {
@@ -8,9 +9,14 @@ function TopAuth({ isLogin, setIsLogin, username }) {
   };
 */
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
-    setIsLogin(!yesLogout);
+    if (yesLogout === true) {
+      await axios.get('/logout');
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
   };
   return (
     <>

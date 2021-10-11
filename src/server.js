@@ -60,6 +60,11 @@ app.get('/loginCheck', (req, res) => {
   }
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 app.post('/test', upload.single('image'), (req, res) => {
   const image = `/image/${req.file.filename}`;
   res.send(image);
