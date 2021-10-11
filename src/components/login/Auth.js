@@ -156,20 +156,13 @@ function Auth({ history }) {
     }
 
     if (check()) {
-      const authUsername = await axios.get('/auth/username').then((res) => {
-        const a = res.data.filter((username) => {
-          return username === e.target.value;
-        })[0];
-        return a;
-      });
+      const authUsername = await axios.post('/auth/username', { username: e.target.value });
 
-      if (authUsername && e.target.value.length !== 0) {
+      if (authUsername.data && e.target.value.length !== 0) {
         setRepeatUsername(true);
       } else {
         setRepeatUsername(false);
       }
-    } else {
-      return;
     }
   };
 
@@ -238,7 +231,6 @@ function Auth({ history }) {
     await axios.post('/auth/join', {
       username: username.inputValue,
       pwd: pwd.inputValue,
-      checkPwd: checkPwd.inputValue,
       name: name.inputValue,
       gender: selectGenderValue,
       birthdayYear: bYear.inputValue,
@@ -274,7 +266,6 @@ function Auth({ history }) {
     console.log(
       'test : ' + usernameFs.test,
       pwdFs.test,
-      checkPwdFs.test,
       nameFs.test,
       genderFs.test,
       bYearFs.test,
@@ -306,7 +297,9 @@ function Auth({ history }) {
             {authData.length !== 0 && repeatUsername ? (
               <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
             ) : null}*/}
-            {repeatUsername ? <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span> : null}
+            {repeatUsername && inputFocus === false ? (
+              <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
+            ) : null}
             {inputFocus ? <span className="inputError">필수정보입니다.</span> : null}
             {usernameFs.test || username.inputValue.length === 0 ? null : (
               <span className="inputError">5~20자리의 영문 대소문자와 숫자만 사용가능합니다.</span>

@@ -23,10 +23,10 @@ export function App() {
   const [username, setUsername] = useState('');
 
   useEffect(async () => {
-    if (isLogin) {
-      const res = await axios.get('/');
-      setIsLogin(res.data);
-    }
+    const res = await axios.get('/loginCheck');
+    console.log(res.data.checkLogin);
+    setIsLogin(res.data.checkLogin);
+    setUsername(res.data.username);
   }, [isLogin]);
 
   return (

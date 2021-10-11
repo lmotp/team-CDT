@@ -32,15 +32,15 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   };
 
   useEffect(() => {
-    if (isLogin === true) {
-      history.push('/');
-    } else if (reLogin === true) {
+    if (reLogin === true) {
       alert('없는 아이디 또는 비밀번호입니다.');
       pwdRef.current.focus();
       setPwd('');
       setReLogin(false);
+    } else if (isLogin === true) {
+      history.push('/');
     }
-  }, [isLogin, reLogin]);
+  }, [reLogin, isLogin]);
 
   return (
     <div className="login-content">
