@@ -26,6 +26,8 @@
 }
 
 .video-contents-list-item p {
+  margin-top: 5px;
+  height: 35px;
   padding: 0 7px;
 }
 
