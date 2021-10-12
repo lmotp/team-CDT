@@ -14,7 +14,7 @@ import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function HeaderGnb({ login, setLogin }) {
+export default function HeaderGnb({ isLogin, setIsLogin, username }) {
   const [inputValue, setInputValue] = useState('');
   const history = useHistory();
 
@@ -26,7 +26,7 @@ export default function HeaderGnb({ login, setLogin }) {
   };
   const handleWriteButton = () => {
     let yes_login = window.confirm('로그인이 필요합니다.');
-    if (!login.checkLogin && yes_login === true) {
+    if (!isLogin.checkLogin && yes_login === true) {
       history.push('/user');
     } else {
       history.push('/uploadform');
@@ -43,7 +43,7 @@ export default function HeaderGnb({ login, setLogin }) {
           <WriteButton write={'오늘 뭐 먹지?'}></WriteButton>
         </Link>
         <GnbMenu></GnbMenu>
-        <TopAuth login={login} setLogin={setLogin}></TopAuth>
+        <TopAuth username={username} isLogin={isLogin} setIsLogin={setIsLogin}></TopAuth>
       </header>
     </>
   );

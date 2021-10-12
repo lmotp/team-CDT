@@ -4,13 +4,14 @@ import { withRouter, Link } from 'react-router-dom';
 
 import './../../styles/layouts/login/login.css';
 
-function Login({ login, setLogin, history }) {
-  const [username, setUsername] = useState('');
+function Login({ isLogin, setIsLogin, history, username, setUsername }) {
+  const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
+  const [reLogin, setReLogin] = useState(false);
   const pwdRef = useRef();
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
+  const handleUser_id = (e) => {
+    setUser_id(e.target.value);
   };
   const hanldePwd = (e) => {
     setPwd(e.target.value);
@@ -21,22 +22,25 @@ function Login({ login, setLogin, history }) {
     await axios({
       method: 'post',
       url: '/user/login',
-      data: { user_name: username, user_pwd: pwd },
+      data: { user_name: user_id, user_pwd: pwd },
     }).then((response) => {
       console.log(response.data);
-      setLogin({ ...response.data });
+      setIsLogin(response.data.checkLogin);
+      setReLogin(response.data.reLogin);
+      setUsername(response.data.nickname);
     });
   };
 
   useEffect(() => {
-    if (login.checkLogin === true) {
-      history.push('/');
-    } else if (login.reLogin === false) {
-      alert('다시 로그인해주세요.');
+    if (reLogin === true) {
+      alert('없는 아이디 또는 비밀번호입니다.');
       pwdRef.current.focus();
       setPwd('');
+      setReLogin(false);
+    } else if (isLogin === true) {
+      history.push('/');
     }
-  }, [login.checkLogin, login.reLogin]);
+  }, [reLogin, isLogin]);
 
   return (
     <div className="login-content">
@@ -53,10 +57,10 @@ function Login({ login, setLogin, history }) {
               type="text"
               id="username"
               name="username"
-              value={username}
+              value={user_id}
               className="login-text"
               placeholder="id"
-              onChange={handleUsername}
+              onChange={handleUser_id}
             ></input>
           </div>
           <div className="login-box">
@@ -84,7 +88,13 @@ function Login({ login, setLogin, history }) {
             <button type="button" className="button">
               비밀번호 찾기
             </button>
-            <button type="button" className="button">
+            <button
+              type="button"
+              className="button"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               <Link to="/auth">회원가입</Link>
             </button>
           </div>

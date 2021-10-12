@@ -1,19 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function TopAuth({ login, setLogin }) {
-  const handleLogout = () => {
+function TopAuth({ isLogin, setIsLogin, username }) {
+  /*const handleLogout = () => {
     const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
-    setLogin({ checkLogin: !yesLogout });
+    setLogin({ ...login, checkLogin: !yesLogout });
+  };
+*/
+
+  const handleLogout = async () => {
+    const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+    if (yesLogout === true) {
+      await axios.get('/logout');
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
   };
   return (
     <>
-      {login.checkLogin ? (
+      {isLogin ? (
         <div className="top-auth">
           <div className="inner">
             <a href="/" className="profile" aria-label="유저 프로필">
               <i class="far fa-user-circle user-icon"></i>
-              <span className="nickname">{login.nickname}</span>
+              <span className="nickname">{username}</span>
             </a>
             <button type="button" className="logout" onClick={handleLogout}>
               로그아웃

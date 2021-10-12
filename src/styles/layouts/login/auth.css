@@ -1,7 +1,7 @@
 .auth {
   position: relative;
   width: 1027px;
-  height: 950px;
+  height: 1050px;
   margin-top: 87px;
 }
 
@@ -11,6 +11,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 350px;
+  height: 100%;
 }
 
 .auth-content-header {
@@ -20,6 +21,7 @@
 }
 
 .auth-content-list-item {
+  position: relative;
   text-align: left;
   margin-bottom: 20px;
 }
@@ -37,10 +39,55 @@
   border: 1px solid #333;
 }
 
+.auth-content-list-item select {
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #333;
+  appearance: none;
+}
+
+.auth-content-list-item p {
+  display: block;
+  height: 30px;
+  font-weight: bold;
+}
+
+.gender-icon {
+  position: absolute;
+  top: 60%;
+  right: 5%;
+  font-size: 25px;
+  pointer-events: none;
+}
+
 .auth-content-list-item label {
   display: block;
   height: 30px;
   font-weight: bold;
+}
+
+.auth-content-list-item:nth-of-type(6) .birthday {
+  position: relative;
+  display: flex;
+}
+
+.birthday .mm-icon {
+  position: absolute;
+  top: 52%;
+  left: 58%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.birthday .yy {
+  margin-right: 10px;
+}
+
+.birthday .dd {
+  margin-left: 10px;
 }
 
 .join-button {
@@ -59,4 +106,11 @@
   height: 50px;
   margin-left: 10px;
   background-color: rgb(236, 181, 181);
+  font-size: 13px;
+}
+
+.inputError {
+  font-size: 13px;
+  color: red;
+  padding-left: 5px;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Context } from './Context';
 import HeaderGnb from './components/HeaderGnb';
@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import FoodGame from './components/foodGame/FoodGame';
 import FoodGameResult from './components/foodGame/FoodGameResult';
 import NoticeContents from './components/notice-contents/NoticeContents';
+import Video from './components/video/Video';
 import Login from './components/login/Login';
 import Auth from './components/login/Auth';
 import DetailPage from './pages/DetailPage';
@@ -15,15 +16,25 @@ import UploadForm from './pages/UploadForm';
 import './App.css';
 import './styles/base/reset.css';
 import './styles/base/visually-hidden.css';
+import axios from 'axios';
 
 export function App() {
-  const [login, setLogin] = useState({ checkLogin: false });
+  /*const [login, setLogin] = useState({ checkLogin: false });*/
+  const [isLogin, setIsLogin] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(async () => {
+    const res = await axios.get('/loginCheck');
+    console.log(res.data.checkLogin);
+    setIsLogin(res.data.checkLogin);
+    setUsername(res.data.username);
+  }, [isLogin]);
 
   return (
     <Context>
       <HashRouter>
         <div className="contain">
-          <HeaderGnb login={login} setLogin={setLogin} />
+          <HeaderGnb isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
           <Switch>
             <Route exact path="/" component={Contents} />
             <Route exact path="/detailpage/:post_id" component={DetailPage} />
@@ -32,8 +43,14 @@ export function App() {
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
             <Route path="/notice/recommend" component={Share} />
             <Route exact path="/notice/:board" component={NoticeContents} />
-            <Route path="/user" render={() => <Login login={login} setLogin={setLogin} />} />
+            <Route
+              path="/user"
+              render={() => (
+                <Login isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
+              )}
+            />
             <Route path="/auth" component={Auth} />
+            <Route path="/video" component={Video} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>

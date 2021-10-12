@@ -2,8 +2,19 @@ const express = require('express');
 const multer = require('multer');
 const mysql = require('mysql');
 const app = express();
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MysqlStore = require('express-mysql-session')(session);
 
-const auth = [];
+const options = {
+  host: '39.123.4.73',
+  port: '3306',
+  user: 'abc',
+  password: '123456789a',
+  database: 'scdt',
+};
+
+const sessionStore = new MysqlStore(options);
 
 require('dotenv').config({ path: __dirname + '/.env' });
 
@@ -29,6 +40,15 @@ const upload = multer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  session({
+    secret: 'Secret key',
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  }),
+);
 
 app.use('/image', express.static(__dirname + '/uploads'));
 
@@ -238,21 +258,117 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
-app.post('/user/login', (req, res) => {
-  if (req.body.user_name === 'abc' && req.body.user_pwd === '1111') {
-    console.log('success login');
-    res.send({ checkLogin: true, nickname: req.body.user_name });
-  } else if (req.body.user_name === auth[0].username && req.body.user_pwd === auth[0].pwd) {
-    res.send({ checkLogin: true, nickname: req.body.user_name });
+// 유저 로직
+
+app.get('/loginCheck', (req, res) => {
+  if (req.session.isLogin) {
+    res.send({ checkLogin: true, username: req.session.user_id });
   } else {
-    res.send({ checkLogin: false, reLogin: false });
+    res.send({ checkLogin: false });
   }
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.post('/user/login', (req, res) => {
+  /*
+  const loginUsername = auth
+    .map((user) => {
+      return user.username;
+    })
+    .filter((username) => {
+      return req.body.user_name === username;
+    })[0];
+
+  const loginUserPwd = auth
+    .map((user) => {
+      return user.pwd;
+    })
+    .filter((pwd) => {
+      return req.body.user_pwd === pwd;
+    })[0];
+
+  if (auth.length !== 0 && loginUsername && loginUserPwd) {
+    req.session.isLogin = true;
+    req.session.user_id = req.body.user_name;
+    res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
+  } else {
+    res.send({ checkLogin: false, reLogin: true });
+  }
+  */
+  connection.query('select username, password from auth', (err, rows) => {
+    if (err) {
+      throw err;
+    } else {
+      const authUsername = rows.filter((user) => {
+        return req.body.user_name === user.username;
+      })[0];
+      const authPwd = rows.filter((user) => {
+        return req.body.user_pwd === user.password;
+      })[0];
+
+      console.log(authUsername);
+      console.log(authPwd);
+      if (authUsername && authPwd) {
+        req.session.isLogin = true;
+        req.session.user_id = req.body.user_name;
+        res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
+      } else {
+        res.send({ checkLogin: false, reLogin: true });
+      }
+    }
+  });
+});
+
 app.post('/auth/join', (req, res) => {
-  console.log(req.body);
-  auth.push(req.body);
-  res.json(auth[0]);
+  connection.query(
+    'INSERT INTO auth(username, password, name, gender, bYear, bMonth, bDay, phoneNumber) Values(?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      req.body.username,
+      req.body.pwd,
+      req.body.name,
+      req.body.gender,
+      req.body.birthdayYear,
+      req.body.birthdayMonth,
+      req.body.birthdayDay,
+      req.body.phoneNumber,
+    ],
+    (err) => {
+      if (err) {
+        console.log('err');
+      } else {
+        console.log('성공');
+      }
+    },
+  );
+  res.send('회원가입 성공');
+});
+
+app.post('/auth/username', (req, res) => {
+  /*
+  const authUsername = auth.map((user) => {
+    return user.username;
+  });
+  res.send(authUsername);
+  */
+  connection.query('select username from auth', (err, rows, fields) => {
+    if (err) {
+      throw err;
+    } else {
+      const authUsername = rows.filter((user) => {
+        return user.username === req.body.username;
+      })[0];
+
+      if (authUsername) {
+        res.send({ repeat: true });
+      } else {
+        res.send({ repeat: false });
+      }
+    }
+  });
 });
 
 app.listen(port, () => {
