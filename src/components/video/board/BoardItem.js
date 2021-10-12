@@ -14,7 +14,7 @@ export default function BoardItem(props) {
         </div>
         <p className="video-item-text">
           <span class="menu-item-color">[영상콘텐츠]</span>
-          {props.desc}
+          {props.title}
         </p>
         <div className="video-item-overay" aria-hidden></div>
       </a>
