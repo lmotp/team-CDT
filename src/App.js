@@ -26,11 +26,11 @@ export function App() {
           <HeaderGnb login={login} setLogin={setLogin} />
           <Switch>
             <Route exact path="/" component={Contents} />
-            <Route path="/share" component={Share} />
             <Route exact path="/detailpage/:post_id" component={DetailPage} />
             <Route path="/uploadform" component={UploadForm} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
+            <Route path="/notice/recommend" component={Share} />
             <Route exact path="/notice/:board" component={NoticeContents} />
             <Route path="/user" render={() => <Login login={login} setLogin={setLogin} />} />
             <Route path="/auth" component={Auth} />

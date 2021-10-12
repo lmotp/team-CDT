@@ -83,7 +83,17 @@ const UploadForm = () => {
     testDispatch({ type: 'SUBMIT', content: submitContent });
     axios.post('/uploadform', submitContent).then((res) => res.data);
     uploadDispatch({ type: 'ALL_DELTE' });
-    history.push('/notice');
+    let board;
+    if (category === '주요소식') {
+      board = 'board';
+    } else if (category === '이벤트') {
+      board = 'event';
+    } else if (category === '자유게시판') {
+      board = 'free';
+    } else if (category === '비디오') {
+      board = 'video';
+    }
+    history.push(`/notice/${board}`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!
