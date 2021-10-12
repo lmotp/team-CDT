@@ -304,7 +304,6 @@
 }
 
 .DetailList-form .DetailList-another-wrap {
-  width: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -319,6 +318,7 @@
   color: #999999;
   font-size: 14px;
   text-align: center;
+  margin-left: 30px;
 }
 
 .DetailList-form .DetailList-another-wrap .DetailList-comment-wrap i {

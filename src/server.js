@@ -40,7 +40,7 @@ app.post('/thumbnail', upload.single('image'), (req, res) => {
 app.post('/uploadform', (req, res) => {
   const { id, title, category, brackets, value, hashTag } = req.body;
   const params = [id, title, value, hashTag, category, brackets];
-  connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?)', params, (err, row) => {
+  connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
     if (err) {
       console.log(err);
     }
@@ -218,22 +218,14 @@ app.post('/notice/list', (req, res) => {
   const { board } = req.body;
 
   let category;
-  switch (board) {
-    case 'board' && '주요소식':
-      category = '주요소식';
-      break;
-    case 'event' && '이벤트':
-      category = '이벤트';
-      break;
-    case 'free' && '자유게시판':
-      category = '자유게시판';
-      break;
-    case 'video' && '비디오':
-      category = '비디오';
-      break;
-    default:
-      throw new Error('액션타입이 안맞습니다..........');
+  if (board === 'board' || board === '주요소식') {
+    category = '주요소식';
+  } else if (board === 'free' || board === '자유게시판') {
+    category = '자유게시판';
+  } else if (board === 'video' || board === '비디오') {
+    category = '비디오';
   }
+
   connection.query(
     'SELECT post_id,count,heart,nickname,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN testauth_id ON post.auth_id = testauth_id.auth_id WHERE category = ?',
     [category],
