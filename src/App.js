@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import FoodGame from './components/foodGame/FoodGame';
 import FoodGameResult from './components/foodGame/FoodGameResult';
 import NoticeContents from './components/notice-contents/NoticeContents';
+import Video from './components/video/Video';
 import Login from './components/login/Login';
 import Auth from './components/login/Auth';
 import DetailPage from './pages/DetailPage';
@@ -49,6 +50,7 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
+            <Route path="/video" component={Video} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>

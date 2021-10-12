@@ -15,7 +15,7 @@ export default function GnbMenu() {
     { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice' },
     { value: 'community list item', items: ['5', '6', '7', '8'] },
     { value: 'recommend list item', items: ['a', 'b', 'c', 'd'] },
-    { value: 'video list item', items: ['e', 'f', 'g', 'h'] },
+    { value: 'video list item', items: ['영상콘텐츠', 'f', 'g', 'h'], url: '/video' },
     { value: 'management list item', items: ['i', 'j', 'k', 'l'] },
   ];
   const menuList = listItems.map((item, index) => {

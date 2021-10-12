@@ -1,12 +1,12 @@
 import React from 'react';
 
-import './../../../styles/layouts/notice-board/board-item.css';
+import './../../../styles/layouts/video-board/board-item.css';
 
 import ArticleInfo from './ArticleInfo';
 
 export default function BoardItem(props) {
   return (
-    <li className="notice-list-item">
+    <li className="video-list-item">
       <a href="/">
         <p>
           <span class="menu-color">{props.menu}</span>
