@@ -158,7 +158,7 @@ function Auth({ history }) {
     if (check()) {
       const authUsername = await axios.post('/auth/username', { username: e.target.value });
 
-      if (authUsername.data && e.target.value.length !== 0) {
+      if (authUsername.data.repeat && e.target.value.length !== 0) {
         setRepeatUsername(true);
       } else {
         setRepeatUsername(false);
@@ -297,7 +297,7 @@ function Auth({ history }) {
             {authData.length !== 0 && repeatUsername ? (
               <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
             ) : null}*/}
-            {repeatUsername && inputFocus === false ? (
+            {repeatUsername && inputFocus === false && usernameFs.test === true ? (
               <span className="inputError">이미 사용중이거나 탈퇴한 아이디입니다.</span>
             ) : null}
             {inputFocus ? <span className="inputError">필수정보입니다.</span> : null}

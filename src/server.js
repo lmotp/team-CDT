@@ -160,9 +160,9 @@ app.post('/auth/username', (req, res) => {
       })[0];
 
       if (authUsername) {
-        res.send(true);
+        res.send({ repeat: true });
       } else {
-        res.send(false);
+        res.send({ repeat: false });
       }
     }
   });
