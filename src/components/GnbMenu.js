@@ -12,11 +12,10 @@ export default function GnbMenu() {
   };
 
   const listItems = [
-    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice' },
-    { value: 'community list item', items: ['5', '6', '7', '8'] },
-    { value: 'recommend list item', items: ['a', 'b', 'c', 'd'] },
-    { value: 'video list item', items: ['영상콘텐츠', 'f', 'g', 'h'], url: '/video' },
-    { value: 'management list item', items: ['i', 'j', 'k', 'l'] },
+    { value: 'notice list items', items: ['주요소식', '2', '3', '4'], url: '/notice/board' },
+    { value: 'community list item', items: ['자유게시판', '6', '7', '8'], url: '/notice/free' },
+    { value: 'recommend list item', items: ['추천게시판', 'b', 'c', 'd'], url: '/notice/recommend' },
+    { value: 'video list item', items: ['비디오', 'f', 'g', 'h'], url: '/notice/video' },
   ];
   const menuList = listItems.map((item, index) => {
     return (
@@ -33,7 +32,7 @@ export default function GnbMenu() {
       </>
     );
   });
-  const menuTitle = ['Notice', 'Community', 'Recommend', 'Video', 'Management'];
+  const menuTitle = ['Notice', 'Community', 'Recommend', 'Video'];
   const menu = menuTitle.map((item, index) => {
     return (
       <li key={index} className="gnb-menu-item-chevron-down" onClick={handleChevron}>

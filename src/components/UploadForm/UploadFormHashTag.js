@@ -8,7 +8,9 @@ const UploadFormHashTag = () => {
   const state = useUploadState();
 
   const spaceControl = (e) => {
-    if (e.code === 'Space') {
+    if (value === '' && e.code === 'Space') {
+      e.preventDefault();
+    } else if (state.length < 7 && value !== '' && e.code === 'Space') {
       e.preventDefault();
       dispatch({ type: 'HASHTAG_ADD', id: state.length + 1, value });
       setValue('');
@@ -22,8 +24,7 @@ const UploadFormHashTag = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-    if (value !== '') {
+    if (state.length < 7 && value !== '') {
       dispatch({ type: 'HASHTAG_ADD', id: state.length + 1, value });
       setValue('');
     }
@@ -38,14 +39,13 @@ const UploadFormHashTag = () => {
           ))}
         </div>
       )}
-
       <form onSubmit={onSubmitHandler}>
         <input
           type="text"
           placeholder="#태그 입력 : 6자 이내 뛰어쓰기 시 해쉬태그 적용"
           value={value}
           onChange={hashTagChangeHanlder}
-          onKeyDown={spaceControl}
+          onKeyPress={spaceControl}
           maxLength="6"
         />
       </form>

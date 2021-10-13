@@ -37,12 +37,12 @@ export function App() {
           <HeaderGnb isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
           <Switch>
             <Route exact path="/" component={Contents} />
-            <Route path="/share" component={Share} />
-            <Route path="/detailpage" component={DetailPage} />
+            <Route exact path="/detailpage/:post_id" component={DetailPage} />
             <Route path="/uploadform" component={UploadForm} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
-            <Route path="/notice" component={NoticeContents} />
+            <Route path="/notice/recommend" component={Share} />
+            <Route exact path="/notice/:board" component={NoticeContents} />
             <Route
               path="/user"
               render={() => (

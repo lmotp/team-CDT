@@ -1,19 +1,24 @@
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/ko';
 
-function DetailHeader({ category, title, profileImg, profileNickName, date, eyeCount, time, minutes }) {
+function DetailHeader({ contents }) {
+  const { bracket, title, category, createdAt, img, nickname, views } = contents;
+  const createTime = moment(createdAt).format('YYYY년 MM월 DD일 HH시 mm분');
   return (
     <header>
       <h2>{category}</h2>
-      <h3>{title}</h3>
+      <h3>
+        {bracket ? `[${bracket}]` : bracket}&nbsp;
+        {title}
+      </h3>
       <div className="profile-wrap">
-        <img src={profileImg} alt={profileNickName} />
+        <img src={img} alt={nickname} />
         <div className="date">
-          <div>{profileNickName}</div>
-          <span>
-            {date} &nbsp;{time} : {minutes}
-          </span>
+          <div>{nickname}</div>
+          <span>{createTime}</span>
           <i className="far fa-eye eye"></i>
-          <span>{eyeCount}</span>
+          <span>{views}</span>
         </div>
       </div>
     </header>

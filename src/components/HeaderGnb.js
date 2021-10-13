@@ -26,11 +26,10 @@ export default function HeaderGnb({ isLogin, setIsLogin, username }) {
   };
   const handleWriteButton = () => {
     let yes_login = window.confirm('로그인이 필요합니다.');
-    if (yes_login === true) {
-      console.log('login');
+    if (!isLogin.checkLogin && yes_login === true) {
+      history.push('/user');
+    } else {
       history.push('/uploadform');
-    } else if (yes_login === false) {
-      console.log('notLogin');
     }
   };
 

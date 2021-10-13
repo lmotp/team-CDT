@@ -25,11 +25,11 @@ const UploadForm = () => {
 
   const submitContent = {
     id: testState.length === 0 ? 1 : testState.length + 1,
-    hashTag: hashTagState,
     title: titleValue,
     category,
-    brackets,
+    brackets: brackets === '말머리를 선택' ? null : brackets,
     value,
+    hashTag: hashTagState.map((v) => v.value).join(),
   };
 
   // 말머리,게시판 선택 이벤트 !!!!
@@ -81,9 +81,19 @@ const UploadForm = () => {
 
   const uploadClick = () => {
     testDispatch({ type: 'SUBMIT', content: submitContent });
-    axios.post('/uploadform', submitContent).then((res) => console.log('나는 무슨데이터?', res.data));
+    axios.post('/uploadform', submitContent).then((res) => res.data);
     uploadDispatch({ type: 'ALL_DELTE' });
-    history.push('/notice');
+    let board;
+    if (category === '주요소식') {
+      board = 'board';
+    } else if (category === '이벤트') {
+      board = 'event';
+    } else if (category === '자유게시판') {
+      board = 'free';
+    } else if (category === '비디오') {
+      board = 'video';
+    }
+    history.push(`/notice/${board}`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!
@@ -93,7 +103,7 @@ const UploadForm = () => {
     for (let i = 0; i < images.length; i++) {
       formdata.append('image', images[i]);
       axios
-        .post('/test', formdata)
+        .post('/thumbnail', formdata)
         .then((res) => insertImage(res.data))
         .catch((err) => console.log(err));
     }

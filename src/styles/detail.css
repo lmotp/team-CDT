@@ -53,13 +53,56 @@
 /* 디테일 섹션부분(컨텐츠) */
 .detail-wrap section {
   width: 100%;
-  padding: 60px 20px 140px;
+  padding: 60px 20px 40px;
+}
+
+.detail-wrap section .content::after {
+  display: block;
+  content: '';
+  clear: both;
 }
 
 .detail-wrap section p {
   line-height: 1.5;
   font-size: 14px;
   white-space: pre-wrap;
+}
+
+.detail-wrap section .hashTag-box {
+  margin: 70px 0;
+  color: burlywood;
+}
+
+.detail-wrap section .button-box button {
+  min-width: 58px;
+  height: 44px;
+  padding: 0 20px;
+  color: #6a6a6a;
+  border: 1px solid #d1d1d1;
+  border-radius: 22px;
+  outline: none;
+}
+
+.detail-wrap section .button-box .likes-button {
+  position: relative;
+  padding-left: 40px;
+  width: 90px;
+  margin-right: 4px;
+}
+
+.detail-wrap section .button-box .likes-button::before {
+  position: absolute;
+  left: 15px;
+  top: 35%;
+  width: 20px;
+  height: 16px;
+  background-image: url(https://dszw1qtcnsa5e.cloudfront.net/bin/live/console-community-view/assets/web/pc/icon-heart.gif);
+  content: '';
+  transition: 0.3s;
+}
+
+.detail-wrap section .button-box .likes-button.on::before {
+  background-position-y: -100%;
 }
 
 /* 디테일 댓글 등록부분  */
@@ -132,6 +175,10 @@
   padding-bottom: 20px;
 }
 
+.detail-wrap .comment-section-wrap.on {
+  padding-left: 52px;
+}
+
 .detail-wrap .comment-section-wrap img {
   width: 40px;
   height: 40px;
@@ -163,6 +210,11 @@
 }
 .comment-secion-content .info-wrap i {
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.comment-secion-content .info-wrap i.on {
+  color: red;
 }
 
 .comment-secion-content .info-wrap .re-comment {
@@ -252,7 +304,6 @@
 }
 
 .DetailList-form .DetailList-another-wrap {
-  width: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -267,6 +318,7 @@
   color: #999999;
   font-size: 14px;
   text-align: center;
+  margin-left: 30px;
 }
 
 .DetailList-form .DetailList-another-wrap .DetailList-comment-wrap i {
