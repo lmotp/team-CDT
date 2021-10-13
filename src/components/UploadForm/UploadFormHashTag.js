@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useUploadDispatch, useUploadState } from '../../Context';
 import UploadFormHashTagValue from './part/UploadFormHashTagValue';
 
-const UploadFormHashTag = () => {
+const UploadFormHashTag = ({ hashTag }) => {
   const [value, setValue] = useState('');
   const dispatch = useUploadDispatch();
   const state = useUploadState();
+
+  const hashTagSplit = hashTag?.split(',');
 
   const spaceControl = (e) => {
     if (value === '' && e.code === 'Space') {
@@ -35,7 +37,7 @@ const UploadFormHashTag = () => {
       {state.length > 0 && (
         <div className="upload-hashTag-box">
           {state.map((v) => (
-            <UploadFormHashTagValue key={v.id} v={v} dispatch={dispatch} />
+            <UploadFormHashTagValue key={v.id} v={v} dispatch={dispatch} hashTag={hashTag} />
           ))}
         </div>
       )}

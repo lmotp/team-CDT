@@ -46,7 +46,19 @@
   margin-right: 12px;
 }
 
-.detail-wrap header .profile-wrap span {
+.detail-wrap header .profile-wrap .user-icon {
+  font-size: 50px;
+  margin-right: 12px;
+}
+
+.detail-wrap header .profile-wrap .dates {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.detail-wrap header .profile-wrap .dates span {
   margin-right: 12px;
 }
 
@@ -173,6 +185,7 @@
   border-bottom: 1px solid #ccc;
   margin: 20px;
   padding-bottom: 20px;
+  position: relative;
 }
 
 .detail-wrap .comment-section-wrap.on {
@@ -184,6 +197,11 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  margin-right: 12px;
+}
+
+.detail-wrap .comment-section-wrap .user-icon {
+  font-size: 40px;
   margin-right: 12px;
 }
 
@@ -226,6 +244,10 @@
   color: #000;
   text-decoration: underline;
 }
+.comment-secion-content .info-wrap .control-box {
+  position: absolute;
+  right: 17px;
+}
 
 /* 디테일 답글부분 폼  */
 .comment-section-wrap .comment-secion-content .re-comment-form {
@@ -234,6 +256,10 @@
   border: 1px solid #ccc;
   margin-top: 10px;
   position: relative;
+}
+
+.comment-section-wrap .comment-secion-content .re-comment-form.on {
+  width: 883px;
 }
 
 .comment-secion-content .re-comment-form textarea {

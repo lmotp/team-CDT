@@ -7,47 +7,7 @@ const initalHasTag = [
   { id: 4, tag: '#프랜차이즈', status: false },
 ];
 
-const initalComment = [
-  {
-    id: 1,
-    nickName: '악동뮤지션',
-    profileImg:
-      ' https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-    heartCount: 3,
-    comment:
-      'This HTML file is a template.  If you open it directly in the browser, you will see an empty page.You can add webfonts, meta tags, or analytics to this file.The build step will place the bundled scripts into the <body> tag.To begin the development, run `npm start` or `yarn start`.To create a production bundle, use `npm run build` or `yarn build`.',
-  },
-  {
-    id: 2,
-    nickName: '크레센도',
-    profileImg:
-      'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-    heartCount: 5,
-    comment:
-      'This HTML file is a template.  If you open it directly in the browser, you will see an empty page.You can add webfonts, meta tags, or analytics to this file.The build step will place the bundled scripts into the <body> tag.To begin the development, run `npm start` or `yarn start`.To create a production bundle, use `npm run build` or `yarn build`.',
-  },
-  {
-    id: 3,
-    nickName: '크레센도',
-    profileImg:
-      'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-    heartCount: 5,
-    comment:
-      'This HTML file is a template.  If you open it directly in the browser, you will see an empty page.You can add webfonts, meta tags, or analytics to this file.The build step will place the bundled scripts into the <body> tag.To begin the development, run `npm start` or `yarn start`.To create a production bundle, use `npm run build` or `yarn build`.',
-  },
-  {
-    id: 4,
-    nickName: '크레센도',
-    profileImg:
-      'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-    heartCount: 5,
-    comment:
-      'This HTML file is a template.  If you open it directly in the browser, you will see an empty page.You can add webfonts, meta tags, or analytics to this file.The build step will place the bundled scripts into the <body> tag.To begin the development, run `npm start` or `yarn start`.To create a production bundle, use `npm run build` or `yarn build`.',
-  },
-];
-
 const initalUpload = [];
-const initalTest = [];
 
 const hashContents = [
   {
@@ -200,30 +160,6 @@ function reducer(state, action) {
   }
 }
 
-function commentReducer(state, action) {
-  switch (action.type) {
-    case 'COMMENT':
-      return [
-        ...state,
-        {
-          id: action.content[0].id,
-          comment: action.content[0].comment,
-          nickName: action.content[0].nickName,
-          profileImg: action.content[0].profileImg,
-          heartCount: action.content[0].heartCount,
-        },
-      ];
-    case 'RECOMMENT':
-      return console.log('나는 덧댓글');
-    case 'CHANGE':
-      return state.map((comments) =>
-        comments.id === action.id ? { ...comments, comment: action.changeValue } : comments,
-      );
-    default:
-      throw new Error('액션타입이 안맞습니다..........');
-  }
-}
-
 function uploadReducer(state, action) {
   switch (action.type) {
     case 'HASHTAG_ADD':
@@ -237,62 +173,29 @@ function uploadReducer(state, action) {
   }
 }
 
-function testReducer(state, action) {
-  switch (action.type) {
-    case 'SUBMIT':
-      return [
-        ...state,
-        {
-          id: action.content.id,
-          hashTag: action.content.hashTag,
-          title: action.content.title,
-          category: action.content.category,
-          brackets: action.content.brackets,
-          value: action.content.value,
-        },
-      ];
-    default:
-      throw new Error('액션타입이 안맞습니다..........');
-  }
-}
-
 const hashTagStateContext = createContext();
 const hashTagDispatchContext = createContext();
 const hashContentsContext = createContext();
 const foodGameExampleContext = createContext();
 const foodGameResultContext = createContext();
-const commentDispatchContext = createContext();
-const commentStateContext = createContext();
 const uploadDispatchContext = createContext();
 const uploadStateContext = createContext();
-const testDispatchContext = createContext();
-const testStateContext = createContext();
 
 export function Context({ children }) {
   const [state, dispatch] = useReducer(reducer, initalHasTag);
-  const [commentState, commentDispatch] = useReducer(commentReducer, initalComment);
   const [uploadState, uploadDispatch] = useReducer(uploadReducer, initalUpload);
-  const [testState, testDispatch] = useReducer(testReducer, initalTest);
 
   return (
     <hashTagStateContext.Provider value={state}>
       <hashTagDispatchContext.Provider value={dispatch}>
         <hashContentsContext.Provider value={hashContents}>
-          <commentDispatchContext.Provider value={commentDispatch}>
-            <commentStateContext.Provider value={commentState}>
-              <testDispatchContext.Provider value={testDispatch}>
-                <testStateContext.Provider value={testState}>
-                  <uploadDispatchContext.Provider value={uploadDispatch}>
-                    <uploadStateContext.Provider value={uploadState}>
-                      <foodGameExampleContext.Provider value={example}>
-                        <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
-                      </foodGameExampleContext.Provider>
-                    </uploadStateContext.Provider>
-                  </uploadDispatchContext.Provider>
-                </testStateContext.Provider>
-              </testDispatchContext.Provider>
-            </commentStateContext.Provider>
-          </commentDispatchContext.Provider>
+          <uploadDispatchContext.Provider value={uploadDispatch}>
+            <uploadStateContext.Provider value={uploadState}>
+              <foodGameExampleContext.Provider value={example}>
+                <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
+              </foodGameExampleContext.Provider>
+            </uploadStateContext.Provider>
+          </uploadDispatchContext.Provider>
         </hashContentsContext.Provider>
       </hashTagDispatchContext.Provider>
     </hashTagStateContext.Provider>
@@ -319,25 +222,10 @@ export const useFoodGameResult = () => {
   return useContext(foodGameResultContext);
 };
 
-export const useCommentState = () => {
-  return useContext(commentStateContext);
-};
-
-export const useCommentDispatch = () => {
-  return useContext(commentDispatchContext);
-};
-
 export const useUploadState = () => {
   return useContext(uploadStateContext);
 };
 
 export const useUploadDispatch = () => {
   return useContext(uploadDispatchContext);
-};
-export const useTestState = () => {
-  return useContext(testStateContext);
-};
-
-export const useTestDispatch = () => {
-  return useContext(testDispatchContext);
 };

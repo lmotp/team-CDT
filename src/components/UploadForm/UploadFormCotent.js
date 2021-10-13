@@ -29,7 +29,7 @@ const UploadFormCotent = ({ onImageUpload, onChange }) => {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
-            ['insert', ['picture']],
+            ['insert', ['picture', 'video']],
             ['view', ['fullscreen']],
           ],
           disableResizeEditor: true,

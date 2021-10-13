@@ -9,23 +9,24 @@ import { Link } from 'react-router-dom';
 
 export default function BoardItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
+
   useEffect(() => {
-    const imgSrcMatch = props.content.match(/image[^]+[\\"]/gm);
     if (props.content.includes('img')) {
-      const imgSrcJoin = imgSrcMatch.join();
-      const imgSrcSplit = imgSrcJoin.split('" ');
-      setImgUrl(imgSrcSplit[0]);
+      const imgSrcMatch = props.content.match(/src[^]+[\\"]/gm);
+      if (imgSrcMatch !== null) {
+        const imgSrcJoin = imgSrcMatch.join();
+        const imgSrcSplit = imgSrcJoin.split('"');
+        setImgUrl(imgSrcSplit[1]);
+      }
     }
   }, [props.content]);
-
-  console.log(imgUrl);
 
   return (
     <li className="main-news-list-item">
       <Link to={`/detailpage/${props.postId}`}>
         <p>
-          <span style={{ color: 'burlywood' }}>[{props.category}]</span>&nbsp;
-          <span class="menu-color">{props.bracket ? `[${props.bracket}]` : null}</span>
+          <span style={{ color: 'burlywood' }}>[{props.category}]</span>
+          <span class="menu-color">{props.bracket ? ` [${props.bracket}]` : null}</span>
           {props.title}
           <span className="new-icon"></span>
         </p>
@@ -40,7 +41,7 @@ export default function BoardItem(props) {
         </div>
       </Link>
       <ArticleInfo
-        nickName={props.nickName}
+        name={props.name}
         eye={props.eye}
         heart={props.heart}
         date={moment(props.date).format('YYYY년 MM월 DD일')}

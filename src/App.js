@@ -19,15 +19,16 @@ import './styles/base/visually-hidden.css';
 import axios from 'axios';
 
 export function App() {
-  /*const [login, setLogin] = useState({ checkLogin: false });*/
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
 
   useEffect(async () => {
     const res = await axios.get('/loginCheck');
     console.log(res.data.checkLogin);
     setIsLogin(res.data.checkLogin);
     setUsername(res.data.username);
+    setUserId(res.data.userId);
   }, [isLogin]);
 
   return (
@@ -37,8 +38,8 @@ export function App() {
           <HeaderGnb isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
           <Switch>
             <Route exact path="/" component={Contents} />
-            <Route exact path="/detailpage/:post_id" component={DetailPage} />
-            <Route path="/uploadform" component={UploadForm} />
+            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} />} />
+            <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
             <Route path="/notice/recommend" component={Share} />

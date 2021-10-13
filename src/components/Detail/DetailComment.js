@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-function DetailComment({ count, loadingHandler }) {
+function DetailComment({ count, loadingHandler, userId }) {
   const [value, setValue] = useState('');
   const { post_id } = useParams();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.post('/detailpage/comment', { comment: value, postId: post_id }).then(() => loadingHandler());
+    axios.post('/detailpage/comment', { comment: value, postId: post_id, userId }).then(() => loadingHandler());
     setValue('');
   };
 

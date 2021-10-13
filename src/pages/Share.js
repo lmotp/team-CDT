@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import HashTagContents from '../components/HasTag/HashTagContents';
 import { useHashTagState } from '../Context';
@@ -8,6 +9,10 @@ function Share() {
   const state = useHashTagState();
 
   const allStatus = state.filter((contents) => contents.status);
+
+  useEffect(() => {
+    axios.get('/share/list').then(({ data }) => console.log(data));
+  }, []);
 
   return (
     <div className="share-wrap">
