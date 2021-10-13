@@ -7,8 +7,13 @@ import Footer from './../Footer';
 
 import './../../../styles/layouts/video-board/board.css';
 
-import eventThumb from './../../../images/event.png';
-import updateThumb from './../../../images/update.png';
+import cafeLatte from './../../../images/카페라떼.png';
+import grinLatte from './../../../images/녹차라떼.png';
+import caramelLatte from './../../../images/카라멜마끼아또.png';
+import mintLatte from './../../../images/민트라떼.png';
+import persimmonLatte from './../../../images/홍시라떼.png';
+import chocoLatte from './../../../images/초코라떼.png';
+
 export default function Board() {
   const [newData, setNewData] = useState([]);
   const [initialBoard, setInitialBoard] = useState(true);
@@ -17,187 +22,195 @@ export default function Board() {
   const boardList = [
     {
       id: 1,
-      menu: '[공지사항]',
-      title: '9.8(수) 카페 업데이트 점검 안내 (08:00 ~ 09:00)',
-      date: '2021.09.08',
-      eye: '3560',
-      like: '25',
-      cm: '15',
-      thumb: updateThumb,
-      desc: 'a',
+      date: '1',
+      eye: '2',
+      like: '3',
+      img: cafeLatte,
+      alt: '카페라떼 만들기',
+      desc: 'hi',
+      title: '누구나 쉽게 만드는 스타벅스 카페라떼?!(feat.블핑지수)',
     },
     {
       id: 2,
-      menu: '[공지사항]',
-      title: '스타벅스에서 쿠폰쏜다! (08.30 ~ 9.30)',
-      date: '2021.08.30',
-      eye: '15600',
-      like: '356',
-      cm: '32',
-      thumb: eventThumb,
-      desc: 'b',
+      date: '4',
+      eye: '5',
+      like: '6',
+      img: grinLatte,
+      alt: '그린티라떼 만들기',
+      desc: 'hi',
+      title: '나, 그린띠라떼 좋아하네?? 드루와 쉬워',
     },
     {
       id: 3,
-      menu: '[공지사항]',
-      title: '카페지기의 라이브 방송 사전 안내 및 쿠폰 이벤트 (09.07)',
-      date: '2021.08.28',
-      eye: '1900',
-      like: '56',
-      cm: '72',
-      thumb: eventThumb,
-      desc: 'c',
+      date: '7',
+      eye: '8',
+      like: '9',
+      img: caramelLatte,
+      alt: '카라멜라떼 만들기',
+      desc: 'hi',
+      title: '슈퍼에 파는 500원짜리 카라멜로 마끼아또를?!',
     },
+
     {
       id: 4,
-      menu: '[공지사항]',
-      title: '08.15(화) 메가커피 쿠폰 이벤트 당첨자 안내',
-      date: '2021.08.25',
-      eye: '782',
-      like: '16',
-      cm: '22',
-      thumb: updateThumb,
-      desc: 'd',
+      date: '10',
+      eye: '11',
+      like: '12',
+      img: mintLatte,
+      alt: '민트라떼 만들기',
+      desc: 'hi',
+      title: '민초단 다 드루와! 내가 해냈어!',
     },
     {
       id: 5,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '13',
+      eye: '14',
+      like: '15',
+      img: persimmonLatte,
+      alt: '홍시라떼 만들기',
+      desc: 'hi',
+      title: '달달한 홍시 좋아하는 사람 여기 모여라~',
     },
     {
       id: 6,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '16',
+      eye: '17',
+      like: '18',
+      img: chocoLatte,
+      alt: '초코라떼 만들기',
+      desc: 'hi',
+      title: '가나초콜릿으로 만드는 겁나 쉬운 초코라떼',
     },
     {
       id: 7,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '1',
+      eye: '2',
+      like: '3',
+      img: cafeLatte,
+      alt: '카페라떼 만들기',
+      desc: 'hi',
+      title: '누구나 쉽게 만드는 스타벅스 카페라떼?!(feat.블핑지수)',
     },
     {
       id: 8,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '4',
+      eye: '5',
+      like: '6',
+      img: grinLatte,
+      alt: '그린티라떼 만들기',
+      desc: 'hi',
+      title: '나, 그린띠라떼 좋아하네?? 드루와 쉬워',
     },
     {
       id: 9,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '7',
+      eye: '8',
+      like: '9',
+      img: caramelLatte,
+      alt: '카라멜라떼 만들기',
+      desc: 'hi',
+      title: '슈퍼에 파는 500원짜리 카라멜로 마끼아또를?!',
     },
+
     {
       id: 10,
-      menu: '[공지사항]',
-      title: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '10',
+      eye: '11',
+      like: '12',
+      img: mintLatte,
+      alt: '민트라떼 만들기',
+      desc: 'hi',
+      title: '민초단 다 드루와! 내가 해냈어!',
     },
     {
       id: 11,
-      menu: '[공지사항]',
-      title: '4롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '13',
+      eye: '14',
+      like: '15',
+      img: persimmonLatte,
+      alt: '홍시라떼 만들기',
+      desc: 'hi',
+      title: '달달한 홍시 좋아하는 사람 여기 모여라~',
     },
     {
       id: 12,
-      menu: '[공지사항]',
-      title: '3롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '16',
+      eye: '17',
+      like: '18',
+      img: chocoLatte,
+      alt: '초코라떼 만들기',
+      desc: 'hi',
+      title: '가나초콜릿으로 만드는 겁나 쉬운 초코라떼',
     },
     {
       id: 13,
-      menu: '[공지사항]',
-      title: '2롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '13',
+      eye: '14',
+      like: '15',
+      img: persimmonLatte,
+      alt: '홍시라떼 만들기',
+      desc: 'hi',
+      title: '달달한 홍시 좋아하는 사람 여기 모여라~',
     },
     {
       id: 14,
-      menu: '[공지사항]',
-      title: '1롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-      desc: '카페',
+      date: '16',
+      eye: '17',
+      like: '18',
+      img: chocoLatte,
+      alt: '초코라떼 만들기',
+      desc: 'hi',
+      title: '가나초콜릿으로 만드는 겁나 쉬운 초코라떼',
+    },
+    {
+      id: 15,
+      date: '13',
+      eye: '14',
+      like: '15',
+      img: persimmonLatte,
+      alt: '홍시라떼 만들기',
+      desc: 'hi',
+      title: '달달한 홍시 좋아하는 사람 여기 모여라~',
+    },
+    {
+      id: 16,
+      date: '16',
+      eye: '17',
+      like: '18',
+      img: chocoLatte,
+      alt: '초코라떼 만들기',
+      desc: 'hi',
+      title: '가나초콜릿으로 만드는 겁나 쉬운 초코라떼',
     },
   ];
 
   const spliceBoardList = [...boardList].splice(order, 12);
   const spliceSearchBoardList = [...newData].splice(order, 12);
 
-  const board = spliceBoardList.map((boardItem) => {
+  const board = spliceBoardList.map((boardItem, index) => {
     return (
       <BoardItem
-        menu={boardItem.menu}
-        title={boardItem.title}
-        thumb={boardItem.thumb}
         date={boardItem.date}
         eye={boardItem.eye}
         like={boardItem.like}
-        cm={boardItem.cm}
+        img={boardItem.img}
+        alt={boardItem.alt}
+        title={boardItem.title}
+        index={index}
       />
     );
   });
 
-  const newBoard = spliceSearchBoardList.map((boardItem) => {
+  const newBoard = spliceSearchBoardList.map((boardItem, index) => {
     return (
       <BoardItem
-        menu={boardItem.menu}
-        title={boardItem.title}
-        thumb={boardItem.thumb}
         date={boardItem.date}
         eye={boardItem.eye}
         like={boardItem.like}
-        cm={boardItem.cm}
+        img={boardItem.img}
+        alt={boardItem.alt}
+        title={boardItem.title}
+        index={index}
       />
     );
   });

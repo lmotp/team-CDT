@@ -23,7 +23,7 @@ export default function VideoListItem(props) {
             </div>
             <p>
               <span class="menu-color">[영상콘텐츠]</span>
-              {videoItem.desc}
+              {videoItem.title}
             </p>
             <div className="video-overay" aria-hidden></div>
           </a>
