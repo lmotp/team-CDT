@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './../../../styles/layouts/video-board/board-item.css';
 
@@ -6,22 +7,19 @@ import ArticleInfo from './ArticleInfo';
 
 export default function BoardItem(props) {
   return (
-    <li className="video-list-item">
-      <a href="/">
-        <p>
-          <span class="menu-color">{props.menu}</span>
+    <li key={props.index} className="video-list-item">
+      <Link to="/detailpage/:post_id">
+        <div class="video-item-thumb">
+          <img src={process.env.PUBLIC_URL + props.img} alt={props.alt} />
+          <i class="far fa-play-circle video-play-icon"></i>
+        </div>
+        <p className="video-item-text">
+          <span class="menu-item-color">[영상콘텐츠]</span>
           {props.title}
-          <span className="new-icon"></span>
         </p>
-        <div className="thumb">
-          <img className="thumb-img" src={props.thumb} alt="주요소식 안내드립니다" />
-        </div>
-        <div className="comment">
-          <i class="far fa-comment-dots comment-icon"></i>
-          <p class="comment-number">{props.cm}</p>
-        </div>
-      </a>
-      <ArticleInfo eye={props.eye} like={props.like} date={props.date}></ArticleInfo>
+        <div className="video-item-overay" aria-hidden></div>
+      </Link>
+      <ArticleInfo eye={props.eye} like={props.heart} date={props.date} />
     </li>
   );
 }

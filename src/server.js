@@ -21,10 +21,11 @@ require('dotenv').config({ path: __dirname + '/.env' });
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: '39.123.4.73',
+  port: '3306',
+  user: 'abc',
+  password: '123456789a',
+  database: 'scdt',
 });
 
 connection.connect();
@@ -370,35 +371,11 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  /*
-  const loginUsername = auth
-    .map((user) => {
-      return user.username;
-    })
-    .filter((username) => {
-      return req.body.user_name === username;
-    })[0];
-
-  const loginUserPwd = auth
-    .map((user) => {
-      return user.pwd;
-    })
-    .filter((pwd) => {
-      return req.body.user_pwd === pwd;
-    })[0];
-
-  if (auth.length !== 0 && loginUsername && loginUserPwd) {
-    req.session.isLogin = true;
-    req.session.user_id = req.body.user_name;
-    res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
-  } else {
-    res.send({ checkLogin: false, reLogin: true });
-  }
-  */
   connection.query('select username, password, id from auth', (err, rows) => {
     if (err) {
       throw err;
     } else {
+      console.log(rows);
       const authUsername = rows.filter((user) => {
         return req.body.user_name === user.username;
       })[0];
@@ -445,12 +422,6 @@ app.post('/auth/join', (req, res) => {
 });
 
 app.post('/auth/username', (req, res) => {
-  /*
-  const authUsername = auth.map((user) => {
-    return user.username;
-  });
-  res.send(authUsername);
-  */
   connection.query('select username from auth', (err, rows, fields) => {
     if (err) {
       throw err;
@@ -464,6 +435,18 @@ app.post('/auth/username', (req, res) => {
       } else {
         res.send({ repeat: false });
       }
+    }
+  });
+});
+
+// video 로직
+
+app.get('/video/data', (req, res) => {
+  connection.query('select * from video', (err, rows) => {
+    if (err) {
+      console.log('err');
+    } else {
+      res.send(rows);
     }
   });
 });
