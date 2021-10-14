@@ -19,7 +19,7 @@
 .video-board-controller {
   display: flex;
   position: absolute;
-  bottom: -230px;
+  bottom: -430px;
   left: 50%;
   height: 50px;
   align-items: center;

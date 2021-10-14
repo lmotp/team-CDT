@@ -15,7 +15,7 @@ export default function GnbMenu() {
     { value: 'notice list items', items: ['주요소식', '2', '3', '4'], url: '/notice/board' },
     { value: 'community list item', items: ['자유게시판', '6', '7', '8'], url: '/notice/free' },
     { value: 'recommend list item', items: ['추천게시판', 'b', 'c', 'd'], url: '/notice/recommend' },
-    { value: 'video list item', items: ['비디오', 'f', 'g', 'h'], url: '/notice/video' },
+    { value: 'video list item', items: ['비디오', 'f', 'g', 'h'], url: '/video_list' },
   ];
   const menuList = listItems.map((item, index) => {
     return (
