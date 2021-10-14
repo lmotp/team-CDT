@@ -37,8 +37,8 @@ function DetailPage({ userId }) {
 
     axios.post('/detailpage/comment/count', { postId: post_id, count: commentCount });
 
-    axios.post('/notice/list', { board: contents.category }).then((res) => setNoticeList(res.data));
-  }, [post_id, isLoading, commentCount, contents.category]);
+    axios.post('/notice/list', { board: contents?.category }).then((res) => setNoticeList(res.data));
+  }, [post_id, isLoading, commentCount, contents?.category]);
 
   const loadingHandler = () => {
     return setIsLoading(false);
