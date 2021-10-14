@@ -27,7 +27,6 @@ function DetailCommentSection({ comment, recomments, loadingHandler, userId }) {
                 createdAt={comment.createdAt}
                 name={comment.name}
                 profileImg={comment.profileImg}
-                heartCount="20"
                 comment={comment.content}
                 loadingHandler={loadingHandler}
                 userId={userId}
@@ -44,7 +43,6 @@ function DetailCommentSection({ comment, recomments, loadingHandler, userId }) {
                       createdAt={recomment.createdAt}
                       name={recomment.name}
                       profileImg={recomment.profileImg}
-                      heartCount="20"
                       comment={recomment.recomment}
                       userId={userId}
                       authId={recomment.auth_id}

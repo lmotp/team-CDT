@@ -162,8 +162,6 @@ function reducer(state, action) {
 
 function uploadReducer(state, action) {
   switch (action.type) {
-    case 'CHANGE_TAG_ADD':
-      return [...state, { id: action.id, value: action.value }];
     case 'HASHTAG_ADD':
       return [...state, { id: action.id, value: action.value }];
     case 'HASHTAG_DELTE':

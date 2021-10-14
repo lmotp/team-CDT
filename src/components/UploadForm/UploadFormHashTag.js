@@ -36,14 +36,14 @@ const UploadFormHashTag = ({ hashTag }) => {
       const length = hashTagSplit?.map((v, i) => i);
 
       for (let i = 0; i < hashTagSplit.length; i++) {
-        dispatch({ type: 'CHANGE_TAG_ADD', id: length[i], value: hashTagSplit[i] });
+        dispatch({ type: 'HASHTAG_ADD', id: length[i], value: hashTagSplit[i] });
       }
     }
   }, [dispatch, hashTag]);
 
   return (
     <div className="hashTag-wrap">
-      {hashTag && state.length > 0 && (
+      {state.length > 0 && (
         <div className="upload-hashTag-box">
           {state.map((v, i) => (
             <UploadFormHashTagValue key={i} v={v} dispatch={dispatch} hashTag={hashTag} />

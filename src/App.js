@@ -39,6 +39,7 @@ export function App() {
           <Switch>
             <Route exact path="/" component={Contents} />
             <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} />} />
+            <Route path="/video_list" component={Video} />
             <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
@@ -51,7 +52,6 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
-            <Route path="/video_list" component={Video} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
