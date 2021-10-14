@@ -59,20 +59,34 @@ app.post('/thumbnail', upload.single('image'), (req, res) => {
 });
 
 app.post('/uploadform', (req, res) => {
-  const { id, title, category, brackets, value, hashTag } = req.body;
+  const { id, title, category, brackets, value, hashTag, changeStateLocation, postId } = req.body;
   const params = [id, title, value, hashTag, category, brackets];
-  connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
-    if (err) {
-      console.log(err);
-    }
-    res.send(row);
-  });
+
+  if (changeStateLocation) {
+    connection.query(
+      'UPDATE post SET title = ?, content = ?, hashTag = ?, category = ?, bracket = ? WHERE post_id = ?;',
+      [title, value, hashTag, category, brackets, postId],
+      (err, row) => {
+        if (err) {
+          console.log('게시글 수정 에러', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(row);
+    });
+  }
 });
 
 app.post('/detailpage', (req, res) => {
   const { postId } = req.body;
   connection.query(
-    'SELECT category,bracket,title,post.createdAt,img,nickname,views,heart,hashTag,content FROM post LEFT JOIN testauth_id ON post.auth_id = testauth_id.auth_id where post_id = ?',
+    'SELECT post.post_id,post.auth_id,category,bracket,title,post.createdAt,profileImg,name,views,heart,hashTag,content FROM post LEFT JOIN auth ON post.auth_id = auth.id where post_id = ?',
     [postId],
     (err, row) => {
       if (err) {
@@ -81,6 +95,16 @@ app.post('/detailpage', (req, res) => {
       res.send(row);
     },
   );
+});
+
+app.post('/detailpage/remove', (req, res) => {
+  const { postId, authId } = req.body;
+  connection.query('DELETE FROM post WHERE post_id = ? AND auth_id = ?;', [Number(postId), authId], (err, row) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(row);
+  });
 });
 
 app.post('/detailpage/views', (req, res) => {
@@ -104,11 +128,11 @@ app.post('/detailpage/comment/count', (req, res) => {
 });
 
 app.post('/detailpage/comment', (req, res) => {
-  const { comment, postId } = req.body;
+  const { comment, postId, userId } = req.body;
 
   connection.query(
-    'INSERT INTO post_comment VALUES (null,?,NOW(),?,2,NOW())',
-    [Number(postId), comment],
+    'INSERT INTO post_comment VALUES (null,?,NOW(),?,?,NOW())',
+    [Number(postId), comment, userId],
     (err, row) => {
       if (err) {
         console.log('디테일페이지 에러입입니다.', err);
@@ -122,7 +146,7 @@ app.post('/detailpage/comment/list', (req, res) => {
   const { postId } = req.body;
 
   connection.query(
-    'SELECT comment_id,post_comment.post_id,content,post_comment.createdAt,img,nickname FROM post_comment INNER JOIN testauth_id ON post_comment.auth_id = testauth_id.auth_id WHERE post_id = ?',
+    'SELECT post_comment.auth_id,comment_id,post_comment.post_id,content,post_comment.createdAt,profileImg,name FROM post_comment INNER JOIN auth ON post_comment.auth_id = auth.id WHERE post_id = ?',
     [Number(postId)],
     (err, row) => {
       if (err) {
@@ -134,30 +158,93 @@ app.post('/detailpage/comment/list', (req, res) => {
 });
 
 app.post('/detailpage/recomment', (req, res) => {
-  const { reComment, commentId } = req.body;
+  const { reComment, commentId, userId } = req.body;
 
-  connection.query('INSERT INTO post_recomment VALUES(null,?,2,?,NOW(),NOW())', [commentId, reComment], (err, row) => {
-    if (err) {
-      console.log('대댓글 에러에요', err);
-    }
-    res.send(row);
-  });
+  connection.query(
+    'INSERT INTO post_recomment VALUES(null,?,?,?,NOW(),NOW())',
+    [commentId, userId, reComment],
+    (err, row) => {
+      if (err) {
+        console.log('대댓글 에러에요', err);
+      }
+      res.send(row);
+    },
+  );
 });
 
 app.post('/detailpage/recomment/list', (req, res) => {
   const { postId } = req.body;
 
   connection.query(
-    'SELECT post_recomment.comment_id,post_recomment.auth_id,recomment,post_recomment.createdAt,nickname,img FROM post_recomment LEFT JOIN post_comment ON post_recomment.comment_id = post_comment.comment_id LEFT JOIN testauth_id ON post_recomment.auth_id = testauth_id.auth_id WHERE post_id = ?',
+    'SELECT post_recomment.id,post_recomment.comment_id,post_recomment.auth_id,recomment,post_recomment.createdAt,name,profileImg FROM post_recomment LEFT JOIN post_comment ON post_recomment.comment_id = post_comment.comment_id LEFT JOIN auth ON post_recomment.auth_id = auth.id WHERE post_id = ?',
     [Number(postId)],
     (err, row) => {
       if (err) {
         console.log('대댓글 에러', err);
       }
-
       res.send(row);
     },
   );
+});
+
+app.post('/detailpage/recomment/list/remove', (req, res) => {
+  const { commentId, authId, recommentId, on } = req.body;
+
+  if (on) {
+    connection.query(
+      'DELETE FROM post_recomment WHERE id = ? AND comment_id = ?;',
+      [Number(recommentId), Number(commentId)],
+      (err, row) => {
+        if (err) {
+          console.log('어디지?', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query(
+      'DELETE FROM post_comment WHERE comment_id = ? AND auth_id = ?;',
+      [Number(commentId), Number(authId)],
+      (err, row) => {
+        if (err) {
+          console.log('어디일까 밑인가?', err);
+        }
+        res.send(row);
+      },
+    );
+  }
+
+  console.log(req.body);
+});
+
+app.post('/detailpage/recomment/list/change', (req, res) => {
+  const { commentId, authId, recommentId, on, reCommentValue } = req.body;
+
+  if (on) {
+    connection.query(
+      'UPDATE  post_recomment SET recomment=? WHERE id = ? AND comment_id = ?;',
+      [reCommentValue, Number(recommentId), Number(commentId)],
+      (err, row) => {
+        if (err) {
+          console.log('어디지?', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query(
+      'UPDATE post_comment SET content=? WHERE comment_id = ? AND auth_id = ?;',
+      [reCommentValue, Number(commentId), Number(authId)],
+      (err, row) => {
+        if (err) {
+          console.log('어디일까 밑인가?', err);
+        }
+        res.send(row);
+      },
+    );
+  }
+
+  console.log(req.body);
 });
 
 app.post('/detailpage/heart', (req, res) => {
@@ -248,7 +335,7 @@ app.post('/notice/list', (req, res) => {
   }
 
   connection.query(
-    'SELECT post_id,count,heart,nickname,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN testauth_id ON post.auth_id = testauth_id.auth_id WHERE category = ?',
+    'SELECT post_id,count,heart,name,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN auth ON post.auth_id = auth.id WHERE category = ?',
     [category],
     (err, row) => {
       if (err) {
@@ -259,11 +346,20 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
-// 유저 로직
+app.get('/share/list', (req, res) => {
+  connection.query('SELECT * FROM post WHERE category = "자유게시판" ORDER BY heart DESC LIMIT 8;', (err, row) => {
+    if (err) {
+      console.log('쉐어리스트에러', err);
+    }
+    res.send(row);
+  });
+});
+
+// 유저 로직-*-----*-*--------------------
 
 app.get('/loginCheck', (req, res) => {
   if (req.session.isLogin) {
-    res.send({ checkLogin: true, username: req.session.user_id });
+    res.send({ checkLogin: true, username: req.session.user_name, userId: req.session.user_id });
   } else {
     res.send({ checkLogin: false });
   }
@@ -275,7 +371,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select username, password from auth', (err, rows) => {
+  connection.query('select username, password, id from auth', (err, rows) => {
     if (err) {
       throw err;
     } else {
@@ -291,7 +387,8 @@ app.post('/user/login', (req, res) => {
       console.log(authPwd);
       if (authUsername && authPwd) {
         req.session.isLogin = true;
-        req.session.user_id = req.body.user_name;
+        req.session.user_name = req.body.user_name;
+        req.session.user_id = authPwd.id;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
       } else {
         res.send({ checkLogin: false, reLogin: true });

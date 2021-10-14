@@ -3,8 +3,7 @@ import React from 'react';
 const noticeBoard = [
   { id: 1, category: '주요소식' },
   { id: 2, category: '비디오' },
-  { id: 3, category: '추천게시판' },
-  { id: 4, category: '자유게시판' },
+  { id: 3, category: '자유게시판' },
 ];
 
 const bracketsBox = [

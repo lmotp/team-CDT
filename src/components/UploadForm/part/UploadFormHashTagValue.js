@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UploadFormHashTagValue = ({ v, dispatch }) => {
+const UploadFormHashTagValue = ({ v, dispatch, hashTag }) => {
   const delteHashTag = () => {
     dispatch({ type: 'HASHTAG_DELTE', id: v.id });
   };

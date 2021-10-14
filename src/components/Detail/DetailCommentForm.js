@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
-import { useCommentDispatch } from '../../Context';
+
 import moment from 'moment';
 import 'moment/locale/ko';
 import axios from 'axios';
 
-function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, comment, on, loadingHandler }) {
-  const commentDispatch = useCommentDispatch();
+function DetailCommentForm({
+  id,
+  recommentId,
+  createdAt,
+  name,
+  profileImg,
+  heartCount,
+  comment,
+  on,
+  loadingHandler,
+  userId,
+  authId,
+}) {
   const [reComment, setReComment] = useState(false);
   const [changeComment, setChangeComment] = useState(false);
-  const [reCommentValue, setReCommentValue] = useState('');
+  const [reCommentValue, setReCommentValue] = useState(comment);
   const [heart, setHeart] = useState(false);
   const createTime = moment(createdAt).format('YYYY년 MM월 DD일 HH시 mm분');
 
@@ -16,7 +27,6 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
   const reCommentHandler = () => {
     setChangeComment(false);
     setReComment(!reComment);
-    console.log(id);
   };
 
   // 댓글에 댓글수정하기 기능
@@ -40,12 +50,29 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
     }
   };
 
+  // 댓글 삭제하기
+  const deleteCommentHandler = () => {
+    const confirm = window.confirm('삭제하겠습니까?');
+    if (confirm) {
+      axios
+        .post('/detailpage/recomment/list/remove', { commentId: id, authId, recommentId, on })
+        .then(() => loadingHandler());
+    }
+  };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (reComment) {
-      axios.post('/detailpage/recomment', { reComment: reCommentValue, commentId: id }).then(() => loadingHandler());
+      axios
+        .post('/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
+        .then(() => loadingHandler());
     } else if (changeComment) {
-      commentDispatch({ type: 'CHANGE', id: id, changeValue: reCommentValue });
+      const confirm = window.confirm('수정하겠습니까?');
+      if (confirm) {
+        axios
+          .post('/detailpage/recomment/list/change', { commentId: id, authId, recommentId, on, reCommentValue })
+          .then(() => loadingHandler());
+      }
     }
     setReCommentValue('');
   };
@@ -59,9 +86,9 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
 
   return (
     <div className={on ? 'comment-section-wrap on' : 'comment-section-wrap'}>
-      <img src={profileImg} alt={nickName} />
+      {profileImg ? <img src={profileImg} alt={name} /> : <i class="far fa-user-circle user-icon"></i>}
       <div className="comment-secion-content">
-        <div className="content-profile">{nickName}</div>
+        <div className="content-profile">{name}</div>
         <p dangerouslySetInnerHTML={{ __html: dangerComment }}></p>
         <div className="info-wrap">
           <span className="info-date">{createTime}</span>
@@ -74,11 +101,19 @@ function DetailCommentForm({ id, createdAt, nickName, profileImg, heartCount, co
               답글 쓰기
             </span>
           )}
-          <span onClick={changeCommentHandler} className={changeComment ? 're-comment on' : 're-comment off'}>
-            수정하기
-          </span>
+          {userId === authId ? (
+            <span className="control-box">
+              <span onClick={changeCommentHandler} className={changeComment ? 're-comment on' : 're-comment off'}>
+                수정하기
+              </span>
+              <span onClick={deleteCommentHandler} style={{ cursor: 'pointer' }}>
+                &nbsp; 삭제하기
+              </span>
+            </span>
+          ) : null}
+
           {(reComment || changeComment) && (
-            <div className="re-comment-form">
+            <div className={!on ? 're-comment-form' : 're-comment-form on'}>
               <form onSubmit={onSubmitHandler}>
                 <textarea
                   placeholder="Shift + Enter 누르시면은 줄 바꿈 하실수 있습니다."

@@ -8,15 +8,15 @@ function DetailListBoard({ list, i }) {
   const [imgUrl, setImgUrl] = useState([]);
 
   useEffect(() => {
-    const imgSrcMatch = list.content.match(/image[^]+[\\"]/gm);
     if (list.content.includes('img')) {
-      const imgSrcJoin = imgSrcMatch.join();
-      const imgSrcSplit = imgSrcJoin.split('" ');
-      setImgUrl(imgSrcSplit[0]);
+      const imgSrcMatch = list.content.match(/src[^]+[\\"]/gm);
+      if (imgSrcMatch !== null) {
+        const imgSrcJoin = imgSrcMatch.join();
+        const imgSrcSplit = imgSrcJoin.split('"');
+        setImgUrl(imgSrcSplit[1]);
+      }
     }
   }, [list.content]);
-
-  console.log(imgUrl);
 
   return (
     <Link to={`/detailpage/${list.post_id}`} key={i}>
@@ -24,11 +24,11 @@ function DetailListBoard({ list, i }) {
         <div>
           <div className="DetailList-form-title">
             <span style={{ color: 'burlywood' }}>[{list.category}]</span>&nbsp;
-            {list.bracket ? `[${list.bracket}]` : null} &nbsp;
+            {list.bracket ? ` [${list.bracket}] ` : null}
             {list.title}
           </div>
           <div className="DetailList-form-info">
-            {list.nickname} &nbsp;
+            {list.name} &nbsp;
             {moment(list.createdAt).format('YYYY년 MM월 DD일')}
             <i className="far fa-eye eye"></i>
             {list.views}

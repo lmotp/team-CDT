@@ -9,11 +9,11 @@ import 'bootstrap/js/dropdown';
 import 'bootstrap/js/tooltip';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const UploadFormCotent = ({ onImageUpload, onChange }) => {
+const UploadFormCotent = ({ onImageUpload, onChange, contents }) => {
   return (
     <div className="content-wrap">
       <ReactSummernote
-        value="내용을 입력하여주세요"
+        value="내용을 입력해주세요"
         options={{
           lang: 'ko-KR',
           height: 400,
@@ -29,14 +29,16 @@ const UploadFormCotent = ({ onImageUpload, onChange }) => {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
-            ['insert', ['picture']],
+            ['insert', ['picture', 'video']],
             ['view', ['fullscreen']],
           ],
           disableResizeEditor: true,
         }}
         onImageUpload={onImageUpload}
         onChange={onChange}
-      />
+      >
+        {contents && <div dangerouslySetInnerHTML={{ __html: contents }}></div>}
+      </ReactSummernote>
     </div>
   );
 };

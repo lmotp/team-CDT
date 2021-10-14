@@ -1,35 +1,40 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import UploadFormButtonBox from '../components/UploadForm/UploadFormButtonBox';
 import UploadFormCategory from '../components/UploadForm/UploadFormCategory';
 import UploadFormCotent from '../components/UploadForm/UploadFormCotent';
 import UploadFormHashTag from '../components/UploadForm/UploadFormHashTag';
 import UploadFormTitle from '../components/UploadForm/UploadFormTitle';
-import { useTestDispatch, useTestState, useUploadDispatch, useUploadState } from '../Context';
+import { useUploadDispatch, useUploadState } from '../Context';
 import '../styles/uploadForm.css';
 
-const UploadForm = () => {
+const UploadForm = ({ userId }) => {
+  const location = useLocation();
+  const changeStateLocation = location.state?.change;
+  const contentsLocation = location.state?.contents;
   const history = useHistory();
-  const testDispatch = useTestDispatch();
   const hashTagState = useUploadState();
   const uploadDispatch = useUploadDispatch();
-  const testState = useTestState();
-  const [titleValue, setTitleValue] = useState('');
-  const [category, setCategory] = useState('게시판을 선택해 주세요.');
-  const [brackets, setBrackets] = useState('말머리를 선택');
-  const [disabled, setDisabled] = useState(true);
+  const [titleValue, setTitleValue] = useState(!changeStateLocation ? '' : contentsLocation.title);
+  const [category, setCategory] = useState(
+    !changeStateLocation ? '게시판을 선택해 주세요.' : contentsLocation.category,
+  );
+  const [brackets, setBrackets] = useState(!contentsLocation?.bracket ? '말머리를 선택' : contentsLocation.bracket);
+  const [disabled, setDisabled] = useState(!contentsLocation?.bracket ? true : false);
   const [mainCategoryStatus, setMainCategoryStatus] = useState(false);
   const [value, setValue] = useState('');
   const [mainBracketsStatus, setMainBracketsStatus] = useState(false);
 
   const submitContent = {
-    id: testState.length === 0 ? 1 : testState.length + 1,
+    id: userId,
     title: titleValue,
     category,
     brackets: brackets === '말머리를 선택' ? null : brackets,
-    value,
+    value: value ? value : contentsLocation.content,
     hashTag: hashTagState.map((v) => v.value).join(),
+    postId: contentsLocation?.post_id,
+    changeStateLocation,
   };
 
   // 말머리,게시판 선택 이벤트 !!!!
@@ -80,7 +85,6 @@ const UploadForm = () => {
   };
 
   const uploadClick = () => {
-    testDispatch({ type: 'SUBMIT', content: submitContent });
     axios.post('/uploadform', submitContent).then((res) => res.data);
     uploadDispatch({ type: 'ALL_DELTE' });
     let board;
@@ -127,8 +131,8 @@ const UploadForm = () => {
         mainBracketsStatus={mainBracketsStatus}
       />
       <UploadFormTitle titleValue={titleValue} changeTitleValue={changeTitleValue} />
-      <UploadFormCotent onImageUpload={onImageUpload} onChange={onChange} />
-      <UploadFormHashTag />
+      <UploadFormCotent onImageUpload={onImageUpload} onChange={onChange} contents={contentsLocation?.content} />
+      <UploadFormHashTag hashTag={contentsLocation?.hashTag} />
       <UploadFormButtonBox uploadClick={uploadClick} cancelClick={cancelClick} />
     </div>
   );

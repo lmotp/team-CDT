@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-function DetailContent({ contents, postId }) {
+function DetailContent({ contents, postId, userId }) {
   const [hashTag, setHashTag] = useState([]);
   const [heart, setHeart] = useState(false);
   const [heartCount, setHeartCount] = useState(0);
@@ -17,7 +17,7 @@ function DetailContent({ contents, postId }) {
 
   useEffect(() => {
     axios.post('/detailpage/heart', { postId }).then(({ data }) => setHeartCount(data.count));
-    axios.post('/detailpage/hearted', { postId, auth: 1 }).then(({ data }) => {
+    axios.post('/detailpage/hearted', { postId, auth: userId }).then(({ data }) => {
       if (data.result) {
         setHeart(true);
         setHeartInfo(data.info[0].heart_id);
@@ -25,17 +25,17 @@ function DetailContent({ contents, postId }) {
         setHeart(false);
       }
     });
-  }, [postId]);
+  }, [postId, userId]);
 
   const heartHandler = () => {
     if (heart) {
-      axios.post('/detailpage/heart/remove', { postId, auth: 1, heartId: heartInfo }).then(({ data }) => {
+      axios.post('/detailpage/heart/remove', { postId, auth: userId, heartId: heartInfo }).then(({ data }) => {
         setHeart(data);
         setHeartCount(heartCount - 1);
       });
       axios.post('/detailpage/heart/removeCount', { postId }).then((res) => console.log(res));
     } else {
-      axios.post('/detailpage/heart/add', { postId, auth: 1 }).then(({ data }) => {
+      axios.post('/detailpage/heart/add', { postId, auth: userId }).then(({ data }) => {
         setHeart(data);
         setHeartCount(heartCount + 1);
       });

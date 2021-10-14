@@ -5,7 +5,7 @@ import './../../../styles/layouts/notice-board/info.css';
 export default function ArticleInfo(props) {
   return (
     <div className="info">
-      <span className="title">{props.nickName}</span>
+      <span className="title">{props.name}</span>
       <span className="date">{props.date}</span>
       <span className="counter-eye">
         <i class="far fa-eye eye"></i>

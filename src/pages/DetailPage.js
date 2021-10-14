@@ -10,7 +10,7 @@ import { useParams } from 'react-router';
 import NotFound from './NotFound';
 import Loading from './Loading';
 
-function DetailPage() {
+function DetailPage({ userId }) {
   const [contents, setContents] = useState('');
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
@@ -43,15 +43,21 @@ function DetailPage() {
   const loadingHandler = () => {
     return setIsLoading(false);
   };
+
   return (
     <>
       {contents ? (
         <div className="detail-wrap">
-          <DetailHeader contents={contents} />
-          <DetailContent contents={contents} postId={post_id} />
-          <DetailComment loadingHandler={loadingHandler} count={commentCount} />
+          <DetailHeader contents={contents} userId={userId} postId={post_id} />
+          <DetailContent contents={contents} postId={post_id} userId={userId} />
+          <DetailComment loadingHandler={loadingHandler} count={commentCount} userId={userId} />
           {isLoading ? (
-            <DetailCommentSection loadingHandler={loadingHandler} comment={comment} recomments={recomments} />
+            <DetailCommentSection
+              userId={userId}
+              loadingHandler={loadingHandler}
+              comment={comment}
+              recomments={recomments}
+            />
           ) : (
             <Loading />
           )}

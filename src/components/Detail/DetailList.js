@@ -8,9 +8,11 @@ const DetailList = ({ category, noticeList }) => {
   return (
     <div className="DetailList-wrap">
       <h2>{category}</h2>
-      {noticeList.map((list, i) => (
-        <DetailListBoard list={list} i={i} />
-      ))}
+      {noticeList
+        .filter((v, i) => 10 > i)
+        .map((list, i) => (
+          <DetailListBoard list={list} i={i} />
+        ))}
 
       <button>
         <Link to="/">홈으로</Link>

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUploadDispatch, useUploadState } from '../../Context';
 import UploadFormHashTagValue from './part/UploadFormHashTagValue';
 
-const UploadFormHashTag = () => {
+const UploadFormHashTag = ({ hashTag }) => {
   const [value, setValue] = useState('');
   const dispatch = useUploadDispatch();
   const state = useUploadState();
@@ -30,12 +30,23 @@ const UploadFormHashTag = () => {
     }
   };
 
+  useEffect(() => {
+    if (hashTag) {
+      const hashTagSplit = hashTag?.split(',');
+      const length = hashTagSplit?.map((v, i) => i);
+
+      for (let i = 0; i < hashTagSplit.length; i++) {
+        dispatch({ type: 'CHANGE_TAG_ADD', id: length[i], value: hashTagSplit[i] });
+      }
+    }
+  }, [dispatch, hashTag]);
+
   return (
     <div className="hashTag-wrap">
-      {state.length > 0 && (
+      {hashTag && state.length > 0 && (
         <div className="upload-hashTag-box">
-          {state.map((v) => (
-            <UploadFormHashTagValue key={v.id} v={v} dispatch={dispatch} />
+          {state.map((v, i) => (
+            <UploadFormHashTagValue key={i} v={v} dispatch={dispatch} hashTag={hashTag} />
           ))}
         </div>
       )}

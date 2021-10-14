@@ -38,7 +38,7 @@ export default function Board() {
         heart={boardItem.heart}
         count={boardItem.count}
         postId={boardItem.post_id}
-        nickName={boardItem.nickname}
+        name={boardItem.name}
         content={boardItem.content}
       />
     );
@@ -56,7 +56,7 @@ export default function Board() {
         heart={boardItem.heart}
         count={boardItem.count}
         postId={boardItem.post_id}
-        nickName={boardItem.nickname}
+        name={boardItem.name}
       />
     );
   });
