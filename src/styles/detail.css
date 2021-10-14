@@ -226,14 +226,6 @@
 .comment-secion-content .info-wrap .info-date {
   margin-right: 16px;
 }
-.comment-secion-content .info-wrap i {
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.comment-secion-content .info-wrap i.on {
-  color: red;
-}
 
 .comment-secion-content .info-wrap .re-comment {
   cursor: pointer;

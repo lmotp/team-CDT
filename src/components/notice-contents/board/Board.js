@@ -57,6 +57,7 @@ export default function Board() {
         count={boardItem.count}
         postId={boardItem.post_id}
         name={boardItem.name}
+        content={boardItem.content}
       />
     );
   });

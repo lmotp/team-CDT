@@ -243,8 +243,6 @@ app.post('/detailpage/recomment/list/change', (req, res) => {
       },
     );
   }
-
-  console.log(req.body);
 });
 
 app.post('/detailpage/heart', (req, res) => {
