@@ -2,6 +2,8 @@ import React from 'react';
 
 import './../../../styles/layouts/video-board/board-item.css';
 
+import a from './../../../images/녹차라떼.png';
+
 import ArticleInfo from './ArticleInfo';
 
 export default function BoardItem(props) {
@@ -9,7 +11,7 @@ export default function BoardItem(props) {
     <li key={props.index} className="video-list-item">
       <a href="/">
         <div class="video-item-thumb">
-          <img src={props.img} alt={props.alt} />
+          <img src={process.env.PUBLIC_URL + props.img} alt={props.alt} />
           <i class="far fa-play-circle video-play-icon"></i>
         </div>
         <p className="video-item-text">
@@ -18,7 +20,7 @@ export default function BoardItem(props) {
         </p>
         <div className="video-item-overay" aria-hidden></div>
       </a>
-      <ArticleInfo eye={props.eye} like={props.like} date={props.date} />
+      <ArticleInfo eye={props.eye} like={props.heart} date={props.date} />
     </li>
   );
 }
