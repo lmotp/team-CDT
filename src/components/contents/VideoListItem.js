@@ -9,7 +9,6 @@ import './../../styles/layouts/video-contents.css';
 import ArticleInfo from './ArticleInfo';
 
 export default function VideoListItem(props) {
-  console.log(props.data);
   const videoData = props.data;
 
   const videoList = videoData.map((videoItem, index) => {

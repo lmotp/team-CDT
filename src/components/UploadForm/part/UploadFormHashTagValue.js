@@ -4,7 +4,6 @@ const UploadFormHashTagValue = ({ v, dispatch, hashTag }) => {
   const delteHashTag = () => {
     dispatch({ type: 'HASHTAG_DELTE', id: v.id });
   };
-  console.log(hashTag);
 
   return (
     <div className="value-wrap" key={v.id}>

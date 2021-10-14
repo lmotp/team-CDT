@@ -21,20 +21,20 @@ const UploadForm = ({ userId }) => {
     !changeStateLocation ? '게시판을 선택해 주세요.' : contentsLocation.category,
   );
   const [brackets, setBrackets] = useState(!contentsLocation?.bracket ? '말머리를 선택' : contentsLocation.bracket);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(!contentsLocation?.bracket ? true : false);
   const [mainCategoryStatus, setMainCategoryStatus] = useState(false);
   const [value, setValue] = useState('');
   const [mainBracketsStatus, setMainBracketsStatus] = useState(false);
-
-  console.log(contentsLocation);
 
   const submitContent = {
     id: userId,
     title: titleValue,
     category,
     brackets: brackets === '말머리를 선택' ? null : brackets,
-    value,
+    value: value ? value : contentsLocation.content,
     hashTag: hashTagState.map((v) => v.value).join(),
+    postId: contentsLocation?.post_id,
+    changeStateLocation,
   };
 
   // 말머리,게시판 선택 이벤트 !!!!
@@ -131,7 +131,7 @@ const UploadForm = ({ userId }) => {
         mainBracketsStatus={mainBracketsStatus}
       />
       <UploadFormTitle titleValue={titleValue} changeTitleValue={changeTitleValue} />
-      <UploadFormCotent onImageUpload={onImageUpload} onChange={onChange} />
+      <UploadFormCotent onImageUpload={onImageUpload} onChange={onChange} contents={contentsLocation?.content} />
       <UploadFormHashTag hashTag={contentsLocation?.hashTag} />
       <UploadFormButtonBox uploadClick={uploadClick} cancelClick={cancelClick} />
     </div>

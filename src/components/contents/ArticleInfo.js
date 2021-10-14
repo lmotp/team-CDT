@@ -3,7 +3,6 @@ import React from 'react';
 import './../../styles/layouts/info.css';
 
 export default function ArticleInfo(props) {
-  console.log(props.name);
   return (
     <div className="info">
       <span className="title">

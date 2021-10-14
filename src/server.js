@@ -58,20 +58,34 @@ app.post('/thumbnail', upload.single('image'), (req, res) => {
 });
 
 app.post('/uploadform', (req, res) => {
-  const { id, title, category, brackets, value, hashTag } = req.body;
+  const { id, title, category, brackets, value, hashTag, changeStateLocation, postId } = req.body;
   const params = [id, title, value, hashTag, category, brackets];
-  connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
-    if (err) {
-      console.log(err);
-    }
-    res.send(row);
-  });
+
+  if (changeStateLocation) {
+    connection.query(
+      'UPDATE post SET title = ?, content = ?, hashTag = ?, category = ?, bracket = ? WHERE post_id = ?;',
+      [title, value, hashTag, category, brackets, postId],
+      (err, row) => {
+        if (err) {
+          console.log('게시글 수정 에러', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(row);
+    });
+  }
 });
 
 app.post('/detailpage', (req, res) => {
   const { postId } = req.body;
   connection.query(
-    'SELECT post.auth_id,category,bracket,title,post.createdAt,profileImg,name,views,heart,hashTag,content FROM post LEFT JOIN auth ON post.auth_id = auth.id where post_id = ?',
+    'SELECT post.post_id,post.auth_id,category,bracket,title,post.createdAt,profileImg,name,views,heart,hashTag,content FROM post LEFT JOIN auth ON post.auth_id = auth.id where post_id = ?',
     [postId],
     (err, row) => {
       if (err) {
