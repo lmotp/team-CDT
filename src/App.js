@@ -50,7 +50,7 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
-            <Route path="/video" component={Video} />
+            <Route path="/video_list" component={Video} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>

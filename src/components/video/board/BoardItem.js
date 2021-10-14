@@ -1,15 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './../../../styles/layouts/video-board/board-item.css';
-
-import a from './../../../images/녹차라떼.png';
 
 import ArticleInfo from './ArticleInfo';
 
 export default function BoardItem(props) {
   return (
     <li key={props.index} className="video-list-item">
-      <a href="/">
+      <Link to="/detailpage/:post_id">
         <div class="video-item-thumb">
           <img src={process.env.PUBLIC_URL + props.img} alt={props.alt} />
           <i class="far fa-play-circle video-play-icon"></i>
@@ -19,7 +18,7 @@ export default function BoardItem(props) {
           {props.title}
         </p>
         <div className="video-item-overay" aria-hidden></div>
-      </a>
+      </Link>
       <ArticleInfo eye={props.eye} like={props.heart} date={props.date} />
     </li>
   );
