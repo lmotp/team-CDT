@@ -87,7 +87,7 @@ const UploadForm = ({ userId }) => {
 
   const uploadClick = () => {
     axios.post('/uploadform', submitContent).then((res) => res.data);
-    console.log('왜 안지워지지?', hashTagState);
+
     uploadDispatch({ type: 'ALL_DELTE' });
     let board;
     if (category === '주요소식') {
@@ -96,10 +96,10 @@ const UploadForm = ({ userId }) => {
       board = 'event';
     } else if (category === '자유게시판') {
       board = 'free';
-    } else if (category === '비디오') {
+    } else if (category === '영상콘텐츠') {
       board = 'video';
     }
-    history.push(board === '비디오' ? `/notice/${board}` : `/video_list`);
+    history.push(board === '영상콘텐츠' ? `/notice/${board}` : `/video_list`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!
