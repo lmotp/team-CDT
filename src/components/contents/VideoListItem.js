@@ -1,36 +1,42 @@
-import React from 'react';
-
-import cafeLatte from './../../images/카페라떼.png';
-import grinLatte from './../../images/녹차라떼.png';
-import caramelLatte from './../../images/카라멜마끼아또.png';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 
 import './../../styles/layouts/video-contents.css';
 
 import ArticleInfo from './ArticleInfo';
+import { Link } from 'react-router-dom';
 
-export default function VideoListItem(props) {
-  const videoData = props.data;
+export default function VideoListItem({ data }) {
+  const [imgUrl, setImgUrl] = useState([]);
+  const date = moment(data.date).format('YYYY.MM.DD');
 
-  const videoList = videoData.map((videoItem, index) => {
-    return (
-      <>
-        <li key={index} className="video-contents-list-item">
-          <a href="/">
-            <div class="video-thumb">
-              <img src={videoItem.img} alt={videoItem.alt} />
-              <i class="far fa-play-circle play-icon"></i>
-            </div>
-            <p>
-              <span class="menu-color">[영상콘텐츠]</span>
-              {videoItem.title}
-            </p>
-            <div className="video-overay" aria-hidden></div>
-          </a>
-          <ArticleInfo eye={videoItem.eye} like={videoItem.like} date={videoItem.date} />
-        </li>
-      </>
-    );
-  });
+  useEffect(() => {
+    if (data.content.includes('youtube')) {
+      const srcMatch = data.content.match(/www.youtube.com\/embed\/([a-zA-Z0-9-_]+)?/gm);
+      if (srcMatch !== null) {
+        const srcJoin = srcMatch.join();
+        const srcSplit = srcJoin.split('/');
+        setImgUrl(srcSplit[2]);
+      }
+    }
+  }, [data.content]);
 
-  return <ul className="video-collection">{videoList}</ul>;
+  return (
+    <>
+      <li key={data.post_id} className="video-contents-list-item">
+        <Link to={`/detailpage/${data.post_id}`}>
+          <div class="video-thumb">
+            <img src={`https://img.youtube.com/vi/${imgUrl}/mqdefault.jpg`} alt={data.alt} />
+            <i class="far fa-play-circle play-icon"></i>
+          </div>
+          <p>
+            <span class="menu-color">[영상콘텐츠]</span>
+            {data.title}
+          </p>
+          <div className="video-overay" aria-hidden></div>
+        </Link>
+        <ArticleInfo views={data.views} heart={data.heart} date={date} name={data.name} count={data.count} />
+      </li>
+    </>
+  );
 }

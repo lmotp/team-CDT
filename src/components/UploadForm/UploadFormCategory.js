@@ -2,8 +2,8 @@ import React from 'react';
 
 const noticeBoard = [
   { id: 1, category: '주요소식' },
-  { id: 2, category: '비디오' },
-  { id: 3, category: '자유게시판' },
+  { id: 2, category: '자유게시판' },
+  { id: 3, category: '영상콘텐츠' },
 ];
 
 const bracketsBox = [

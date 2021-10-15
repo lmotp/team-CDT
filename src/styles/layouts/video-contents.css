@@ -16,23 +16,24 @@
 
 .video-collection {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .video-contents-list-item {
   position: relative;
-  width: 33%;
-  margin-right: 3.5%;
+  width: 32%;
+  margin-right: 2%;
   margin-bottom: 50px;
+}
+
+.video-contents-list-item:nth-of-type(3n) {
+  margin-right: 0;
 }
 
 .video-contents-list-item p {
   margin-top: 5px;
   height: 35px;
   padding: 0 7px;
-}
-
-.video-contents-list-item:last-child {
-  margin-right: 0;
 }
 
 .video-thumb {

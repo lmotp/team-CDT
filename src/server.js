@@ -328,8 +328,8 @@ app.post('/notice/list', (req, res) => {
     category = '주요소식';
   } else if (board === 'free' || board === '자유게시판') {
     category = '자유게시판';
-  } else if (board === 'video' || board === '비디오') {
-    category = '비디오';
+  } else if (board === 'video' || board === '영상콘텐츠') {
+    category = '영상콘텐츠';
   }
 
   connection.query(

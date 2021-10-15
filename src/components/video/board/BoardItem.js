@@ -15,7 +15,6 @@ export default function BoardItem(props) {
       if (srcMatch !== null) {
         const srcJoin = srcMatch.join();
         const srcSplit = srcJoin.split('/');
-        console.log(srcSplit);
         setImgUrl(srcSplit[2]);
       }
     }
@@ -35,7 +34,7 @@ export default function BoardItem(props) {
         </p>
         <div className="video-item-overay" aria-hidden></div>
       </Link>
-      <ArticleInfo views={props.views} like={props.heart} date={date} name={props.name} />
+      <ArticleInfo views={props.views} like={props.heart} date={date} name={props.name} count={props.count} />
     </li>
   );
 }

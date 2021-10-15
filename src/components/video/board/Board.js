@@ -16,11 +16,13 @@ export default function Board() {
   const boardCollectionRef = useRef();
 
   useEffect(() => {
-    axios.post('/notice/list', { board: '비디오' }).then((res) => setBoardList(res.data));
+    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
   }, []);
 
   const spliceBoardList = [...boardList].splice(order, 12);
   const spliceSearchBoardList = [...newData].splice(order, 12);
+
+  console.log(boardList);
 
   const boards = spliceBoardList.map((boardItem, index) => {
     return (
@@ -34,6 +36,7 @@ export default function Board() {
         postId={boardItem.post_id}
         name={boardItem.name}
         content={boardItem.content}
+        count={boardItem.count}
         index={index}
       />
     );
@@ -51,6 +54,7 @@ export default function Board() {
         name={boardItem.name}
         postId={boardItem.post_id}
         content={boardItem.content}
+        count={boardItem.count}
         index={index}
       />
     );
