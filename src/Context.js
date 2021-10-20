@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-const initalHasTag = [
-  { id: 1, tag: '#감성카페', status: false },
-  { id: 2, tag: '#이쁜카페', status: false },
-  { id: 3, tag: '#분위기 좋은 카페', status: false },
-  { id: 4, tag: '#프랜차이즈', status: false },
-];
-
 const initalUpload = [];
 
 const hashContents = [
@@ -151,15 +144,6 @@ const result = [
   },
 ];
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'TAGOFF':
-      return state.map((tag) => (tag.id === action.id ? { ...tag, status: !tag.status } : tag));
-    default:
-      throw new Error('액션타입이 안맞습니다..........');
-  }
-}
-
 function uploadReducer(state, action) {
   switch (action.type) {
     case 'HASHTAG_ADD':
@@ -173,8 +157,6 @@ function uploadReducer(state, action) {
   }
 }
 
-const hashTagStateContext = createContext();
-const hashTagDispatchContext = createContext();
 const hashContentsContext = createContext();
 const foodGameExampleContext = createContext();
 const foodGameResultContext = createContext();
@@ -182,33 +164,20 @@ const uploadDispatchContext = createContext();
 const uploadStateContext = createContext();
 
 export function Context({ children }) {
-  const [state, dispatch] = useReducer(reducer, initalHasTag);
   const [uploadState, uploadDispatch] = useReducer(uploadReducer, initalUpload);
 
   return (
-    <hashTagStateContext.Provider value={state}>
-      <hashTagDispatchContext.Provider value={dispatch}>
-        <hashContentsContext.Provider value={hashContents}>
-          <uploadDispatchContext.Provider value={uploadDispatch}>
-            <uploadStateContext.Provider value={uploadState}>
-              <foodGameExampleContext.Provider value={example}>
-                <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
-              </foodGameExampleContext.Provider>
-            </uploadStateContext.Provider>
-          </uploadDispatchContext.Provider>
-        </hashContentsContext.Provider>
-      </hashTagDispatchContext.Provider>
-    </hashTagStateContext.Provider>
+    <hashContentsContext.Provider value={hashContents}>
+      <uploadDispatchContext.Provider value={uploadDispatch}>
+        <uploadStateContext.Provider value={uploadState}>
+          <foodGameExampleContext.Provider value={example}>
+            <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
+          </foodGameExampleContext.Provider>
+        </uploadStateContext.Provider>
+      </uploadDispatchContext.Provider>
+    </hashContentsContext.Provider>
   );
 }
-
-export const useHashTagState = () => {
-  return useContext(hashTagStateContext);
-};
-
-export const useHashTagDispatch = () => {
-  return useContext(hashTagDispatchContext);
-};
 
 export const useHashContents = () => {
   return useContext(hashContentsContext);

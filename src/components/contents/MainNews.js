@@ -56,7 +56,7 @@ export default function MainNews() {
         title={boardItem.title}
         thumb={boardItem.thumb}
         date={boardItem.createdAt}
-        eye={boardItem.views}
+        views={boardItem.views}
         heart={boardItem.heart}
         count={boardItem.count}
         postId={boardItem.post_id}

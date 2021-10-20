@@ -344,15 +344,27 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
-app.get('/share/list', (req, res) => {
-  connection.query('SELECT * FROM post WHERE category = "자유게시판" ORDER BY heart DESC LIMIT 8;', (err, row) => {
-    if (err) {
-      console.log('쉐어리스트에러', err);
+app.get('/share/list/:pages', (req, res) => {
+  console.log(req.params.pages);
+
+  const { pages } = req.params;
+  const list = [];
+  connection.query('SELECT * FROM coffee_item', (err, row) => {
+    for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
+      if (row[i]) {
+        list.push(row[i]);
+      } else {
+        break;
+      }
     }
-    res.send(row);
+    res.send(list);
+    console.log(list);
   });
 });
 
+app.put('/share/list/id', (req, res) => {
+  // console.log(req.body);
+});
 // 유저 로직-*-----*-*--------------------
 
 app.get('/loginCheck', (req, res) => {
