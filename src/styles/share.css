@@ -1,18 +1,3 @@
-.hashButton {
-  background: none;
-  outline: none;
-  margin-bottom: 20px;
-  padding: 10px 5px;
-}
-
-.hashButton.onTag {
-  border: black 1px solid;
-}
-
-.hashButton.offTag {
-  border: burlywood 1px solid;
-}
-
 .share-wrap {
   padding-left: 20px;
   padding-top: 120px;
@@ -22,23 +7,26 @@
   margin-top: 10px;
   width: 1000px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
+  text-align: center;
 }
 
 .share-contents-wrap .share-contents {
   width: 45%;
   height: 100%;
   margin-right: 2%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+.share-contents-wrap .share-contents h2 {
+  font-size: 21px;
 }
 
 .share-contents-wrap .share-contents img {
-  width: 100%;
-  height: 300px;
+  width: 50%;
+  height: 100%;
   object-fit: cover;
   cursor: pointer;
-}
-
-.share-contents-wrap .share-contents .hashTagContents {
-  margin-bottom: 30px;
 }

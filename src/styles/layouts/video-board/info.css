@@ -1,12 +1,12 @@
 .info {
-  padding-left: 10px;
+  padding-left: 0 !important;
   margin-top: 3px;
   font-size: 14px;
   color: #999;
 }
 
 .title {
-  margin-right: 35px;
+  margin-right: 10px;
 }
 
 .speaker {
@@ -14,17 +14,20 @@
 }
 
 .date {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .eye {
   margin-right: 3px;
 }
 
-.counter-eye {
-  margin-right: 15px;
+.counter-like {
+  margin-right: 10px;
 }
 
 .heart {
+  margin-right: 3px;
+}
+.comment-box .comment-icon {
   margin-right: 3px;
 }
