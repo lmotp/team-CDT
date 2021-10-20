@@ -42,7 +42,7 @@ export default function BoardItem(props) {
       </Link>
       <ArticleInfo
         name={props.name}
-        eye={props.eye}
+        views={props.views}
         heart={props.heart}
         date={moment(props.date).format('YYYY년 MM월 DD일')}
       ></ArticleInfo>

@@ -43,7 +43,7 @@ export function App() {
             <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
             <Route exact path="/foodgame" component={FoodGame} />
             <Route exact path="/foodgame/:count" component={FoodGameResult} />
-            <Route path="/notice/recommend" component={Share} />
+            <Route path="/notice/recommend" render={() => <Share userId={userId} />} />
             <Route exact path="/notice/:board" component={NoticeContents} />
             <Route
               path="/user"

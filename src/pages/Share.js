@@ -1,32 +1,53 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
-import HashTagButton from '../components/HasTag/HashTagButton';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import HashTagContents from '../components/HasTag/HashTagContents';
-import { useHashTagState } from '../Context';
+
 import '../styles/share.css';
 
-function Share() {
-  const state = useHashTagState();
-
-  const allStatus = state.filter((contents) => contents.status);
+function Share({ userId }) {
+  const [coffeeItem, setCoffeeItem] = useState([]);
+  const [pages, setPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const observer = useRef();
 
   useEffect(() => {
-    axios.get('/share/list').then(({ data }) => console.log(data));
-  }, []);
+    setIsLoading(true);
+    axios.get(`/share/list/${pages}`).then(
+      ({ data }) =>
+        setCoffeeItem((prevItems) => {
+          return [...new Set([...prevItems, ...data])];
+        }),
+      setIsLoading(false),
+    );
+  }, [pages]);
+
+  const moreObserver = useCallback(
+    (node) => {
+      if (isLoading) {
+        return;
+      }
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+      observer.current = new IntersectionObserver(([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          setPages((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) {
+        observer.current.observe(node);
+        console.log(node);
+      }
+    },
+    [isLoading],
+  );
 
   return (
     <div className="share-wrap">
-      {state.map((hashTag) => (
-        <HashTagButton key={hashTag.id} tagStatus={hashTag.status} hashTag={hashTag.tag} hashId={hashTag.id} />
-      ))}
       <div className="share-contents-wrap">
-        {allStatus.length > 0
-          ? state
-              .filter((contents) => contents.status)
-              .map((contents) => <HashTagContents key={contents.id} hashTag={contents.tag} />)
-          : state
-              .filter((contents) => [])
-              .map((contents) => <HashTagContents key={contents.id} hashTag={contents.tag} />)}
+        {coffeeItem.map((v) => {
+          return <HashTagContents data={v} isLoading={isLoading} setPages={setPages} moreObserver={moreObserver} />;
+        })}
       </div>
     </div>
   );
