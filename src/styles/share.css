@@ -3,6 +3,26 @@
   padding-top: 120px;
 }
 
+.share-wrap span button {
+  border: 1px solid black;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.share-wrap span .on {
+  border: 1px solid burlywood;
+  color: burlywood;
+}
+
+.share-wrap .loading {
+  width: 100%;
+  background: cadetblue;
+  color: white;
+  height: 100px;
+  text-align: center;
+}
+
 .share-contents-wrap {
   margin-top: 10px;
   width: 1000px;
@@ -29,4 +49,12 @@
   height: 100%;
   object-fit: cover;
   cursor: pointer;
+}
+
+.share-contents-wrap .share-contents i {
+  cursor: pointer;
+}
+
+.share-contents-wrap .share-contents i.fas {
+  color: red;
 }

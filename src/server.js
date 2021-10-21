@@ -344,27 +344,87 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
-app.get('/share/list/:pages', (req, res) => {
-  console.log(req.params.pages);
-
-  const { pages } = req.params;
-  const list = [];
-  connection.query('SELECT * FROM coffee_item', (err, row) => {
-    for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
-      if (row[i]) {
-        list.push(row[i]);
-      } else {
-        break;
-      }
+app.get('/share/categories', (req, res) => {
+  connection.query('SELECT coffee_category FROM coffee_categories', (err, row) => {
+    if (err) {
+      console.log('카테고리 가져오기 에러');
     }
-    res.send(list);
-    console.log(list);
+    res.send(row);
   });
 });
 
-app.put('/share/list/id', (req, res) => {
-  // console.log(req.body);
+app.get('/share/list/:pages/:category', (req, res) => {
+  const { pages, category } = req.params;
+  const list = [];
+
+  if (category === 'all') {
+    connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
+      for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
+        if (row[i]) {
+          list.push(row[i]);
+        } else {
+          break;
+        }
+      }
+      res.send(list);
+    });
+  } else {
+    connection.query('SELECT * FROM coffee_item WHERE coffee_category = ?', [category], (err, row) => {
+      for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
+        if (row[i]) {
+          list.push(row[i]);
+        } else {
+          break;
+        }
+      }
+      res.send(list);
+    });
+  }
 });
+
+app.get('/share/list/heart/:userId', (req, res) => {
+  const { userId } = req.params;
+  connection.query('SELECT coffee_id FROM coffee_heartbox WHERE auth_id = ?', [Number(userId)], (err, row) => {
+    if (err) {
+      console.log('여기여기 법에 의한 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.post('/share/list/heart', (req, res) => {
+  const { userId, coffeeId } = req.body;
+  connection.query(
+    'SELECT * FROM coffee_heartbox WHERE auth_id = ? AND coffee_id = ?',
+    [Number(userId), Number(coffeeId)],
+    (err, row) => {
+      if (row.length <= 0) {
+        connection.query(
+          'INSERT INTO coffee_heartbox VALUES (null,?,?,NOW(),NOW())',
+          [Number(userId), Number(coffeeId)],
+          (err, row) => {
+            if (err) {
+              console.log('리스트하트에러', err);
+            }
+            res.send(row);
+          },
+        );
+      } else {
+        connection.query(
+          'DELETE FROM coffee_heartbox WHERE auth_id = ? AND coffee_id = ?',
+          [Number(userId), Number(coffeeId)],
+          (err, row) => {
+            if (err) {
+              console.log('리스트하트딜리트에러', err);
+            }
+            res.send(row);
+          },
+        );
+      }
+    },
+  );
+});
+
 // 유저 로직-*-----*-*--------------------
 
 app.get('/loginCheck', (req, res) => {
