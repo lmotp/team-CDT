@@ -1,0 +1,42 @@
+.myPage-wrap {
+  width: 79%;
+  margin-top: 87px;
+  padding: 30px 30px 20px;
+}
+
+.myPage-wrap .myPage-header {
+  padding: 20px 0 70px;
+  display: flex;
+  align-items: center;
+}
+
+.myPage-wrap .myPage-header img {
+  width: 80px;
+  height: 80px;
+  margin-right: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.myPage-wrap .myPage-header h2 {
+  margin-top: 0;
+}
+
+.myPage-header .myPage-profile-info {
+  margin: 5px 0 6px 0;
+}
+
+.myPage-header .myPage-profile-info .day,
+.myPage-header .myPage-profile-info .username {
+  margin-right: 10px;
+}
+
+.myPage-header .myPage-profile-info .month,
+.myPage-header .myPage-profile-info .gender {
+  text-transform: uppercase;
+}
+
+.myPage-wrap .myPage-header .comment-icon,
+.myPage-wrap .myPage-header .fa-comments {
+  margin-left: 10px;
+}

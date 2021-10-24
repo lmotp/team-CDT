@@ -4,6 +4,7 @@ import HashTagContents from '../components/HasTag/HashTagContents';
 
 import '../styles/share.css';
 import HashTagButton from '../components/HasTag/HashTagButton';
+import { useParams } from 'react-router';
 
 function Share({ userId }) {
   const [coffeeItem, setCoffeeItem] = useState([]);
@@ -11,9 +12,10 @@ function Share({ userId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [coffeeHeartList, setCoffeeHeartList] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [parentCategory, setParentCategory] = useState('all');
-  const [wow, setWow] = useState(true);
+  const [categoryState, setCategoryState] = useState(true);
   const [hasData, setHasData] = useState(false);
+  const { category } = useParams();
+
   const observer = useRef();
 
   const coffeeItemSet = coffeeItem.map((v) => v.id_coffee_item);
@@ -24,33 +26,23 @@ function Share({ userId }) {
     axios.get(`/share/categories`).then(({ data }) => setCategories(data));
   }, []);
 
-  const categoryHandler = (category) => {
-    setParentCategory(category);
-    setPages(0);
-    setWow(false);
-  };
-
   useEffect(() => {
     setIsLoading(true);
-
-    axios.get(`/share/list/${pages}/${parentCategory}`).then(({ data }) => {
-      console.log(data.length > 0);
-      if (wow) {
+    axios.get(`/share/list/${pages}/${category}`).then(({ data }) => {
+      if (categoryState) {
         setCoffeeItem((prevItems) => {
           return [...new Set([...prevItems, ...data])];
         });
-      } else {
-        setCoffeeItem([]);
-        setWow(true);
       }
       setHasData(data.length > 0);
       setIsLoading(false);
+      setCategoryState(false);
     });
-  }, [pages, parentCategory, wow]);
+  }, [pages, category, categoryState]);
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/share/list/heart/${userId}`).then(({ data }) => setCoffeeHeartList(data));
+      axios.get(`/share/heart/${userId}`).then(({ data }) => setCoffeeHeartList(data));
     }
   }, [userId, pages]);
 
@@ -65,6 +57,7 @@ function Share({ userId }) {
       observer.current = new IntersectionObserver(([{ isIntersecting }]) => {
         if (isIntersecting && hasData) {
           setPages((prevPageNumber) => prevPageNumber + 1);
+          setCategoryState(true);
         }
       });
       if (node) {
@@ -74,14 +67,16 @@ function Share({ userId }) {
     [isLoading, hasData],
   );
 
+  const pagesHandler = useCallback(() => {
+    setPages(0);
+    setCoffeeItem([]);
+    setCategoryState(true);
+  }, [setPages]);
+
   return (
     <div className="share-wrap">
-      {categories.map((category) => (
-        <HashTagButton
-          category={category.coffee_category}
-          categoryHandler={categoryHandler}
-          parentCategory={parentCategory}
-        />
+      {categories.map((childCategory) => (
+        <HashTagButton childCategory={childCategory.coffee_category} category={category} pagesHandler={pagesHandler} />
       ))}
       <div className="share-contents-wrap">
         {coffeeItem.map((v) => {

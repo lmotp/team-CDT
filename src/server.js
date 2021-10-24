@@ -353,9 +353,22 @@ app.get('/share/categories', (req, res) => {
   });
 });
 
-app.get('/share/list/:pages/:category', (req, res) => {
-  const { pages, category } = req.params;
+app.get('/share/list/:pages/:reqCategory', (req, res) => {
+  const { pages, reqCategory } = req.params;
   const list = [];
+
+  let category;
+  if (reqCategory === 'Latte') {
+    category = 'Latte';
+  } else if (reqCategory === 'Hollyccino') {
+    category = 'Hollyccino';
+  } else if (reqCategory === 'Sparkling') {
+    category = 'Sparkling';
+  } else if (reqCategory === 'Coffee') {
+    category = 'Coffee';
+  } else {
+    category = 'all';
+  }
 
   if (category === 'all') {
     connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
@@ -366,6 +379,7 @@ app.get('/share/list/:pages/:category', (req, res) => {
           break;
         }
       }
+
       res.send(list);
     });
   } else {
@@ -382,7 +396,7 @@ app.get('/share/list/:pages/:category', (req, res) => {
   }
 });
 
-app.get('/share/list/heart/:userId', (req, res) => {
+app.get('/share/heart/:userId', (req, res) => {
   const { userId } = req.params;
   connection.query('SELECT coffee_id FROM coffee_heartbox WHERE auth_id = ?', [Number(userId)], (err, row) => {
     if (err) {
@@ -394,6 +408,7 @@ app.get('/share/list/heart/:userId', (req, res) => {
 
 app.post('/share/list/heart', (req, res) => {
   const { userId, coffeeId } = req.body;
+
   connection.query(
     'SELECT * FROM coffee_heartbox WHERE auth_id = ? AND coffee_id = ?',
     [Number(userId), Number(coffeeId)],
@@ -429,7 +444,12 @@ app.post('/share/list/heart', (req, res) => {
 
 app.get('/loginCheck', (req, res) => {
   if (req.session.isLogin) {
-    res.send({ checkLogin: true, username: req.session.user_name, userId: req.session.user_id });
+    res.send({
+      checkLogin: true,
+      username: req.session.user_name,
+      userId: req.session.user_id,
+      user: req.session.user,
+    });
   } else {
     res.send({ checkLogin: false });
   }
@@ -441,7 +461,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select username, password, id from auth', (err, rows) => {
+  connection.query('select * from auth', (err, rows) => {
     if (err) {
       throw err;
     } else {
@@ -453,12 +473,13 @@ app.post('/user/login', (req, res) => {
         return req.body.user_pwd === user.password;
       })[0];
 
-      console.log(authUsername);
-      console.log(authPwd);
+      // console.log(authUsername);
+      // console.log(authPwd);
       if (authUsername && authPwd) {
         req.session.isLogin = true;
         req.session.user_name = req.body.user_name;
         req.session.user_id = authPwd.id;
+        req.session.user = authPwd;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
       } else {
         res.send({ checkLogin: false, reLogin: true });

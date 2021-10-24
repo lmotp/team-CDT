@@ -17,11 +17,13 @@ import './App.css';
 import './styles/base/reset.css';
 import './styles/base/visually-hidden.css';
 import axios from 'axios';
+import MyPage from './pages/MyPage';
 
 export function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState('');
   const [userId, setUserId] = useState('');
+  const [user, setUser] = useState();
 
   useEffect(async () => {
     const res = await axios.get('/loginCheck');
@@ -29,6 +31,7 @@ export function App() {
     setIsLogin(res.data.checkLogin);
     setUsername(res.data.username);
     setUserId(res.data.userId);
+    setUser(res.data.user);
   }, [isLogin]);
 
   return (
@@ -52,6 +55,7 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
+            <Route path="/mypage" render={() => <MyPage user={user} isLogin={isLogin} />} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
