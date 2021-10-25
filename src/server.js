@@ -344,6 +344,8 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
+// -------------------------------------- 추천게시판 api -------------------------------------------------
+
 app.get('/share/categories', (req, res) => {
   connection.query('SELECT coffee_category FROM coffee_categories', (err, row) => {
     if (err) {
@@ -438,6 +440,64 @@ app.post('/share/list/heart', (req, res) => {
       }
     },
   );
+});
+
+// -------------------------------------- 마이페이지 api -------------------------------------------------
+app.get('/mypage/list/:id/:value', (req, res) => {
+  const { id, value } = req.params;
+  let category;
+
+  if (value === '작성글') {
+    category = 'post';
+  } else if (value === '댓글 단 글') {
+    category = 'post_comment';
+  } else if (value === '좋아요 한 글') {
+    category = 'post_heartbox';
+  } else if (value === '좋아요 한 커피메뉴') {
+    category = 'coffee_heartbox';
+  }
+
+  if (category === 'post') {
+    connection.query(`SELECT * FROM ${category} WHERE auth_id = ?`, [Number(id)], (err, row) => {
+      if (err) {
+        console.log('마이페이지 리스트', err);
+      }
+      res.send(row);
+    });
+  } else if (category === 'coffee_heartbox') {
+    connection.query(
+      `SELECT * FROM ${category} INNER JOIN coffee_item ON coffee_item.id_coffee_item = coffee_heartbox.coffee_id WHERE auth_id = ?;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('좋아요한 커피', err);
+        }
+        res.send(row);
+      },
+    );
+  } else if (category === 'post_comment') {
+    connection.query(
+      `SELECT * FROM ${category} INNER JOIN post ON post.post_id = ${category}.post_id WHERE ${category}.auth_id = ? GROUP BY ${category}.post_id;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('작성댓글', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query(
+      `select * from ${category} inner join post on post.post_id = ${category}.post_id WHERE ${category}.auth_id = ?;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('좋아요 한 글', err);
+        }
+        res.send(row);
+      },
+    );
+  }
 });
 
 // 유저 로직-*-----*-*--------------------

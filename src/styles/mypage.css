@@ -18,6 +18,11 @@
   object-fit: cover;
 }
 
+.myPage-wrap .myPage-header .user-icon {
+  font-size: 80px;
+  margin-right: 30px;
+}
+
 .myPage-wrap .myPage-header h2 {
   margin-top: 0;
 }
@@ -39,4 +44,116 @@
 .myPage-wrap .myPage-header .comment-icon,
 .myPage-wrap .myPage-header .fa-comments {
   margin-left: 10px;
+}
+
+.myPage-wrap .tag-box {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.myPage-wrap .tag-box .myPage-button {
+  height: 43px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 3px 12px;
+}
+
+.myPage-wrap .tag-box .myPage-button + .myPage-button {
+  margin-left: 50px;
+}
+
+.myPage-wrap .tag-box .myPage-button.on {
+  color: burlywood;
+  border-bottom: 4px solid burlywood;
+}
+
+/* 마이페이지 리스트 부분 */
+
+.myPage-wrap-box {
+  width: 100%;
+  margin: 20px 0 0;
+  position: relative;
+}
+
+.myPage-wrap-box .myPage-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.myPage-wrap-box .myPage-form:hover {
+  background: #f5f5f5;
+}
+
+.myPage-wrap-box .myPage-form .myPage-form-title {
+  cursor: pointer;
+}
+
+.myPage-wrap-box .myPage-form .myPage-form-info {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #999;
+}
+
+.myPage-form .myPage-form-info .eye,
+.myPage-form .myPage-form-info .heart {
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.myPage-form .myPage-another-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.myPage-form .myPage-another-wrap img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.myPage-form .myPage-another-wrap .myPage-comment-wrap {
+  color: #999999;
+  font-size: 14px;
+  text-align: center;
+  margin-left: 30px;
+}
+
+.myPage-form .myPage-another-wrap .myPage-comment-wrap i {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 마이페이지 리스트(좋아요) 부분 */
+.myPage-wrap-box .myPage-coffee-wrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.myPage-wrap-box .myPage-coffee-wrap .myPage-coffee {
+  text-align: center;
+  cursor: pointer;
+  width: 32%;
+  margin-right: 2%;
+  margin-bottom: 50px;
+  position: relative;
+}
+.myPage-wrap-box .myPage-coffee-wrap .myPage-coffee:nth-of-type(3n) {
+  margin-right: 0;
+}
+
+.myPage-coffee-wrap .myPage-coffee .coffee-img {
+  width: 80%;
+  object-fit: cover;
+}
+
+.myPage-coffee-wrap .myPage-coffee .coffee-name {
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
 }

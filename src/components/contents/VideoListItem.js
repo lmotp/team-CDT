@@ -11,7 +11,7 @@ export default function VideoListItem({ data }) {
   const date = moment(data.date).format('YYYY.MM.DD');
 
   useEffect(() => {
-    if (data.content.includes('youtube')) {
+    if (data?.content.includes('youtube')) {
       const srcMatch = data.content.match(/www.youtube.com\/embed\/([a-zA-Z0-9-_]+)?/gm);
       if (srcMatch !== null) {
         const srcJoin = srcMatch.join();

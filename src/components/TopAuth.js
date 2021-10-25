@@ -23,7 +23,7 @@ function TopAuth({ isLogin, setIsLogin, username }) {
       {isLogin ? (
         <div className="top-auth">
           <div className="inner">
-            <Link to="/mypage" className="profile" aria-label="유저 프로필">
+            <Link to={`/mypage/${username}`} className="profile" aria-label="유저 프로필">
               <i class="far fa-user-circle user-icon"></i>
               <span className="nickname">{username}</span>
             </Link>

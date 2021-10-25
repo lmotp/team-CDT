@@ -55,7 +55,7 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
-            <Route path="/mypage" render={() => <MyPage user={user} isLogin={isLogin} />} />
+            <Route path="/mypage/:username" render={() => <MyPage user={user} isLogin={isLogin} />} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
