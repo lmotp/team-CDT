@@ -500,6 +500,60 @@ app.get('/mypage/list/:id/:value', (req, res) => {
   }
 });
 
+app.get('/mypage/:id/content', (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  connection.query('SELECT * FROM post WHERE auth_id = ?', [Number(id)], (err, row) => {
+    if (err) {
+      console.log('마이페이지 카운터 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.get('/mypage/:id/comment', (req, res) => {
+  const { id } = req.params;
+  connection.query('SELECT * FROM post_comment WHERE auth_id = ?', [Number(id)], (err, row) => {
+    if (err) {
+      console.log('마이페이지 카운터 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.get('/mypage/:id/heart', (req, res) => {
+  const { id } = req.params;
+  connection.query('SELECT * FROM post_heartbox WHERE auth_id = ?', [Number(id)], (err, row) => {
+    if (err) {
+      console.log('마이페이지 카운터 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.get('/mypage/:id/coffeeheart', (req, res) => {
+  const { id } = req.params;
+  connection.query('SELECT * FROM coffee_heartbox WHERE auth_id = ?', [Number(id)], (err, row) => {
+    if (err) {
+      console.log('마이페이지 카운터 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.put('/mypage/profile', upload.single('image'), (req, res) => {
+  const { name, id } = req.body;
+  const image = `/image/${req.file.filename}`;
+
+  connection.query('UPDATE auth SET profileImg = ? , name = ? WHERE id = ?;', [image, name, Number(id)], (err, row) => {
+    if (err) {
+      console.log('프로필업데이트 실패', err);
+    }
+
+    res.send('성공');
+  });
+});
+
 // 유저 로직-*-----*-*--------------------
 
 app.get('/loginCheck', (req, res) => {
