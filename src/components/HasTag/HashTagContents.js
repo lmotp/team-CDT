@@ -35,7 +35,11 @@ function HashTagContents({ data, moreObserver, userId, on }) {
         <div className="hashTagContents" key={data.id_coffee_item}>
           <img onClick={openModal} src={data.coffee_img} alt={data.coffee_name} />
           <h2>{data.coffee_name}</h2>
-          <i onClick={heartStateHandler} class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}></i>
+          <i
+            ref={moreObserver}
+            onClick={heartStateHandler}
+            class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}
+          ></i>
           <Modals modalOpen={modalOpen} close={closeModal}>
             <ModalContents contents={data} closeModal={closeModal} />
           </Modals>
