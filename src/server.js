@@ -500,9 +500,18 @@ app.get('/mypage/list/:id/:value', (req, res) => {
   }
 });
 
+app.get('/mypage/:id', (req, res) => {
+  const { id } = req.params;
+  connection.query('SELECT * FROM auth WHERE id = ?', [Number(id)], (err, row) => {
+    if (err) {
+      console.log('마이페이지 유저 에러', err);
+    }
+    res.send(row);
+  });
+});
+
 app.get('/mypage/:id/content', (req, res) => {
   const { id } = req.params;
-  console.log(id);
   connection.query('SELECT * FROM post WHERE auth_id = ?', [Number(id)], (err, row) => {
     if (err) {
       console.log('마이페이지 카운터 에러', err);
@@ -543,15 +552,21 @@ app.get('/mypage/:id/coffeeheart', (req, res) => {
 
 app.put('/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
-  const image = `/image/${req.file.filename}`;
+  const image = req.file ? `/image/${req.file?.filename}` : req.session.user.profileImg;
+  const nickname = name ? name : req.session.user.name;
 
-  connection.query('UPDATE auth SET profileImg = ? , name = ? WHERE id = ?;', [image, name, Number(id)], (err, row) => {
-    if (err) {
-      console.log('프로필업데이트 실패', err);
-    }
-
-    res.send('성공');
-  });
+  connection.query(
+    'UPDATE auth SET profileImg = ? , name = ? WHERE id = ?;',
+    [image, nickname, Number(id)],
+    (err, row) => {
+      if (err) {
+        console.log('프로필업데이트 실패', err);
+      }
+      req.session.user_profileImg = image;
+      req.session.user_name = nickname;
+      res.send('성공');
+    },
+  );
 });
 
 // 유저 로직-*-----*-*--------------------
@@ -561,6 +576,7 @@ app.get('/loginCheck', (req, res) => {
     res.send({
       checkLogin: true,
       username: req.session.user_name,
+      userProfileImg: req.session.user_profileImg,
       userId: req.session.user_id,
       user: req.session.user,
     });
@@ -591,7 +607,8 @@ app.post('/user/login', (req, res) => {
       // console.log(authPwd);
       if (authUsername && authPwd) {
         req.session.isLogin = true;
-        req.session.user_name = req.body.user_name;
+        req.session.user_name = authPwd.name;
+        req.session.user_profileImg = authPwd.profileImg;
         req.session.user_id = authPwd.id;
         req.session.user = authPwd;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });

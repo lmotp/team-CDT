@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ModalMyPage({ profileImg, setValue, value, chnageHandler, profileThumbnail }) {
+function ModalMyPage({ userProfileImg, setValue, value, chnageHandler, profileThumbnail }) {
   return (
     <div className="myPage-modal">
       <h2>SCDT</h2>
@@ -8,8 +8,8 @@ function ModalMyPage({ profileImg, setValue, value, chnageHandler, profileThumbn
       <div className="myPage-change">
         <div className="profile-box">
           <div>
-            {profileImg && !profileThumbnail ? (
-              <img src={profileImg} alt="프로필이미지" />
+            {userProfileImg && !profileThumbnail ? (
+              <img src={userProfileImg} alt="프로필이미지" />
             ) : profileThumbnail ? (
               <img src={profileThumbnail} alt="프로필이미지"></img>
             ) : (
