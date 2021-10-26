@@ -344,32 +344,172 @@ app.post('/notice/list', (req, res) => {
   );
 });
 
-app.get('/share/list/:pages', (req, res) => {
-  console.log(req.params.pages);
+// -------------------------------------- 추천게시판 api -------------------------------------------------
 
-  const { pages } = req.params;
-  const list = [];
-  connection.query('SELECT * FROM coffee_item', (err, row) => {
-    for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
-      if (row[i]) {
-        list.push(row[i]);
-      } else {
-        break;
-      }
+app.get('/share/categories', (req, res) => {
+  connection.query('SELECT coffee_category FROM coffee_categories', (err, row) => {
+    if (err) {
+      console.log('카테고리 가져오기 에러');
     }
-    res.send(list);
-    console.log(list);
+    res.send(row);
   });
 });
 
-app.put('/share/list/id', (req, res) => {
-  // console.log(req.body);
+app.get('/share/list/:pages/:reqCategory', (req, res) => {
+  const { pages, reqCategory } = req.params;
+  const list = [];
+
+  let category;
+  if (reqCategory === 'Latte') {
+    category = 'Latte';
+  } else if (reqCategory === 'Hollyccino') {
+    category = 'Hollyccino';
+  } else if (reqCategory === 'Sparkling') {
+    category = 'Sparkling';
+  } else if (reqCategory === 'Coffee') {
+    category = 'Coffee';
+  } else {
+    category = 'all';
+  }
+
+  if (category === 'all') {
+    connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
+      for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
+        if (row[i]) {
+          list.push(row[i]);
+        } else {
+          break;
+        }
+      }
+
+      res.send(list);
+    });
+  } else {
+    connection.query('SELECT * FROM coffee_item WHERE coffee_category = ?', [category], (err, row) => {
+      for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
+        if (row[i]) {
+          list.push(row[i]);
+        } else {
+          break;
+        }
+      }
+      res.send(list);
+    });
+  }
 });
+
+app.get('/share/heart/:userId', (req, res) => {
+  const { userId } = req.params;
+  connection.query('SELECT coffee_id FROM coffee_heartbox WHERE auth_id = ?', [Number(userId)], (err, row) => {
+    if (err) {
+      console.log('여기여기 법에 의한 에러', err);
+    }
+    res.send(row);
+  });
+});
+
+app.post('/share/list/heart', (req, res) => {
+  const { userId, coffeeId } = req.body;
+
+  connection.query(
+    'SELECT * FROM coffee_heartbox WHERE auth_id = ? AND coffee_id = ?',
+    [Number(userId), Number(coffeeId)],
+    (err, row) => {
+      if (row.length <= 0) {
+        connection.query(
+          'INSERT INTO coffee_heartbox VALUES (null,?,?,NOW(),NOW())',
+          [Number(userId), Number(coffeeId)],
+          (err, row) => {
+            if (err) {
+              console.log('리스트하트에러', err);
+            }
+            res.send(row);
+          },
+        );
+      } else {
+        connection.query(
+          'DELETE FROM coffee_heartbox WHERE auth_id = ? AND coffee_id = ?',
+          [Number(userId), Number(coffeeId)],
+          (err, row) => {
+            if (err) {
+              console.log('리스트하트딜리트에러', err);
+            }
+            res.send(row);
+          },
+        );
+      }
+    },
+  );
+});
+
+// -------------------------------------- 마이페이지 api -------------------------------------------------
+app.get('/mypage/list/:id/:value', (req, res) => {
+  const { id, value } = req.params;
+  let category;
+
+  if (value === '작성글') {
+    category = 'post';
+  } else if (value === '댓글 단 글') {
+    category = 'post_comment';
+  } else if (value === '좋아요 한 글') {
+    category = 'post_heartbox';
+  } else if (value === '좋아요 한 커피메뉴') {
+    category = 'coffee_heartbox';
+  }
+
+  if (category === 'post') {
+    connection.query(`SELECT * FROM ${category} WHERE auth_id = ?`, [Number(id)], (err, row) => {
+      if (err) {
+        console.log('마이페이지 리스트', err);
+      }
+      res.send(row);
+    });
+  } else if (category === 'coffee_heartbox') {
+    connection.query(
+      `SELECT * FROM ${category} INNER JOIN coffee_item ON coffee_item.id_coffee_item = coffee_heartbox.coffee_id WHERE auth_id = ?;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('좋아요한 커피', err);
+        }
+        res.send(row);
+      },
+    );
+  } else if (category === 'post_comment') {
+    connection.query(
+      `SELECT * FROM ${category} INNER JOIN post ON post.post_id = ${category}.post_id WHERE ${category}.auth_id = ? GROUP BY ${category}.post_id;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('작성댓글', err);
+        }
+        res.send(row);
+      },
+    );
+  } else {
+    connection.query(
+      `select * from ${category} inner join post on post.post_id = ${category}.post_id WHERE ${category}.auth_id = ?;`,
+      [Number(id)],
+      (err, row) => {
+        if (err) {
+          console.log('좋아요 한 글', err);
+        }
+        res.send(row);
+      },
+    );
+  }
+});
+
 // 유저 로직-*-----*-*--------------------
 
 app.get('/loginCheck', (req, res) => {
   if (req.session.isLogin) {
-    res.send({ checkLogin: true, username: req.session.user_name, userId: req.session.user_id });
+    res.send({
+      checkLogin: true,
+      username: req.session.user_name,
+      userId: req.session.user_id,
+      user: req.session.user,
+    });
   } else {
     res.send({ checkLogin: false });
   }
@@ -381,7 +521,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select username, password, id from auth', (err, rows) => {
+  connection.query('select * from auth', (err, rows) => {
     if (err) {
       throw err;
     } else {
@@ -393,12 +533,13 @@ app.post('/user/login', (req, res) => {
         return req.body.user_pwd === user.password;
       })[0];
 
-      console.log(authUsername);
-      console.log(authPwd);
+      // console.log(authUsername);
+      // console.log(authPwd);
       if (authUsername && authPwd) {
         req.session.isLogin = true;
         req.session.user_name = req.body.user_name;
         req.session.user_id = authPwd.id;
+        req.session.user = authPwd;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
       } else {
         res.send({ checkLogin: false, reLogin: true });

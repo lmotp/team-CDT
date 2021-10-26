@@ -18,10 +18,6 @@ export default function ArticleInfo(props) {
         <i class="far fa-heart heart"></i>
         {props.heart}
       </span>
-      <span className="comment-box">
-        <i class="far fa-comment-dots comment-icon"></i>
-        <span class="comment-count">{props.count}</span>
-      </span>
     </div>
   );
 }
