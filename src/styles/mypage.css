@@ -27,6 +27,13 @@
   margin-top: 0;
 }
 
+.myPage-wrap .myPage-header h2 button {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #a5a5a5;
+  cursor: pointer;
+}
+
 .myPage-header .myPage-profile-info {
   margin: 5px 0 6px 0;
 }
@@ -41,8 +48,9 @@
   text-transform: uppercase;
 }
 
-.myPage-wrap .myPage-header .comment-icon,
-.myPage-wrap .myPage-header .fa-comments {
+.myPage-wrap .myPage-header .heart,
+.myPage-wrap .myPage-header .fa-comments,
+.myPage-wrap .myPage-header .fa-kiss-wink-heart {
   margin-left: 10px;
 }
 
@@ -64,6 +72,107 @@
 .myPage-wrap .tag-box .myPage-button.on {
   color: burlywood;
   border-bottom: 4px solid burlywood;
+}
+
+/* 모달창 부분 */
+.myPage-wrap .myPage-header .myPage-modal {
+  text-align: left;
+  width: 680px;
+  align-items: flex-start;
+}
+
+.myPage-wrap .myPage-header .myPage-modal .myPage-change {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.myPage-wrap .myPage-header .myPage-modal .profile-box {
+  position: relative;
+}
+
+.myPage-modal .profile-box #imgInput {
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  left: auto;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -9999px;
+  visibility: hidden;
+}
+
+.myPage-modal .profile-box label {
+  position: absolute;
+  left: 74px;
+  top: 70px;
+  width: 34px;
+  height: 34px;
+  background-image: url(https://dszw1qtcnsa5e.cloudfront.net/bin/live/console-community-view/assets/web/pc/btn-edit-profile.png);
+  text-indent: -9999px;
+  cursor: pointer;
+}
+
+.myPage-wrap .myPage-header .myPage-modal .nick-input {
+  position: relative;
+  margin-top: 15px;
+}
+
+.myPage-wrap .myPage-header .myPage-modal img {
+  width: 106px;
+  height: 106px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.myPage-wrap .myPage-header .myPage-modal i {
+  font-size: 106px;
+}
+
+.myPage-wrap .myPage-header .myPage-modal input {
+  width: 440px;
+  height: 44px;
+  padding: 0 10px;
+  border: 1px solid #d1d1d1;
+}
+
+.myPage-wrap .myPage-header .myPage-modal button {
+  overflow: hidden;
+  position: absolute;
+  right: 20px;
+  top: 14px;
+  width: 17px;
+  height: 17px;
+  background-image: url(https://dszw1qtcnsa5e.cloudfront.net/bin/live/console-community-view/assets/web/pc/btn-delete.gif);
+  background-size: 100% auto;
+  text-indent: -9999px;
+}
+
+.myPage-wrap .myPage-header .modal section {
+  height: 380px;
+}
+
+.myPage-wrap .myPage-header .modal main {
+  padding: 40px 40px 30px;
+}
+
+.myPage-wrap .myPage-header .modal footer {
+  text-align: center;
+  padding: 35px 16px;
+}
+
+.myPage-wrap .myPage-header .modal footer button {
+  width: 105px;
+  height: 45px;
+  padding: 0;
+  color: #999;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 0;
+  margin: 0 4px;
 }
 
 /* 마이페이지 리스트 부분 */
