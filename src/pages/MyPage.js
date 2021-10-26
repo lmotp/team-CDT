@@ -7,7 +7,7 @@ import MyPageContents from '../components/MyPage/MyPageContents';
 import MyPageTapBox from '../components/MyPage/MyPageTapBox';
 import '../styles/mypage.css';
 
-function MyPage({ user, isLogin }) {
+function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUserProfileImg }) {
   const { profileImg, name, username, bYear, bMonth, bDay, gender, id } = user;
   const [parentValue, setParentValue] = useState('작성글');
   const [contents, setContents] = useState([]);
@@ -16,9 +16,10 @@ function MyPage({ user, isLogin }) {
   const [heartCount, setHeartCount] = useState(0);
   const [coffeeHeartCount, setCoffeeHeartCount] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const [value, setValue] = useState(name);
+  const [value, setValue] = useState(usernames);
   const [fileName, setFileName] = useState('');
   const [profileThumbnail, setProfileThumbnail] = useState('');
+  const [status, setStatus] = useState(true);
   const on = true;
 
   const openModal = () => {
@@ -40,6 +41,7 @@ function MyPage({ user, isLogin }) {
       setProfileThumbnail('');
       setFileName('');
       setModalOpen(false);
+      setStatus(false);
     });
   };
 
@@ -66,20 +68,33 @@ function MyPage({ user, isLogin }) {
     axios.get(`/mypage/list/${id}/${parentValue}`).then(({ data }) => setContents(data));
   }, [id, parentValue]);
 
+  useEffect(() => {
+    axios.get('/loginCheck').then(({ data }) => {
+      console.log(data);
+      setUsername(data.username);
+      setUserProfileImg(data.userProfileImg);
+      setStatus(true);
+    });
+  }, [userProfileImg, username, setUsername, setUserProfileImg, status]);
+
   return (
     <section className="myPage-wrap">
       <div className="myPage-header">
-        {profileImg ? <img src={profileImg} alt="프로필이미지" /> : <i className="far fa-user-circle user-icon"></i>}
+        {userProfileImg ? (
+          <img src={userProfileImg} alt="프로필이미지" />
+        ) : (
+          <i className="far fa-user-circle user-icon"></i>
+        )}
         <div className="myPage-profile">
           <h2>
-            {name}
+            {usernames}
             <button onClick={openModal} className="changeHandler">
               수정
             </button>
           </h2>
           <Modals modalOpen={modalOpen} close={closeModal} on={on} change={changeModal}>
             <ModalMyPage
-              profileImg={profileImg}
+              userProfileImg={userProfileImg}
               setValue={setValue}
               value={value}
               chnageHandler={chnageProfileImg}
@@ -110,7 +125,7 @@ function MyPage({ user, isLogin }) {
         {parentValue !== '좋아요 한 커피메뉴' ? (
           <div>
             {contents.map((content, index) => {
-              return <MyPageContents contents={content} index={index} name={name} parentValue={parentValue} />;
+              return <MyPageContents contents={content} index={index} usernames={usernames} />;
             })}
           </div>
         ) : (

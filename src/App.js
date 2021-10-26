@@ -22,6 +22,7 @@ import MyPage from './pages/MyPage';
 export function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState('');
+  const [userProfileImg, setUserProfileImg] = useState('');
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState();
 
@@ -30,9 +31,10 @@ export function App() {
     console.log(res.data.checkLogin);
     setIsLogin(res.data.checkLogin);
     setUsername(res.data.username);
+    setUserProfileImg(res.data.userProfileImg);
     setUserId(res.data.userId);
     setUser(res.data.user);
-  }, [isLogin]);
+  }, [isLogin, username, userProfileImg]);
 
   return (
     <Context>
@@ -55,7 +57,19 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
-            <Route path="/mypage/:username" render={() => <MyPage user={user} isLogin={isLogin} />} />
+            <Route
+              path="/mypage/:username"
+              render={() => (
+                <MyPage
+                  user={user}
+                  isLogin={isLogin}
+                  userProfileImg={userProfileImg}
+                  usernames={username}
+                  setUsername={setUsername}
+                  setUserProfileImg={setUserProfileImg}
+                />
+              )}
+            />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
