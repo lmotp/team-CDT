@@ -3,7 +3,7 @@ import DetailCommentForm from './DetailCommentForm';
 import '../../styles/detail.css';
 import DetailPagination from './DetailPagination';
 
-function DetailCommentSection({ comment, recomments, loadingHandler, userId }) {
+function DetailCommentSection({ comment, recomments, loadingHandler, userId, scorllHight }) {
   const postPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postPerPage;
@@ -13,6 +13,7 @@ function DetailCommentSection({ comment, recomments, loadingHandler, userId }) {
   // Change Page
   const paginate = (pageNumber) => () => {
     setCurrentPage(pageNumber);
+    window.scrollTo(0, scorllHight);
   };
 
   return (

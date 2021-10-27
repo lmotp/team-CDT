@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function TopAuth({ isLogin, setIsLogin, username }) {
+function TopAuth({ isLogin, setIsLogin, username, userProfileImg }) {
   /*const handleLogout = () => {
     const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
     setLogin({ ...login, checkLogin: !yesLogout });
@@ -24,7 +24,11 @@ function TopAuth({ isLogin, setIsLogin, username }) {
         <div className="top-auth">
           <div className="inner">
             <Link to={`/mypage/${username}`} className="profile" aria-label="유저 프로필">
-              <i class="far fa-user-circle user-icon"></i>
+              {userProfileImg ? (
+                <img src={userProfileImg} alt="프로필이미지" />
+              ) : (
+                <i class="far fa-user-circle user-icon"></i>
+              )}
               <span className="nickname">{username}</span>
             </Link>
             <button type="button" className="logout" onClick={handleLogout}>

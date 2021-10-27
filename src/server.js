@@ -595,7 +595,6 @@ app.post('/user/login', (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log(rows);
       const authUsername = rows.filter((user) => {
         return req.body.user_name === user.username;
       })[0];
@@ -603,8 +602,6 @@ app.post('/user/login', (req, res) => {
         return req.body.user_pwd === user.password;
       })[0];
 
-      // console.log(authUsername);
-      // console.log(authPwd);
       if (authUsername && authPwd) {
         req.session.isLogin = true;
         req.session.user_name = authPwd.name;

@@ -8,7 +8,7 @@ import MyPageTapBox from '../components/MyPage/MyPageTapBox';
 import '../styles/mypage.css';
 
 function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUserProfileImg }) {
-  const { profileImg, name, username, bYear, bMonth, bDay, gender, id } = user;
+  const { username, bYear, bMonth, bDay, gender, id } = user;
   const [parentValue, setParentValue] = useState('작성글');
   const [contents, setContents] = useState([]);
   const [contentCount, setConentCount] = useState(0);
@@ -58,6 +58,16 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    axios.get('/loginCheck').then(({ data }) => {
+      console.log(data);
+      setUsername(data.username);
+      setUserProfileImg(data.userProfileImg);
+      setStatus(true);
+    });
+  }, [userProfileImg, username, setUsername, setUserProfileImg, status]);
+
+  useEffect(() => {
     axios.get(`/mypage/${id}/content`).then(({ data }) => setConentCount(data.length));
     axios.get(`/mypage/${id}/comment`).then(({ data }) => setCommentCount(data.length));
     axios.get(`/mypage/${id}/heart`).then(({ data }) => setHeartCount(data.length));
@@ -67,15 +77,6 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   useEffect(() => {
     axios.get(`/mypage/list/${id}/${parentValue}`).then(({ data }) => setContents(data));
   }, [id, parentValue]);
-
-  useEffect(() => {
-    axios.get('/loginCheck').then(({ data }) => {
-      console.log(data);
-      setUsername(data.username);
-      setUserProfileImg(data.userProfileImg);
-      setStatus(true);
-    });
-  }, [userProfileImg, username, setUsername, setUserProfileImg, status]);
 
   return (
     <section className="myPage-wrap">
