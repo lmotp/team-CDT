@@ -40,10 +40,16 @@ export function App() {
     <Context>
       <HashRouter>
         <div className="contain">
-          <HeaderGnb isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
+          <HeaderGnb
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            username={username}
+            userProfileImg={userProfileImg}
+            setUsername={setUsername}
+          />
           <Switch>
             <Route exact path="/" component={Contents} />
-            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} />} />
+            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} isLogin={isLogin} />} />
             <Route path="/video_list" component={Video} />
             <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
             <Route exact path="/foodgame" component={FoodGame} />

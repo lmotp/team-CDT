@@ -10,16 +10,19 @@ import { useParams } from 'react-router';
 import NotFound from './NotFound';
 import Loading from './Loading';
 
-function DetailPage({ userId }) {
+function DetailPage({ userId, isLogin }) {
+  const [heartCount, setHeartCount] = useState(0);
   const [contents, setContents] = useState('');
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const commentCount = comment.length + recomments.length;
   const [noticeList, setNoticeList] = useState([]);
+  const [scorllHight, setScrollHight] = useState(0);
   const { post_id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios.post('/detailpage/views', { postId: post_id });
     axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
@@ -38,7 +41,7 @@ function DetailPage({ userId }) {
     axios.post('/detailpage/comment/count', { postId: post_id, count: commentCount });
 
     axios.post('/notice/list', { board: contents?.category }).then((res) => setNoticeList(res.data));
-  }, [post_id, isLoading, commentCount, contents?.category]);
+  }, [post_id, isLoading, commentCount, contents?.category, heartCount]);
 
   const loadingHandler = () => {
     return setIsLoading(false);
@@ -49,14 +52,27 @@ function DetailPage({ userId }) {
       {contents ? (
         <div className="detail-wrap">
           <DetailHeader contents={contents} userId={userId} postId={post_id} />
-          <DetailContent contents={contents} postId={post_id} userId={userId} />
-          <DetailComment loadingHandler={loadingHandler} count={commentCount} userId={userId} />
+          <DetailContent
+            contents={contents}
+            postId={post_id}
+            userId={userId}
+            heartCount={heartCount}
+            setHeartCount={setHeartCount}
+            isLogin={isLogin}
+          />
+          <DetailComment
+            loadingHandler={loadingHandler}
+            count={commentCount}
+            userId={userId}
+            setScrollHight={setScrollHight}
+          />
           {isLoading ? (
             <DetailCommentSection
               userId={userId}
               loadingHandler={loadingHandler}
               comment={comment}
               recomments={recomments}
+              scorllHight={scorllHight}
             />
           ) : (
             <Loading />
