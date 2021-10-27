@@ -23,6 +23,7 @@ function Share({ userId }) {
   const heartCoffee = coffeeItemSet.filter((v) => heartCoffeItemSet.includes(v));
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios.get(`/share/categories`).then(({ data }) => setCategories(data));
   }, []);
 

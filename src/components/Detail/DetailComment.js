@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 
-function DetailComment({ count, loadingHandler, userId }) {
+function DetailComment({ count, loadingHandler, userId, setScrollHight }) {
   const [value, setValue] = useState('');
   const { post_id } = useParams();
+  const commentRef = useRef();
+
+  useEffect(() => {
+    setScrollHight(commentRef.current.offsetTop);
+  }, [post_id, setScrollHight]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -28,7 +33,7 @@ function DetailComment({ count, loadingHandler, userId }) {
   };
 
   return (
-    <div className="comment-wrap">
+    <div className="comment-wrap" ref={commentRef}>
       <div className="comment-count">댓글 {count}</div>
       <div className="comment-wrap-form">
         <form onSubmit={submitHandler}>

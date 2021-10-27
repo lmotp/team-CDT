@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFoodGameExample } from '../../Context';
 import '../../styles/foodGame.css';
@@ -11,6 +11,10 @@ function FoodGame() {
       .fill(0)
       .map((v) => v),
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const countPlus = (e) => {
     const id = e.target.id;

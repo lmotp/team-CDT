@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import { Link } from 'react-router-dom';
 
-function MyPageContents({ contents, index, name, parentValue }) {
+function MyPageContents({ contents, index, usernames }) {
   const [imgUrl, setImgUrl] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function MyPageContents({ contents, index, name, parentValue }) {
             {contents.title}
           </div>
           <div className="myPage-form-info">
-            {name} &nbsp;
+            {usernames} &nbsp;
             {moment(contents.createdAt).format('YYYY년 MM월 DD일')}
             <i className="far fa-eye eye"></i>
             {contents.views}

@@ -22,6 +22,7 @@ import MyPage from './pages/MyPage';
 export function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState('');
+  const [userProfileImg, setUserProfileImg] = useState('');
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState();
 
@@ -30,18 +31,25 @@ export function App() {
     console.log(res.data.checkLogin);
     setIsLogin(res.data.checkLogin);
     setUsername(res.data.username);
+    setUserProfileImg(res.data.userProfileImg);
     setUserId(res.data.userId);
     setUser(res.data.user);
-  }, [isLogin]);
+  }, [isLogin, username, userProfileImg]);
 
   return (
     <Context>
       <HashRouter>
         <div className="contain">
-          <HeaderGnb isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
+          <HeaderGnb
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            username={username}
+            userProfileImg={userProfileImg}
+            setUsername={setUsername}
+          />
           <Switch>
             <Route exact path="/" component={Contents} />
-            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} />} />
+            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} isLogin={isLogin} />} />
             <Route path="/video_list" component={Video} />
             <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
             <Route exact path="/foodgame" component={FoodGame} />
@@ -55,7 +63,19 @@ export function App() {
               )}
             />
             <Route path="/auth" component={Auth} />
-            <Route path="/mypage/:username" render={() => <MyPage user={user} isLogin={isLogin} />} />
+            <Route
+              path="/mypage/:username"
+              render={() => (
+                <MyPage
+                  user={user}
+                  isLogin={isLogin}
+                  userProfileImg={userProfileImg}
+                  usernames={username}
+                  setUsername={setUsername}
+                  setUserProfileImg={setUserProfileImg}
+                />
+              )}
+            />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>

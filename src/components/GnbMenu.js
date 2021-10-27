@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function GnbMenu() {
+export default function GnbMenu({ scrollTop }) {
   const handleChevron = (e) => {
     e.preventDefault();
     if (e.target.className === 'gnb-menu-item-chevron-down') {
@@ -22,7 +22,7 @@ export default function GnbMenu() {
       <>
         {item.items.map((smallItem) => {
           return (
-            <li className="list-item" key={index}>
+            <li className="list-item" key={index} onClick={scrollTop}>
               <Link to={item.url} aria-label={item.value}>
                 {smallItem}
               </Link>
