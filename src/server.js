@@ -6,26 +6,26 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
 
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const options = {
-  host: '39.123.4.73',
+  host: process.env.DB_HOST,
   port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
 const sessionStore = new MysqlStore(options);
 
-require('dotenv').config({ path: __dirname + '/.env' });
-
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: '39.123.4.73',
+  host: process.env.DB_HOST,
   port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 connection.connect();
@@ -333,7 +333,7 @@ app.post('/notice/list', (req, res) => {
   }
 
   connection.query(
-    'SELECT post_id,count,heart,name,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN auth ON post.auth_id = auth.id WHERE category = ?',
+    'SELECT post_id,count,heart,name,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN auth ON post.auth_id = auth.id WHERE category = ? ORDER BY post_id DESC',
     [category],
     (err, row) => {
       if (err) {

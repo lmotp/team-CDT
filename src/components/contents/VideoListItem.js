@@ -5,10 +5,11 @@ import './../../styles/layouts/video-contents.css';
 
 import ArticleInfo from './ArticleInfo';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function VideoListItem({ data }) {
   const [imgUrl, setImgUrl] = useState([]);
-  const date = moment(data.date).format('YYYY.MM.DD');
+  const date = moment(data.createdAt).format('YYYY.MM.DD');
 
   useEffect(() => {
     if (data?.content.includes('youtube')) {
@@ -21,10 +22,14 @@ export default function VideoListItem({ data }) {
     }
   }, [data.content]);
 
+  const viewsPlus = () => {
+    axios.post('/detailpage/views', { postId: data.post_id });
+  };
+
   return (
     <>
       <li key={data.post_id} className="video-contents-list-item">
-        <Link to={`/detailpage/${data.post_id}`}>
+        <Link to={`/detailpage/${data.post_id}`} onClick={viewsPlus}>
           <div class="video-thumb">
             <img src={`https://img.youtube.com/vi/${imgUrl}/mqdefault.jpg`} alt={data.alt} />
             <i class="far fa-play-circle play-icon"></i>

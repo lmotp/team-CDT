@@ -5,10 +5,12 @@ import Modals from '../components/Modal/Modals';
 import MyPageCoffee from '../components/MyPage/MyPageCoffee';
 import MyPageContents from '../components/MyPage/MyPageContents';
 import MyPageTapBox from '../components/MyPage/MyPageTapBox';
+import { useHistory } from 'react-router-dom';
 import '../styles/mypage.css';
 
 function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUserProfileImg }) {
-  const { username, bYear, bMonth, bDay, gender, id } = user;
+  const { username, bYear, bMonth, bDay, gender } = user;
+  const [userId, setUserId] = useState('');
   const [parentValue, setParentValue] = useState('작성글');
   const [contents, setContents] = useState([]);
   const [contentCount, setConentCount] = useState(0);
@@ -20,6 +22,8 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   const [fileName, setFileName] = useState('');
   const [profileThumbnail, setProfileThumbnail] = useState('');
   const [status, setStatus] = useState(true);
+  const history = useHistory();
+
   const on = true;
 
   const openModal = () => {
@@ -35,7 +39,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
     const formData = new FormData();
     formData.append('image', fileName);
     formData.append('name', value);
-    formData.append('id', id);
+    formData.append('id', userId);
 
     axios.put(`/mypage/profile`, formData).then(() => {
       setProfileThumbnail('');
@@ -58,25 +62,36 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   };
 
   useEffect(() => {
+    if (!isLogin) {
+      history.push('/');
+      return;
+    }
+
     window.scrollTo(0, 0);
     axios.get('/loginCheck').then(({ data }) => {
-      console.log(data);
       setUsername(data.username);
       setUserProfileImg(data.userProfileImg);
+      setUserId(data.userId);
       setStatus(true);
     });
-  }, [userProfileImg, username, setUsername, setUserProfileImg, status]);
+  }, [userProfileImg, username, setUsername, setUserProfileImg, status, isLogin, history]);
 
   useEffect(() => {
-    axios.get(`/mypage/${id}/content`).then(({ data }) => setConentCount(data.length));
-    axios.get(`/mypage/${id}/comment`).then(({ data }) => setCommentCount(data.length));
-    axios.get(`/mypage/${id}/heart`).then(({ data }) => setHeartCount(data.length));
-    axios.get(`/mypage/${id}/coffeeheart`).then(({ data }) => setCoffeeHeartCount(data.length));
-  }, [id]);
+    if (userId) {
+      axios.get(`/mypage/${userId}/content`).then(({ data }) => setConentCount(data.length));
+      axios.get(`/mypage/${userId}/comment`).then(({ data }) => setCommentCount(data.length));
+      axios.get(`/mypage/${userId}/heart`).then(({ data }) => setHeartCount(data.length));
+      axios.get(`/mypage/${userId}/coffeeheart`).then(({ data }) => setCoffeeHeartCount(data.length));
+      console.log('배돈');
+    }
+  }, [userId]);
 
   useEffect(() => {
-    axios.get(`/mypage/list/${id}/${parentValue}`).then(({ data }) => setContents(data));
-  }, [id, parentValue]);
+    if (userId) {
+      axios.get(`/mypage/list/${userId}/${parentValue}`).then(({ data }) => setContents(data));
+      console.log('배돈');
+    }
+  }, [userId, parentValue]);
 
   return (
     <section className="myPage-wrap">

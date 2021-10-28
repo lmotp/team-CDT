@@ -27,7 +27,7 @@ export default function Board() {
   const boards = spliceBoardList.map((boardItem, index) => {
     return (
       <BoardItem
-        date={boardItem.date}
+        date={boardItem.createdAt}
         views={boardItem.views}
         heart={boardItem.heart}
         img={boardItem.img}
