@@ -38,8 +38,8 @@
 }
 
 .profile img {
-  width: 30px;
-  height: auto;
+  width: 35px;
+  height: 35px;
   object-fit: cover;
   border-radius: 50%;
 }

@@ -6,9 +6,14 @@ import ArticleInfo from './ArticleInfo';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function BoardItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
+
+  const viewsPlus = () => {
+    axios.post('/detailpage/views', { postId: props.postId });
+  };
 
   useEffect(() => {
     if (props.content.includes('img')) {
@@ -23,7 +28,7 @@ export default function BoardItem(props) {
 
   return (
     <li className="main-news-list-item">
-      <Link to={`/detailpage/${props.postId}`}>
+      <Link to={`/detailpage/${props.postId}`} onClick={viewsPlus}>
         <p>
           <span style={{ color: 'burlywood' }}>[{props.category}]</span>
           <span class="menu-color">{props.bracket ? ` [${props.bracket}]` : null}</span>

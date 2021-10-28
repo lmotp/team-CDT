@@ -16,6 +16,7 @@ function DetailPage({ userId, isLogin }) {
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const commentCount = comment.length + recomments.length;
   const [noticeList, setNoticeList] = useState([]);
   const [scorllHight, setScrollHight] = useState(0);
@@ -23,7 +24,6 @@ function DetailPage({ userId, isLogin }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.post('/detailpage/views', { postId: post_id });
     axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
 
@@ -73,11 +73,13 @@ function DetailPage({ userId, isLogin }) {
               comment={comment}
               recomments={recomments}
               scorllHight={scorllHight}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
           ) : (
             <Loading />
           )}
-          <DetailList category={contents.category} noticeList={noticeList} />
+          <DetailList category={contents.category} noticeList={noticeList} setCurrentPage={setCurrentPage} />
         </div>
       ) : (
         <NotFound />

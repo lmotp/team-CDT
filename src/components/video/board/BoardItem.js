@@ -5,9 +5,14 @@ import moment from 'moment';
 import './../../../styles/layouts/video-board/board-item.css';
 
 import ArticleInfo from './ArticleInfo';
+import axios from 'axios';
 
 export default function BoardItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
+
+  const viewsPlus = () => {
+    axios.post('/detailpage/views', { postId: props.postId });
+  };
 
   useEffect(() => {
     if (props.content.includes('youtube')) {
@@ -23,7 +28,7 @@ export default function BoardItem(props) {
   const date = moment(props.date).format('YYYY.MM.DD');
   return (
     <li key={props.index} className="video-list-item">
-      <Link to={`/detailpage/${props.postId}`}>
+      <Link to={`/detailpage/${props.postId}`} onClick={viewsPlus}>
         <div class="video-item-thumb">
           <img src={`https://img.youtube.com/vi/${imgUrl}/mqdefault.jpg`} alt={props.alt} />
           <i class="far fa-play-circle video-play-icon"></i>

@@ -21,18 +21,27 @@ export default function HeaderGnb({ isLogin, setIsLogin, username, userProfileIm
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
   };
+
   const handleSearchButton = () => {
     setInputValue('');
   };
+
   const handleWriteButton = () => {
-    let yes_login = window.confirm('로그인이 필요합니다.');
-    if (!isLogin.checkLogin && yes_login === true) {
+    if (isLogin) {
       window.scrollTo(0, 0);
       history.push('/uploadform');
-    } else {
       return;
+    } else {
+      let yes_login = window.confirm('로그인이 필요합니다.');
+      if (!isLogin.checkLogin && yes_login === true) {
+        window.scrollTo(0, 0);
+        history.push('/uploadform');
+      } else {
+        return;
+      }
     }
   };
+
   const gotoGameButton = () => {
     window.scrollTo(0, 0);
     history.push('/foodgame');

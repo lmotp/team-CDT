@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DetailCommentForm from './DetailCommentForm';
 import '../../styles/detail.css';
 import DetailPagination from './DetailPagination';
 
-function DetailCommentSection({ comment, recomments, loadingHandler, userId, scorllHight }) {
+function DetailCommentSection({
+  comment,
+  recomments,
+  loadingHandler,
+  userId,
+  scorllHight,
+  currentPage,
+  setCurrentPage,
+}) {
   const postPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFistPost = indexOfLastPost - postPerPage;
   const currentPosts = comment.slice(indexOfFistPost, indexOfLastPost);

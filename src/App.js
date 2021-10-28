@@ -24,17 +24,18 @@ export function App() {
   const [username, setUsername] = useState('');
   const [userProfileImg, setUserProfileImg] = useState('');
   const [userId, setUserId] = useState('');
-  const [user, setUser] = useState();
+  const [user, setUser] = useState([]);
 
-  useEffect(async () => {
-    const res = await axios.get('/loginCheck');
-    console.log(res.data.checkLogin);
-    setIsLogin(res.data.checkLogin);
-    setUsername(res.data.username);
-    setUserProfileImg(res.data.userProfileImg);
-    setUserId(res.data.userId);
-    setUser(res.data.user);
-  }, [isLogin, username, userProfileImg]);
+  useEffect(() => {
+    axios.get('/loginCheck').then((res) => {
+      console.log(res.data.checkLogin);
+      setIsLogin(res.data.checkLogin);
+      setUsername(res.data.username);
+      setUserProfileImg(res.data.userProfileImg);
+      setUserId(res.data.userId);
+      setUser(res.data.user);
+    });
+  }, [isLogin]);
 
   return (
     <Context>
@@ -73,6 +74,7 @@ export function App() {
                   usernames={username}
                   setUsername={setUsername}
                   setUserProfileImg={setUserProfileImg}
+                  userId={userId}
                 />
               )}
             />
