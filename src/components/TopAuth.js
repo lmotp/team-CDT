@@ -13,6 +13,7 @@ function TopAuth({ isLogin, setIsLogin, username, userProfileImg }) {
     const yesLogout = window.confirm('정말 로그아웃 하시겠습니까?');
     if (yesLogout === true) {
       await axios.get('/logout');
+      window.sessionStorage.removeItem('login');
       setIsLogin(false);
     } else {
       setIsLogin(true);

@@ -37,7 +37,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
 
   const changeModal = () => {
     const formData = new FormData();
-    formData.append('image', fileName);
+    formData.append('image', fileName ? fileName : userProfileImg);
     formData.append('name', value);
     formData.append('id', userId);
 
@@ -62,12 +62,15 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   };
 
   useEffect(() => {
-    if (!isLogin) {
+    let login = window.sessionStorage.getItem('login');
+
+    if (!login) {
       history.push('/');
       return;
     }
 
     window.scrollTo(0, 0);
+
     axios.get('/loginCheck').then(({ data }) => {
       setUsername(data.username);
       setUserProfileImg(data.userProfileImg);
@@ -82,14 +85,12 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
       axios.get(`/mypage/${userId}/comment`).then(({ data }) => setCommentCount(data.length));
       axios.get(`/mypage/${userId}/heart`).then(({ data }) => setHeartCount(data.length));
       axios.get(`/mypage/${userId}/coffeeheart`).then(({ data }) => setCoffeeHeartCount(data.length));
-      console.log('배돈');
     }
   }, [userId]);
 
   useEffect(() => {
     if (userId) {
       axios.get(`/mypage/list/${userId}/${parentValue}`).then(({ data }) => setContents(data));
-      console.log('배돈');
     }
   }, [userId, parentValue]);
 

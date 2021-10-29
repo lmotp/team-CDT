@@ -10,8 +10,6 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   const change = location.state?.change;
   const postId = location.state?.postId;
 
-  console.log(change, postId);
-
   const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
   const [reLogin, setReLogin] = useState(false);
@@ -46,6 +44,7 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
       setReLogin(false);
     } else if (isLogin === true && !change) {
       history.push('/');
+      window.sessionStorage.setItem('login', true);
     } else if (isLogin === true && change) {
       history.push(`/detailpage/${postId}`);
     }
