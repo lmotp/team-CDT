@@ -552,8 +552,9 @@ app.get('/mypage/:id/coffeeheart', (req, res) => {
 
 app.put('/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
-  const image = req.file ? `/image/${req.file?.filename}` : req.session.user.profileImg;
-  const nickname = name ? name : req.session.user.name;
+
+  const image = req.file ? `/image/${req.file?.filename}` : req.body.image;
+  const nickname = name ? name : req.body.name;
 
   connection.query(
     'UPDATE auth SET profileImg = ? , name = ? WHERE id = ?;',

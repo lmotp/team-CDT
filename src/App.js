@@ -35,7 +35,7 @@ export function App() {
       setUserId(res.data.userId);
       setUser(res.data.user);
     });
-  }, [isLogin]);
+  }, [isLogin, setUserProfileImg, setUsername]);
 
   return (
     <Context>
