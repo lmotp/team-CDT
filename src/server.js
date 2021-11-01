@@ -7,7 +7,7 @@ const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
 
 const options = {
-  host: '39.123.4.73',
+  host: '39.123.4.119',
   port: '3306',
   user: 'abc',
   password: '123456789a',
@@ -21,7 +21,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: '39.123.4.73',
+  host: '39.123.4.119',
   port: '3306',
   user: 'abc',
   password: '123456789a',

@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export default function MainNews() {
   const [noticeList, setNoticeList] = useState([]);
+  const [order, setOrder] = useState(0);
 
   const newsCollectionRef = useRef();
   const newsOrderRef = useRef();
@@ -20,7 +21,6 @@ export default function MainNews() {
 
   const handleRightController = (e) => {
     if (newsOrderRef.current.textContent === '1 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(-900px)';
       newsOrderRef.current.textContent = '2 / 4';
       leftController.current.style.color = '#333';
     } else if (newsOrderRef.current.textContent === '2 / 4') {
@@ -48,7 +48,9 @@ export default function MainNews() {
     }
   };
 
-  const board = noticeList.map((boardItem) => {
+  const spliceNoticeList = [...noticeList].splice(noticeList.length - 5 - order, 5);
+
+  const board = spliceNoticeList.reverse().map((boardItem) => {
     return (
       <BoardItem
         category={boardItem.category}
@@ -70,9 +72,6 @@ export default function MainNews() {
     <div className="main-news">
       <h2>주요소식</h2>
       <div ref={newsCollectionRef} className="news-collection">
-        <ul className="main-news-list">{board}</ul>
-        <ul className="main-news-list">{board}</ul>
-        <ul className="main-news-list">{board}</ul>
         <ul className="main-news-list">{board}</ul>
       </div>
       <div className="main-news-controller">
