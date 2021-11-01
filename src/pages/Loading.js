@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
+import '../styles/loading.css';
 
 const Loading = () => {
-  return <div>로딩중</div>;
+  return <div class="loading"></div>;
 };
 
-export default Loading;
+export default memo(Loading);

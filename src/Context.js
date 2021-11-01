@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useState } from 'react';
 
 const initalUpload = [];
 
@@ -162,20 +162,32 @@ const foodGameExampleContext = createContext();
 const foodGameResultContext = createContext();
 const uploadDispatchContext = createContext();
 const uploadStateContext = createContext();
+const orderBoxContext = createContext();
 
 export function Context({ children }) {
   const [uploadState, uploadDispatch] = useReducer(uploadReducer, initalUpload);
+  const [order, setOrder] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const orderBox = {
+    order,
+    setOrder,
+    loading,
+    setLoading,
+  };
 
   return (
-    <hashContentsContext.Provider value={hashContents}>
-      <uploadDispatchContext.Provider value={uploadDispatch}>
-        <uploadStateContext.Provider value={uploadState}>
-          <foodGameExampleContext.Provider value={example}>
-            <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
-          </foodGameExampleContext.Provider>
-        </uploadStateContext.Provider>
-      </uploadDispatchContext.Provider>
-    </hashContentsContext.Provider>
+    <orderBoxContext.Provider value={orderBox}>
+      <hashContentsContext.Provider value={hashContents}>
+        <uploadDispatchContext.Provider value={uploadDispatch}>
+          <uploadStateContext.Provider value={uploadState}>
+            <foodGameExampleContext.Provider value={example}>
+              <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
+            </foodGameExampleContext.Provider>
+          </uploadStateContext.Provider>
+        </uploadDispatchContext.Provider>
+      </hashContentsContext.Provider>
+    </orderBoxContext.Provider>
   );
 }
 
@@ -197,4 +209,8 @@ export const useUploadState = () => {
 
 export const useUploadDispatch = () => {
   return useContext(uploadDispatchContext);
+};
+
+export const useOrderBox = () => {
+  return useContext(orderBoxContext);
 };

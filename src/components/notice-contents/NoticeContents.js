@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Board from './board/Board';
 
@@ -8,6 +8,7 @@ export default function NoticeContents() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div className="contents">
       <Board />

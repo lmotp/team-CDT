@@ -6,26 +6,26 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
 
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const options = {
-  host: '39.123.4.73',
+  host: process.env.DB_HOST,
   port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
 const sessionStore = new MysqlStore(options);
 
-require('dotenv').config({ path: __dirname + '/.env' });
-
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: '39.123.4.73',
+  host: process.env.DB_HOST,
   port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 connection.connect();
@@ -333,7 +333,7 @@ app.post('/notice/list', (req, res) => {
   }
 
   connection.query(
-    'SELECT post_id,count,heart,name,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN auth ON post.auth_id = auth.id WHERE category = ?',
+    'SELECT post_id,count,heart,name,title,content,post.createdAt,category,bracket,views FROM post INNER JOIN auth ON post.auth_id = auth.id WHERE category = ? ORDER BY post_id DESC',
     [category],
     (err, row) => {
       if (err) {
@@ -356,6 +356,7 @@ app.get('/share/categories', (req, res) => {
 });
 
 app.get('/share/list/:pages/:reqCategory', (req, res) => {
+  console.log('몇번찍히나요?,커피아이템');
   const { pages, reqCategory } = req.params;
   const list = [];
 
@@ -552,8 +553,9 @@ app.get('/mypage/:id/coffeeheart', (req, res) => {
 
 app.put('/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
-  const image = req.file ? `/image/${req.file?.filename}` : req.session.user.profileImg;
-  const nickname = name ? name : req.session.user.name;
+
+  const image = req.file ? `/image/${req.file?.filename}` : req.body.image;
+  const nickname = name ? name : req.body.name;
 
   connection.query(
     'UPDATE auth SET profileImg = ? , name = ? WHERE id = ?;',
