@@ -593,18 +593,15 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select * from auth', (err, rows) => {
+  connection.query('select password from auth where username=?', [req.body.user_name], (err, rows) => {
     if (err) {
       throw err;
     } else {
-      const authUsername = rows.filter((user) => {
-        return req.body.user_name === user.username;
-      })[0];
       const authPwd = rows.filter((user) => {
         return req.body.user_pwd === user.password;
       })[0];
 
-      if (authUsername && authPwd) {
+      if (rows[0].password === req.body.user_pwd) {
         req.session.isLogin = true;
         req.session.user_name = authPwd.name;
         req.session.user_profileImg = authPwd.profileImg;
