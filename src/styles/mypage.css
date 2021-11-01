@@ -1,6 +1,10 @@
 .myPage-wrap {
   width: 79%;
   margin-top: 87px;
+  position: relative;
+}
+
+.myPage-wrap .mypage-box {
   padding: 30px 30px 20px;
 }
 

@@ -7,22 +7,26 @@ import BoardControll from './BoardControll';
 import Footer from './../Footer';
 
 import './../../../styles/layouts/video-board/board.css';
+import Loading from '../../../pages/Loading';
+import { useOrderBox } from '../../../Context';
 
 export default function Board() {
   const [newData, setNewData] = useState([]);
   const [initialBoard, setInitialBoard] = useState(true);
-  const [order, setOrder] = useState(0);
+  const { order, setOrder } = useOrderBox();
   const [boardList, setBoardList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const boardCollectionRef = useRef();
 
   useEffect(() => {
-    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
+    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => {
+      setBoardList(res.data);
+      setLoading(true);
+    });
   }, []);
 
   const spliceBoardList = [...boardList].splice(order, 12);
   const spliceSearchBoardList = [...newData].splice(order, 12);
-
-  console.log(boardList);
 
   const boards = spliceBoardList.map((boardItem, index) => {
     return (
@@ -62,22 +66,34 @@ export default function Board() {
 
   return (
     <>
-      <BoardSearch
-        data={boardList}
-        setInitialBoard={setInitialBoard}
-        setNewData={setNewData}
-        newData={newData}
-        setOrder={setOrder}
-      ></BoardSearch>
-      <div className="board">
-        <div ref={boardCollectionRef} className="board-collection">
-          <ul className="board-list">
-            {initialBoard ? boards : newData.length === 0 ? <div className="not-search">검색 결과 - 0</div> : newBoard}
-          </ul>
-        </div>
-      </div>
-      <BoardControll order={order} setOrder={setOrder}></BoardControll>
-      <Footer></Footer>
+      {loading ? (
+        <>
+          <BoardSearch
+            data={boardList}
+            setInitialBoard={setInitialBoard}
+            setNewData={setNewData}
+            newData={newData}
+            setOrder={setOrder}
+          ></BoardSearch>
+          <div className="board">
+            <div ref={boardCollectionRef} className="board-collection">
+              <ul className="board-list">
+                {initialBoard ? (
+                  boards
+                ) : newData.length === 0 ? (
+                  <div className="not-search">검색 결과 - 0</div>
+                ) : (
+                  newBoard
+                )}
+              </ul>
+            </div>
+            <BoardControll order={order} setOrder={setOrder}></BoardControll>
+            <Footer></Footer>
+          </div>
+        </>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }

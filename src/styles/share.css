@@ -1,31 +1,33 @@
 .share-wrap {
-  padding-left: 20px;
-  padding-top: 120px;
+  width: 79%;
+  margin-top: 87px;
+  position: relative;
 }
 
-.share-wrap span button {
+.share-wrap .button-box-category {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.share-wrap .button-box-category span button {
   border: 1px solid black;
   padding: 10px 20px;
   margin-right: 10px;
   border-radius: 10px;
 }
 
-.share-wrap span .on {
+.share-wrap .button-box-category span .on {
   border: 1px solid burlywood;
   color: burlywood;
 }
 
-.share-wrap .loading {
-  width: 100%;
-  background: cadetblue;
-  color: white;
-  height: 100px;
-  text-align: center;
+.share-wrap .shard-loading-box {
+  margin-top: 50px;
 }
 
 .share-contents-wrap {
   margin-top: 10px;
-  width: 1000px;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -38,6 +40,10 @@
   margin-right: 2%;
   margin-bottom: 20px;
   border: 1px solid black;
+}
+
+.share-contents-wrap .share-contents:nth-child(2n) {
+  margin-right: 0;
 }
 
 .share-contents-wrap .share-contents h2 {

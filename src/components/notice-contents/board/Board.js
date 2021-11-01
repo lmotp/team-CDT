@@ -10,18 +10,23 @@ import './../../../styles/layouts/notice-board/board.css';
 
 import axios from 'axios';
 import { useParams } from 'react-router';
+import Loading from '../../../pages/Loading.js';
+import { useOrderBox } from '../../../Context.js';
 
 export default function Board() {
   const [newData, setNewData] = useState([]);
   const [initialBoard, setInitialBoard] = useState(true);
-  const [order, setOrder] = useState(0);
   const [noticeList, setNoticeList] = useState([]);
   const boardCollectionRef = useRef();
+  const { order, setOrder, loading, setLoading } = useOrderBox();
   const { board } = useParams();
 
   useEffect(() => {
-    axios.post('/notice/list', { board }).then((res) => setNoticeList(res.data));
-  }, [board]);
+    axios.post('/notice/list', { board }).then((res) => {
+      setNoticeList(res.data);
+      setLoading(true);
+    });
+  }, [board, setLoading]);
 
   const spliceBoardList = [...noticeList].splice(order, 10);
   const spliceSearchBoardList = [...newData].splice(order, 10);
@@ -64,23 +69,35 @@ export default function Board() {
 
   return (
     <>
-      <BoardTop />
-      <BoardSearch
-        data={noticeList}
-        setInitialBoard={setInitialBoard}
-        setNewData={setNewData}
-        newData={newData}
-        setOrder={setOrder}
-      ></BoardSearch>
-      <div className="board">
-        <div ref={boardCollectionRef} className="board-collection">
-          <ul className="board-list">
-            {initialBoard ? boards : newData.length === 0 ? <div className="not-search">검색 결과 - 0</div> : newBoard}
-          </ul>
-        </div>
-      </div>
-      <BoardControll order={order} setOrder={setOrder}></BoardControll>
-      <Footer></Footer>
+      {loading ? (
+        <>
+          <BoardTop />
+          <BoardSearch
+            data={noticeList}
+            setInitialBoard={setInitialBoard}
+            setNewData={setNewData}
+            newData={newData}
+            setOrder={setOrder}
+          ></BoardSearch>
+          <div className="board">
+            <div ref={boardCollectionRef} className="board-collection">
+              <ul className="board-list">
+                {initialBoard ? (
+                  boards
+                ) : newData.length === 0 ? (
+                  <div className="not-search">검색 결과 - 0</div>
+                ) : (
+                  newBoard
+                )}
+              </ul>
+            </div>
+            <BoardControll order={order} setOrder={setOrder}></BoardControll>
+            <Footer></Footer>
+          </div>
+        </>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }

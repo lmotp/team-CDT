@@ -9,6 +9,7 @@
 .detail-wrap {
   width: 79%;
   margin-top: 87px;
+  position: relative;
 }
 
 /* 디테일 헤더 */

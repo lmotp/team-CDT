@@ -17,9 +17,10 @@ function DetailPage({ userId, isLogin }) {
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const commentCount = comment.length + recomments.length;
   const [noticeList, setNoticeList] = useState([]);
   const [scorllHight, setScrollHight] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const commentCount = comment.length + recomments.length;
   const { post_id } = useParams();
 
   useEffect(() => {
@@ -40,7 +41,10 @@ function DetailPage({ userId, isLogin }) {
 
     axios.post('/detailpage/comment/count', { postId: post_id, count: commentCount });
 
-    axios.post('/notice/list', { board: contents?.category }).then((res) => setNoticeList(res.data));
+    axios.post('/notice/list', { board: contents?.category }).then((res) => {
+      setNoticeList(res.data);
+      setLoading(true);
+    });
   }, [post_id, isLoading, commentCount, contents?.category, heartCount]);
 
   const loadingHandler = () => {
@@ -48,43 +52,49 @@ function DetailPage({ userId, isLogin }) {
   };
 
   return (
-    <>
-      {contents ? (
-        <div className="detail-wrap">
-          <DetailHeader contents={contents} userId={userId} postId={post_id} />
-          <DetailContent
-            contents={contents}
-            postId={post_id}
-            userId={userId}
-            heartCount={heartCount}
-            setHeartCount={setHeartCount}
-            isLogin={isLogin}
-          />
-          <DetailComment
-            loadingHandler={loadingHandler}
-            count={commentCount}
-            userId={userId}
-            setScrollHight={setScrollHight}
-          />
-          {isLoading ? (
-            <DetailCommentSection
-              userId={userId}
-              loadingHandler={loadingHandler}
-              comment={comment}
-              recomments={recomments}
-              scorllHight={scorllHight}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
+    <div className="detail-wrap">
+      {loading ? (
+        <>
+          {contents ? (
+            <>
+              <DetailHeader contents={contents} userId={userId} postId={post_id} />
+              <DetailContent
+                contents={contents}
+                postId={post_id}
+                userId={userId}
+                heartCount={heartCount}
+                setHeartCount={setHeartCount}
+                isLogin={isLogin}
+              />
+              <DetailComment
+                loadingHandler={loadingHandler}
+                count={commentCount}
+                userId={userId}
+                setScrollHight={setScrollHight}
+              />
+              {isLoading ? (
+                <DetailCommentSection
+                  userId={userId}
+                  loadingHandler={loadingHandler}
+                  comment={comment}
+                  recomments={recomments}
+                  scorllHight={scorllHight}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              ) : (
+                <Loading />
+              )}
+              <DetailList category={contents.category} noticeList={noticeList} setCurrentPage={setCurrentPage} />
+            </>
           ) : (
-            <Loading />
+            <NotFound />
           )}
-          <DetailList category={contents.category} noticeList={noticeList} setCurrentPage={setCurrentPage} />
-        </div>
+        </>
       ) : (
-        <NotFound />
+        <Loading />
       )}
-    </>
+    </div>
   );
 }
 

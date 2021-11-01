@@ -1,25 +1,22 @@
 .board {
   position: relative;
-  width: 900px;
-  margin: 0 0 50px 63.5px;
-  overflow: hidden;
+  width: 100%;
+  padding: 0 62.5px;
 }
 
 .board-list {
-  width: 900px;
   margin-top: 10px;
+  width: 100%;
   border-top: 1px solid #ccc;
 }
 
 .board-collection {
   display: flex;
-  width: 1400%;
 }
 
 .video-board-controller {
   display: flex;
   position: absolute;
-  bottom: -430px;
   left: 50%;
   height: 50px;
   align-items: center;
@@ -42,6 +39,6 @@
 
 .list-paging-left {
   opacity: 0;
-  visibility: hidden;
+  display: hidden;
   margin-right: 18px;
 }
