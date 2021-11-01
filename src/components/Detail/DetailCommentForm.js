@@ -10,7 +10,6 @@ function DetailCommentForm({
   createdAt,
   name,
   profileImg,
-  heartCount,
   comment,
   on,
   loadingHandler,
@@ -19,8 +18,7 @@ function DetailCommentForm({
 }) {
   const [reComment, setReComment] = useState(false);
   const [changeComment, setChangeComment] = useState(false);
-  const [reCommentValue, setReCommentValue] = useState(comment);
-  const [heart, setHeart] = useState(false);
+  const [reCommentValue, setReCommentValue] = useState('');
   const createTime = moment(createdAt).format('YYYY년 MM월 DD일 HH시 mm분');
 
   // 댓글에 댓글추가하기 기능
@@ -33,6 +31,7 @@ function DetailCommentForm({
   const changeCommentHandler = () => {
     setReComment(false);
     setChangeComment(!changeComment);
+    setReCommentValue(comment);
   };
 
   const onChangeValueHandler = (e) => {
@@ -77,11 +76,6 @@ function DetailCommentForm({
     setReCommentValue('');
   };
 
-  // 좋아요 누르기
-  const likeHeartHanlder = () => {
-    setHeart(!heart);
-  };
-
   const dangerComment = comment.replace(/\\n/g, '<br/>');
 
   return (
@@ -92,10 +86,6 @@ function DetailCommentForm({
         <p dangerouslySetInnerHTML={{ __html: dangerComment }}></p>
         <div className="info-wrap">
           <span className="info-date">{createTime}</span>
-          <sapn>
-            <i className={heart ? 'fas fa-heart heart on' : 'far fa-heart heart'} onClick={likeHeartHanlder}></i>
-            {heartCount}
-          </sapn>
           {!on && (
             <span onClick={reCommentHandler} className={reComment ? 're-comment on' : 're-comment off'}>
               답글 쓰기

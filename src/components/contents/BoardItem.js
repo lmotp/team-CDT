@@ -6,6 +6,7 @@ import ArticleInfo from './ArticleInfo';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function BoardItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
@@ -21,9 +22,13 @@ export default function BoardItem(props) {
     }
   }, [props.content]);
 
+  const viewsPlus = () => {
+    axios.post('/detailpage/views', { postId: props.postId });
+  };
+
   return (
     <li className="main-news-list-item">
-      <Link to={`/detailpage/${props.postId}`}>
+      <Link to={`/detailpage/${props.postId}`} onClick={viewsPlus}>
         <p>
           <span style={{ color: 'burlywood' }}>[{props.category}]</span>&nbsp;
           <span class="menu-color">{props.bracket ? `[${props.bracket}]` : null}</span>
@@ -42,7 +47,7 @@ export default function BoardItem(props) {
       </Link>
       <ArticleInfo
         name={props.name}
-        eye={props.eye}
+        views={props.views}
         heart={props.heart}
         date={moment(props.date).format('YYYY년 MM월 DD일')}
       ></ArticleInfo>

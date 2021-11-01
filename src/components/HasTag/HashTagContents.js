@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useHashContents } from '../../Context';
+import React, { useEffect, useState, memo } from 'react';
 import Modals from '../Modal/Modals';
 import ModalContents from '../Modal/ModalContents';
+import axios from 'axios';
 
-function HashTagContents({ hashTag }) {
-  const hashContents = useHashContents();
+function HashTagContents({ data, moreObserver, userId, on }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [heartState, setHeartState] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
@@ -15,22 +15,39 @@ function HashTagContents({ hashTag }) {
     setModalOpen(false);
   };
 
+  useEffect(() => {
+    if (!userId) {
+      setHeartState(false);
+    }
+    if (on.includes(data.id_coffee_item) && userId) {
+      setHeartState(true);
+    }
+  }, [on, data.id_coffee_item, userId]);
+
+  const heartStateHandler = () => {
+    setHeartState(!heartState);
+    axios.post('/share/list/heart', { userId, coffeeId: data.id_coffee_item }).then((res) => console.log(res));
+  };
+
   return (
-    <div className="share-contents">
-      {hashContents
-        .filter((contents) => contents.tag.includes(hashTag))
-        .map((contents) => (
-          <div className="hashTagContents" key={contents.id}>
-            <h2>{contents.title}</h2>
-            <img onClick={openModal} src={contents.image} alt={contents.tag} />
-            <Modals modalOpen={modalOpen} close={closeModal}>
-              <ModalContents contents={contents} closeModal={closeModal} />
-            </Modals>
-            <div>{contents.tag}</div>
-          </div>
-        ))}
-    </div>
+    <>
+      <div className="share-contents">
+        <div className="hashTagContents" key={data.id_coffee_item}>
+          <img onClick={openModal} src={data.coffee_img} alt={data.coffee_name} />
+          <h2>{data.coffee_name}</h2>
+          <i
+            ref={moreObserver}
+            onClick={heartStateHandler}
+            class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}
+          ></i>
+
+          <Modals modalOpen={modalOpen} close={closeModal}>
+            <ModalContents contents={data} closeModal={closeModal} />
+          </Modals>
+        </div>
+      </div>
+    </>
   );
 }
 
-export default HashTagContents;
+export default memo(HashTagContents);

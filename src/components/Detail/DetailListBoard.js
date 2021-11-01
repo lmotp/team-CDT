@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import moment from 'moment';
 import 'moment/locale/ko';
+import axios from 'axios';
 
-function DetailListBoard({ list, i }) {
+function DetailListBoard({ list, i, setCurrentPage }) {
   const [imgUrl, setImgUrl] = useState([]);
 
   useEffect(() => {
@@ -19,7 +20,14 @@ function DetailListBoard({ list, i }) {
   }, [list.content]);
 
   return (
-    <Link to={`/detailpage/${list.post_id}`} key={i}>
+    <Link
+      to={`/detailpage/${list.post_id}`}
+      key={i}
+      onClick={() => {
+        setCurrentPage(1);
+        axios.post('/detailpage/views', { postId: list.post_id });
+      }}
+    >
       <div className="DetailList-form">
         <div>
           <div className="DetailList-form-title">

@@ -15,7 +15,7 @@
 }
 .modal > section {
   max-width: 650px;
-  height: 500px;
+  height: 50%;
   margin: 0 auto;
   border-radius: 0.3rem;
   background-color: #fff;
@@ -25,9 +25,25 @@
 }
 
 .modal > section > main {
-  padding: 16px;
+  padding: 40px 40px 55px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
+}
+
+.modal > section > main > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.modal > section > main p {
+  width: 65%;
+  height: 100%;
+}
+
+.modal > section > main img {
+  width: 50%;
 }
 
 .modal > section > footer {

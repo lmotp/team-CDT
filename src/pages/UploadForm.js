@@ -31,8 +31,8 @@ const UploadForm = ({ userId }) => {
     title: titleValue,
     category,
     brackets: brackets === '말머리를 선택' ? null : brackets,
-    value: value ? value : contentsLocation.content,
-    hashTag: hashTagState.map((v) => v.value).join(),
+    value: value ? value : contentsLocation?.content,
+    hashTag: hashTagState?.map((v) => v.value).join(),
     postId: contentsLocation?.post_id,
     changeStateLocation,
   };
@@ -79,6 +79,7 @@ const UploadForm = ({ userId }) => {
   // 버튼 이벤트 !!!
   const cancelClick = () => {
     const status = window.confirm('정말로 취소하시겠습니까?');
+    uploadDispatch({ type: 'ALL_DELTE' });
     if (status) {
       history.push('/');
     }
@@ -86,6 +87,7 @@ const UploadForm = ({ userId }) => {
 
   const uploadClick = () => {
     axios.post('/uploadform', submitContent).then((res) => res.data);
+
     uploadDispatch({ type: 'ALL_DELTE' });
     let board;
     if (category === '주요소식') {
@@ -94,10 +96,10 @@ const UploadForm = ({ userId }) => {
       board = 'event';
     } else if (category === '자유게시판') {
       board = 'free';
-    } else if (category === '비디오') {
+    } else if (category === '영상콘텐츠') {
       board = 'video';
     }
-    history.push(`/notice/${board}`);
+    history.push(board === '영상콘텐츠' ? `/notice/${board}` : `/video_list`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!

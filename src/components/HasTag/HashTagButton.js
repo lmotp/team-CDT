@@ -1,19 +1,16 @@
-import React from 'react';
-import { useHashTagDispatch } from '../../Context';
+import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 
-function HashTagButton({ hashTag, hashId, tagStatus }) {
-  const dispatch = useHashTagDispatch();
-
-  const changeTagStatus = (e) => {
-    e.preventDefault();
-    dispatch({ type: 'TAGOFF', id: hashId });
-  };
-
+function HashTagButton({ childCategory, category, pagesHandler }) {
   return (
-    <button className={tagStatus ? 'hashButton onTag' : ' hashButton offTag'} onClick={changeTagStatus}>
-      {hashTag}
-    </button>
+    <span>
+      <Link to={`/notice/recommend/${childCategory}`}>
+        <button onClick={pagesHandler} className={childCategory === category ? 'on' : null}>
+          {childCategory}
+        </button>
+      </Link>
+    </span>
   );
 }
 
-export default HashTagButton;
+export default memo(HashTagButton);

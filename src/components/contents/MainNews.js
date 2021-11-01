@@ -1,23 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 import BoardItem from './BoardItem';
 
 import './../../styles/layouts/main-news.css';
 
-import axios from 'axios';
-
-export default function MainNews() {
-  const [noticeList, setNoticeList] = useState([]);
-  const [order, setOrder] = useState(0);
-
+export default function MainNews({ noticeList }) {
   const newsCollectionRef = useRef();
   const newsOrderRef = useRef();
   const leftController = useRef();
   const rightController = useRef();
-
-  useEffect(() => {
-    axios.post('/notice/list', { board: '주요소식' }).then((res) => setNoticeList(res.data));
-  }, []);
 
   const handleRightController = (e) => {
     if (newsOrderRef.current.textContent === '1 / 4') {
@@ -58,7 +49,7 @@ export default function MainNews() {
         title={boardItem.title}
         thumb={boardItem.thumb}
         date={boardItem.createdAt}
-        eye={boardItem.views}
+        views={boardItem.views}
         heart={boardItem.heart}
         count={boardItem.count}
         postId={boardItem.post_id}

@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import './../../styles/layouts/login/login.css';
 
 function Login({ isLogin, setIsLogin, history, username, setUsername }) {
+  const location = useLocation();
+  const change = location.state?.change;
+  const postId = location.state?.postId;
+
   const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
   const [reLogin, setReLogin] = useState(false);
@@ -37,10 +42,13 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
       pwdRef.current.focus();
       setPwd('');
       setReLogin(false);
-    } else if (isLogin === true) {
+    } else if (isLogin === true && !change) {
       history.push('/');
+      window.sessionStorage.setItem('login', true);
+    } else if (isLogin === true && change) {
+      history.push(`/detailpage/${postId}`);
     }
-  }, [reLogin, isLogin]);
+  }, [reLogin, isLogin, history, change, postId]);
 
   return (
     <div className="login-content">

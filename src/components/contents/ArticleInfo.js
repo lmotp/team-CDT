@@ -12,7 +12,7 @@ export default function ArticleInfo(props) {
       <span className="date">{props.date}</span>
       <span className="counter-eye">
         <i class="far fa-eye eye"></i>
-        {props.eye}
+        {props.views}
       </span>
       <span className="counter-like">
         <i class="far fa-heart heart"></i>

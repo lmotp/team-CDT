@@ -40,9 +40,10 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-uploads/
+# uploads/
 .env
 database.json
+json/
 
 
 # TypeScript v1 declaration files

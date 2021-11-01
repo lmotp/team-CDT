@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function GnbMenu() {
+export default function GnbMenu({ scrollTop }) {
   const handleChevron = (e) => {
     e.preventDefault();
     if (e.target.className === 'gnb-menu-item-chevron-down') {
@@ -12,17 +12,17 @@ export default function GnbMenu() {
   };
 
   const listItems = [
-    { value: 'notice list items', items: ['주요소식', '2', '3', '4'], url: '/notice/board' },
+    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice/board' },
     { value: 'community list item', items: ['자유게시판', '6', '7', '8'], url: '/notice/free' },
-    { value: 'recommend list item', items: ['추천게시판', 'b', 'c', 'd'], url: '/notice/recommend' },
-    { value: 'video list item', items: ['비디오', 'f', 'g', 'h'], url: '/video_list' },
+    { value: 'recommend list item', items: ['추천게시판', 'b', 'c', 'd'], url: '/notice/recommend/all' },
+    { value: 'video list item', items: ['영상콘텐츠', 'f', 'g', 'h'], url: '/video_list' },
   ];
   const menuList = listItems.map((item, index) => {
     return (
       <>
         {item.items.map((smallItem) => {
           return (
-            <li className="list-item" key={index}>
+            <li className="list-item" key={index} onClick={scrollTop}>
               <Link to={item.url} aria-label={item.value}>
                 {smallItem}
               </Link>

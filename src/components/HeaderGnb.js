@@ -12,25 +12,47 @@ import './../styles/layouts/search-input.css';
 import './../styles/layouts/write-button.css';
 import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useOrderBox } from '../Context.js';
 
-export default function HeaderGnb({ isLogin, setIsLogin, username }) {
+export default function HeaderGnb({ isLogin, setIsLogin, username, userProfileImg }) {
   const [inputValue, setInputValue] = useState('');
+  const { setOrder, setLoading } = useOrderBox();
   const history = useHistory();
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
   };
+
   const handleSearchButton = () => {
     setInputValue('');
   };
+
   const handleWriteButton = () => {
-    let yes_login = window.confirm('로그인이 필요합니다.');
-    if (!isLogin.checkLogin && yes_login === true) {
+    if (isLogin) {
+      window.scrollTo(0, 0);
       history.push('/uploadform');
+      return;
     } else {
-      history.push('/user');
+      let yes_login = window.confirm('로그인이 필요합니다.');
+      if (!isLogin.checkLogin && yes_login === true) {
+        window.scrollTo(0, 0);
+        history.push('/uploadform');
+      } else {
+        return;
+      }
     }
+  };
+
+  const gotoGameButton = () => {
+    window.scrollTo(0, 0);
+    history.push('/foodgame');
+  };
+
+  const scrollTop = () => {
+    window.scrollTo(0, 0);
+    setLoading(false);
+    setOrder(0);
   };
 
   return (
@@ -39,11 +61,14 @@ export default function HeaderGnb({ isLogin, setIsLogin, username }) {
         <GnbTitle></GnbTitle>
         <SearchInput value={inputValue} onChange={handleInputValue} onClick={handleSearchButton}></SearchInput>
         <WriteButton onClick={handleWriteButton} write={'글쓰기'}></WriteButton>
-        <Link to="foodgame">
-          <WriteButton write={'오늘 뭐 먹지?'}></WriteButton>
-        </Link>
-        <GnbMenu></GnbMenu>
-        <TopAuth username={username} isLogin={isLogin} setIsLogin={setIsLogin}></TopAuth>
+        <WriteButton onClick={gotoGameButton} write={'오늘 뭐 먹지?'}></WriteButton>
+        <GnbMenu scrollTop={scrollTop}></GnbMenu>
+        <TopAuth
+          username={username}
+          userProfileImg={userProfileImg}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        ></TopAuth>
       </header>
     </>
   );
