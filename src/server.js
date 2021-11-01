@@ -593,7 +593,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select password from auth where username=?', [req.body.user_name], (err, rows) => {
+  connection.query('select * from auth where username=?', [req.body.user_name], (err, rows) => {
     if (err) {
       throw err;
     } else {

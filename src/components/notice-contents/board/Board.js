@@ -71,7 +71,7 @@ export default function Board() {
     <>
       {loading ? (
         <>
-          <BoardTop />
+          {board === 'board' ? <BoardTop noticeList={noticeList} /> : undefined}
           <BoardSearch
             data={noticeList}
             setInitialBoard={setInitialBoard}
