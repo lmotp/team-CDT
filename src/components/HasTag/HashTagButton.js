@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 function HashTagButton({ childCategory, category, pagesHandler }) {
@@ -13,4 +13,4 @@ function HashTagButton({ childCategory, category, pagesHandler }) {
   );
 }
 
-export default HashTagButton;
+export default memo(HashTagButton);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Modals from '../Modal/Modals';
 import ModalContents from '../Modal/ModalContents';
 import axios from 'axios';
@@ -40,6 +40,7 @@ function HashTagContents({ data, moreObserver, userId, on }) {
             onClick={heartStateHandler}
             class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}
           ></i>
+
           <Modals modalOpen={modalOpen} close={closeModal}>
             <ModalContents contents={data} closeModal={closeModal} />
           </Modals>
@@ -49,4 +50,4 @@ function HashTagContents({ data, moreObserver, userId, on }) {
   );
 }
 
-export default HashTagContents;
+export default memo(HashTagContents);

@@ -26,6 +26,7 @@ export default function BoardControll({ order, setOrder }) {
 
   const handlePaging = (e) => {
     setOrder((e.target.id - 1) * 12);
+    window.scrollTo(0, 0);
     if (e.target.id === String(buttonValue[1])) {
       buttonRef1.current.classList.remove('on');
       buttonRef3.current.classList.remove('on');
@@ -71,7 +72,7 @@ export default function BoardControll({ order, setOrder }) {
     buttonRef2.current.classList.remove('on');
     buttonRef1.current.classList.add('on');
     pagingLeftController.current.style.opacity = '1';
-    pagingLeftController.current.style.visibility = 'visible';
+    pagingLeftController.current.style.display = 'inline-block';
   };
 
   const handlePagingLeft = () => {
@@ -87,7 +88,7 @@ export default function BoardControll({ order, setOrder }) {
     buttonRef1.current.classList.remove('on');
     if (newButtonValue[0] === 1) {
       pagingLeftController.current.style.opacity = '0';
-      pagingLeftController.current.style.visibility = 'hidden';
+      pagingLeftController.current.style.display = 'none';
     }
   };
 

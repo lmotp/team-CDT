@@ -13,9 +13,11 @@ import './../styles/layouts/write-button.css';
 import './../styles/layouts/gnb-menu.css';
 import './../styles/layouts/top-auth.css';
 import { useHistory } from 'react-router-dom';
+import { useOrderBox } from '../Context.js';
 
 export default function HeaderGnb({ isLogin, setIsLogin, username, userProfileImg }) {
   const [inputValue, setInputValue] = useState('');
+  const { setOrder, setLoading } = useOrderBox();
   const history = useHistory();
 
   const handleInputValue = (e) => {
@@ -49,6 +51,8 @@ export default function HeaderGnb({ isLogin, setIsLogin, username, userProfileIm
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
+    setLoading(false);
+    setOrder(0);
   };
 
   return (

@@ -5,6 +5,7 @@ import HashTagContents from '../components/HasTag/HashTagContents';
 import '../styles/share.css';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import { useParams } from 'react-router';
+import Loading from './Loading';
 
 function Share({ userId }) {
   const [coffeeItem, setCoffeeItem] = useState([]);
@@ -14,6 +15,7 @@ function Share({ userId }) {
   const [categories, setCategories] = useState([]);
   const [categoryState, setCategoryState] = useState(true);
   const [hasData, setHasData] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { category } = useParams();
 
   const observer = useRef();
@@ -23,12 +25,8 @@ function Share({ userId }) {
   const heartCoffee = coffeeItemSet.filter((v) => heartCoffeItemSet.includes(v));
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    axios.get(`/share/categories`).then(({ data }) => setCategories(data));
-  }, []);
-
-  useEffect(() => {
     setIsLoading(true);
+
     axios.get(`/share/list/${pages}/${category}`).then(({ data }) => {
       if (categoryState) {
         setCoffeeItem((prevItems) => {
@@ -37,15 +35,25 @@ function Share({ userId }) {
       }
       setHasData(data.length > 0);
       setIsLoading(false);
+      setLoading(true);
       setCategoryState(false);
     });
   }, [pages, category, categoryState]);
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/share/heart/${userId}`).then(({ data }) => setCoffeeHeartList(data));
+      axios.get(`/share/heart/${userId}`).then(({ data }) => {
+        setCoffeeHeartList(data);
+      });
     }
   }, [userId, pages]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    axios.get(`/share/categories`).then(({ data }) => {
+      setCategories(data);
+    });
+  }, []);
 
   const moreObserver = useCallback(
     (node) => {
@@ -72,31 +80,44 @@ function Share({ userId }) {
     setPages(0);
     setCoffeeItem([]);
     setCategoryState(true);
+    setLoading(false);
   }, [setPages]);
 
   return (
     <div className="share-wrap">
-      {categories.map((childCategory) => (
-        <HashTagButton childCategory={childCategory.coffee_category} category={category} pagesHandler={pagesHandler} />
-      ))}
-      <div className="share-contents-wrap">
-        {coffeeItem.map((v) => {
-          return (
-            <HashTagContents
-              data={v}
-              isLoading={isLoading}
-              setPages={setPages}
-              moreObserver={moreObserver}
-              userId={userId}
-              on={heartCoffee}
-            />
-          );
-        })}
-      </div>
-      {isLoading && (
-        <div ref={moreObserver} className="loading">
-          <div>{isLoading ? 'Loading...' : ''}</div>
-        </div>
+      {loading ? (
+        <>
+          <div className="button-box-category">
+            {categories.map((childCategory) => (
+              <HashTagButton
+                childCategory={childCategory.coffee_category}
+                category={category}
+                pagesHandler={pagesHandler}
+              />
+            ))}
+          </div>
+          <div className="share-contents-wrap">
+            {coffeeItem.map((v) => {
+              return (
+                <HashTagContents
+                  data={v}
+                  isLoading={isLoading}
+                  setPages={setPages}
+                  moreObserver={moreObserver}
+                  userId={userId}
+                  on={heartCoffee}
+                />
+              );
+            })}
+          </div>
+          {isLoading && (
+            <div className="shard-loading-box">
+              <Loading />
+            </div>
+          )}
+        </>
+      ) : (
+        <Loading />
       )}
     </div>
   );

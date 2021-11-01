@@ -356,6 +356,7 @@ app.get('/share/categories', (req, res) => {
 });
 
 app.get('/share/list/:pages/:reqCategory', (req, res) => {
+  console.log('몇번찍히나요?,커피아이템');
   const { pages, reqCategory } = req.params;
   const list = [];
 

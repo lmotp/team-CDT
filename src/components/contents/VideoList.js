@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './../../styles/layouts/video-contents.css';
 
 import VideoListItem from './VideoListItem';
 
-import axios from 'axios';
-
-export default function VideoList() {
-  const [boardList, setBoardList] = useState([]);
-
-  useEffect(() => {
-    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
-  }, []);
-
+export default function VideoList({ boardList }) {
   return (
     <div className="video-contents-list">
       <ul className="video-collection">
