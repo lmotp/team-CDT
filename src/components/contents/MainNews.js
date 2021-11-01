@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import BoardItem from './BoardItem';
 
 import './../../styles/layouts/main-news.css';
 
 export default function MainNews({ noticeList }) {
+  const [order, setOrder] = useState(0);
+
   const newsCollectionRef = useRef();
   const newsOrderRef = useRef();
   const leftController = useRef();
@@ -12,13 +14,14 @@ export default function MainNews({ noticeList }) {
 
   const handleRightController = (e) => {
     if (newsOrderRef.current.textContent === '1 / 4') {
+      setOrder(5);
       newsOrderRef.current.textContent = '2 / 4';
       leftController.current.style.color = '#333';
     } else if (newsOrderRef.current.textContent === '2 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(-1800px)';
+      setOrder(10);
       newsOrderRef.current.textContent = '3 / 4';
     } else if (newsOrderRef.current.textContent === '3 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(-2700px)';
+      setOrder(15);
       newsOrderRef.current.textContent = '4 / 4';
       e.target.style.color = '#ccc';
     }
@@ -26,22 +29,22 @@ export default function MainNews({ noticeList }) {
 
   const handleLeftController = (e) => {
     if (newsOrderRef.current.textContent === '4 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(-1800px)';
+      setOrder(10);
       newsOrderRef.current.textContent = '3 / 4';
       rightController.current.style.color = '#333';
     } else if (newsOrderRef.current.textContent === '3 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(-900px)';
+      setOrder(5);
       newsOrderRef.current.textContent = '2 / 4';
     } else if (newsOrderRef.current.textContent === '2 / 4') {
-      newsCollectionRef.current.style.transform = 'translateX(0px)';
+      setOrder(0);
       newsOrderRef.current.textContent = '1 / 4';
       e.target.style.color = '#ccc';
     }
   };
 
-  const spliceNoticeList = [...noticeList].splice(noticeList.length - 5 - order, 5);
+  const spliceNoticeList = [...noticeList].splice(order, 5);
 
-  const board = spliceNoticeList.reverse().map((boardItem) => {
+  const board = spliceNoticeList.map((boardItem) => {
     return (
       <BoardItem
         category={boardItem.category}

@@ -31,7 +31,7 @@ export default function Board() {
   const spliceBoardList = [...noticeList].splice(order, 10);
   const spliceSearchBoardList = [...newData].splice(order, 10);
 
-  const boards = spliceBoardList.reverse().map((boardItem) => {
+  const boards = spliceBoardList.map((boardItem) => {
     return (
       <BoardItem
         category={boardItem.category}
@@ -49,7 +49,7 @@ export default function Board() {
     );
   });
 
-  const newBoard = spliceSearchBoardList.reverse().map((boardItem) => {
+  const newBoard = spliceSearchBoardList.map((boardItem) => {
     return (
       <BoardItem
         category={boardItem.category}
