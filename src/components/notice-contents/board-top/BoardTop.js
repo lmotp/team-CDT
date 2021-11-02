@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import moment from 'moment';
 
 import BoardTopItem from './BoardTopItem';
 
@@ -7,89 +8,45 @@ import './../../../styles/layouts/notice-board/board-top.css';
 import eventThumb from './../../../images/event.png';
 import updateThumb from './../../../images/update.png';
 
-export default function BoardTop() {
+export default function BoardTop({ noticeList }) {
+  const [order, setOrder] = useState(0);
+
   const boardTopCollectionRef = useRef();
   const boardTopOrderRef = useRef();
   const boardTopLeftController = useRef();
   const boardTopRightController = useRef();
 
-  const boardList = [
-    {
-      id: 1,
-      title: '[공지사항]',
-      desc: '9.8(수) 카페 업데이트 점검 안내 (08:00 ~ 09:00)',
-      date: '2021.09.08',
-      eye: '3560',
-      like: '25',
-      cm: '15',
-      thumb: updateThumb,
-    },
-    {
-      id: 2,
-      title: '[공지사항]',
-      desc: '스타벅스에서 쿠폰쏜다! (08.30 ~ 9.30)',
-      date: '2021.08.30',
-      eye: '15600',
-      like: '356',
-      cm: '32',
-      thumb: eventThumb,
-    },
-    {
-      id: 3,
-      title: '[공지사항]',
-      desc: '카페지기의 라이브 방송 사전 안내 및 쿠폰 이벤트 (09.07)',
-      date: '2021.08.28',
-      eye: '1900',
-      like: '56',
-      cm: '72',
-      thumb: eventThumb,
-    },
-    {
-      id: 4,
-      title: '[공지사항]',
-      desc: '08.15(화) 메가커피 쿠폰 이벤트 당첨자 안내',
-      date: '2021.08.25',
-      eye: '782',
-      like: '16',
-      cm: '22',
-      thumb: updateThumb,
-    },
-    {
-      id: 5,
-      title: '[공지사항]',
-      desc: '롤챔스 승자예측 쿠폰 이벤트 "DK vs T1"',
-      date: '2021.08.20',
-      eye: '7782',
-      like: '816',
-      cm: '87',
-      thumb: eventThumb,
-    },
-  ];
+  const spliceNoticeList = [...noticeList].splice(order, 2);
 
-  const boardTop = boardList.map((boardTopItem) => {
+  const boardTop = spliceNoticeList.map((boardTopItem) => {
+    const date = moment(boardTopItem.createdAt).format('YYYY.MM.DD HH:mm');
     return (
       <BoardTopItem
+        category={boardTopItem.category}
+        bracket={boardTopItem.bracket}
         title={boardTopItem.title}
-        desc={boardTopItem.desc}
         thumb={boardTopItem.thumb}
-        date={boardTopItem.date}
-        eye={boardTopItem.eye}
-        like={boardTopItem.like}
-        cm={boardTopItem.cm}
+        date={date}
+        eye={boardTopItem.views}
+        heart={boardTopItem.heart}
+        count={boardTopItem.count}
+        postId={boardTopItem.post_id}
+        name={boardTopItem.name}
+        content={boardTopItem.content}
       />
     );
   });
 
   const handleRightController = (e) => {
     if (boardTopOrderRef.current.textContent === '1 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(-900px)';
+      setOrder(2);
       boardTopOrderRef.current.textContent = '2 / 4';
       boardTopLeftController.current.style.color = '#333';
     } else if (boardTopOrderRef.current.textContent === '2 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(-1800px)';
+      setOrder(4);
       boardTopOrderRef.current.textContent = '3 / 4';
     } else if (boardTopOrderRef.current.textContent === '3 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(-2700px)';
+      setOrder(6);
       boardTopOrderRef.current.textContent = '4 / 4';
       e.target.style.color = '#ccc';
     }
@@ -97,14 +54,14 @@ export default function BoardTop() {
 
   const handleLeftController = (e) => {
     if (boardTopOrderRef.current.textContent === '4 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(-1800px)';
+      setOrder(4);
       boardTopOrderRef.current.textContent = '3 / 4';
       boardTopRightController.current.style.color = '#333';
     } else if (boardTopOrderRef.current.textContent === '3 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(-900px)';
+      setOrder(2);
       boardTopOrderRef.current.textContent = '2 / 4';
     } else if (boardTopOrderRef.current.textContent === '2 / 4') {
-      boardTopCollectionRef.current.style.transform = 'translateX(0px)';
+      setOrder(0);
       boardTopOrderRef.current.textContent = '1 / 4';
       e.target.style.color = '#ccc';
     }

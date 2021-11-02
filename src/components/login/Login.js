@@ -22,6 +22,10 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
     setPwd(e.target.value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios({

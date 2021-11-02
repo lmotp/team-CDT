@@ -158,6 +158,7 @@
 .detail-wrap .comment-form-wrap .pagiNation-wrap {
   text-align: center;
 }
+
 .comment-form-wrap .pagiNation-wrap button {
   border: 1px solid burlywood;
   border-radius: 5px;
@@ -277,14 +278,18 @@
 
 .DetailList-wrap {
   width: 96.5%;
-  margin: 100px auto 0;
+  margin: 100px auto 20px;
   position: relative;
 }
 
+.DetailList-wrap .DetailList-button-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .DetailList-wrap button {
-  position: absolute;
   margin-top: 20px;
-  right: 10px;
 }
 
 .DetailList-wrap h2 {

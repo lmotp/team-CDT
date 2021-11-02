@@ -61,6 +61,10 @@ function DetailCommentForm({
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (!reCommentValue) {
+      alert('내용을 입력해주세요');
+      return;
+    }
     if (reComment) {
       axios
         .post('/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
@@ -73,6 +77,8 @@ function DetailCommentForm({
           .then(() => loadingHandler());
       }
     }
+    setReComment(false);
+    setChangeComment(false);
     setReCommentValue('');
   };
 

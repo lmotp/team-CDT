@@ -99,7 +99,8 @@ const UploadForm = ({ userId }) => {
     } else if (category === '영상콘텐츠') {
       board = 'video';
     }
-    history.push(board === '영상콘텐츠' ? `/notice/${board}` : `/video_list`);
+
+    history.push(board === '영상콘텐츠' ? `/video_list` : `/notice/${board}`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!

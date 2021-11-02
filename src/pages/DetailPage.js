@@ -15,7 +15,7 @@ function DetailPage({ userId, isLogin }) {
   const [contents, setContents] = useState('');
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [noticeList, setNoticeList] = useState([]);
   const [scorllHight, setScrollHight] = useState(0);
@@ -72,19 +72,16 @@ function DetailPage({ userId, isLogin }) {
                 userId={userId}
                 setScrollHight={setScrollHight}
               />
-              {isLoading ? (
-                <DetailCommentSection
-                  userId={userId}
-                  loadingHandler={loadingHandler}
-                  comment={comment}
-                  recomments={recomments}
-                  scorllHight={scorllHight}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                />
-              ) : (
-                <Loading />
-              )}
+              <DetailCommentSection
+                userId={userId}
+                loadingHandler={loadingHandler}
+                comment={comment}
+                recomments={recomments}
+                scorllHight={scorllHight}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                isLoading={isLoading}
+              />
               <DetailList category={contents.category} noticeList={noticeList} setCurrentPage={setCurrentPage} />
             </>
           ) : (
