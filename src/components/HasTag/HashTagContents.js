@@ -3,7 +3,7 @@ import Modals from '../Modal/Modals';
 import ModalContents from '../Modal/ModalContents';
 import axios from 'axios';
 
-function HashTagContents({ data, moreObserver, userId, on }) {
+function HashTagContents({ data, userId, on }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [heartState, setHeartState] = useState(false);
 
@@ -35,12 +35,7 @@ function HashTagContents({ data, moreObserver, userId, on }) {
         <div className="hashTagContents" key={data.id_coffee_item}>
           <img onClick={openModal} src={data.coffee_img} alt={data.coffee_name} />
           <h2>{data.coffee_name}</h2>
-          <i
-            ref={moreObserver}
-            onClick={heartStateHandler}
-            class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}
-          ></i>
-
+          <i onClick={heartStateHandler} class={!heartState ? 'far fa-heart heart' : 'fas fa-heart heart'}></i>
           <Modals modalOpen={modalOpen} close={closeModal}>
             <ModalContents contents={data} closeModal={closeModal} />
           </Modals>

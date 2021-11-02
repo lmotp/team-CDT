@@ -6,39 +6,21 @@ import '../styles/share.css';
 import HashTagButton from '../components/HasTag/HashTagButton';
 import { useParams } from 'react-router';
 import Loading from './Loading';
+import MoreCoffeeItem from '../components/HasTag/MoreCoffeeItem';
 
 function Share({ userId }) {
   const [coffeeItem, setCoffeeItem] = useState([]);
   const [pages, setPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [coffeeHeartList, setCoffeeHeartList] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [categoryState, setCategoryState] = useState(true);
   const [hasData, setHasData] = useState(false);
   const [loading, setLoading] = useState(false);
   const { category } = useParams();
 
-  const observer = useRef();
-
   const coffeeItemSet = coffeeItem.map((v) => v.id_coffee_item);
   const heartCoffeItemSet = coffeeHeartList.map((v) => v.coffee_id);
   const heartCoffee = coffeeItemSet.filter((v) => heartCoffeItemSet.includes(v));
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    axios.get(`/share/list/${pages}/${category}`).then(({ data }) => {
-      if (categoryState) {
-        setCoffeeItem((prevItems) => {
-          return [...new Set([...prevItems, ...data])];
-        });
-      }
-      setHasData(data.length > 0);
-      setIsLoading(false);
-      setLoading(true);
-      setCategoryState(false);
-    });
-  }, [pages, category, categoryState]);
 
   useEffect(() => {
     if (userId) {
@@ -55,31 +37,24 @@ function Share({ userId }) {
     });
   }, []);
 
-  const moreObserver = useCallback(
-    (node) => {
-      if (isLoading) {
-        return;
-      }
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-      observer.current = new IntersectionObserver(([{ isIntersecting }]) => {
-        if (isIntersecting && hasData) {
-          setPages((prevPageNumber) => prevPageNumber + 1);
-          setCategoryState(true);
-        }
+  useEffect(() => {
+    setIsLoading(false);
+    const res = async () => {
+      await axios.get(`/share/list/${pages}/${category}`).then(({ data }) => {
+        setCoffeeItem((prevItems) => {
+          return [...new Set([...prevItems, ...data])];
+        });
+        setHasData(data.length > 0);
       });
-      if (node) {
-        observer.current.observe(node);
-      }
-    },
-    [isLoading, hasData],
-  );
+      setIsLoading(true);
+      setLoading(true);
+    };
+    res();
+  }, [pages, category]);
 
   const pagesHandler = useCallback(() => {
     setPages(0);
     setCoffeeItem([]);
-    setCategoryState(true);
     setLoading(false);
   }, [setPages]);
 
@@ -98,23 +73,10 @@ function Share({ userId }) {
           </div>
           <div className="share-contents-wrap">
             {coffeeItem.map((v) => {
-              return (
-                <HashTagContents
-                  data={v}
-                  isLoading={isLoading}
-                  setPages={setPages}
-                  moreObserver={moreObserver}
-                  userId={userId}
-                  on={heartCoffee}
-                />
-              );
+              return <HashTagContents data={v} userId={userId} on={heartCoffee} />;
             })}
+            <MoreCoffeeItem hasData={hasData} setPages={setPages} loading={isLoading} />
           </div>
-          {isLoading && (
-            <div className="shard-loading-box">
-              <Loading />
-            </div>
-          )}
         </>
       ) : (
         <Loading />
