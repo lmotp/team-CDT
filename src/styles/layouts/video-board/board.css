@@ -38,7 +38,6 @@
 }
 
 .list-paging-left {
-  opacity: 0;
-  display: hidden;
+  display: none;
   margin-right: 18px;
 }

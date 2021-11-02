@@ -2,6 +2,7 @@ import React from 'react';
 import DetailCommentForm from './DetailCommentForm';
 import '../../styles/detail.css';
 import DetailPagination from './DetailPagination';
+import Loading from '../../pages/Loading';
 
 function DetailCommentSection({
   comment,
@@ -11,6 +12,7 @@ function DetailCommentSection({
   scorllHight,
   currentPage,
   setCurrentPage,
+  isLoading,
 }) {
   const postPerPage = 5;
   const indexOfLastPost = currentPage * postPerPage;
@@ -23,53 +25,62 @@ function DetailCommentSection({
     window.scrollTo(0, scorllHight);
   };
 
+  console.log(isLoading);
+
   return (
     <>
       {comment ? (
         <div className="comment-form-wrap">
-          {currentPosts.map((comment) => (
+          {isLoading ? (
             <>
-              <DetailCommentForm
-                key={comment.comment_id}
-                id={comment.comment_id}
-                createdAt={comment.createdAt}
-                name={comment.name}
-                profileImg={comment.profileImg}
-                comment={comment.content}
-                loadingHandler={loadingHandler}
-                userId={userId}
-                authId={comment.auth_id}
-              />
-              {recomments
-                .filter((recomment) => comment.comment_id === recomment.comment_id)
-                .map((recomment) => (
-                  <div>
-                    <DetailCommentForm
-                      key={recomment.comment_id}
-                      id={recomment.comment_id}
-                      recommentId={recomment.id}
-                      createdAt={recomment.createdAt}
-                      name={recomment.name}
-                      profileImg={recomment.profileImg}
-                      comment={recomment.recomment}
-                      userId={userId}
-                      authId={recomment.auth_id}
-                      loadingHandler={loadingHandler}
-                      on={true}
-                    />
-                  </div>
-                ))}
+              {currentPosts.map((comment) => (
+                <>
+                  <DetailCommentForm
+                    key={comment.comment_id}
+                    id={comment.comment_id}
+                    createdAt={comment.createdAt}
+                    name={comment.name}
+                    profileImg={comment.profileImg}
+                    comment={comment.content}
+                    loadingHandler={loadingHandler}
+                    userId={userId}
+                    authId={comment.auth_id}
+                  />
+                  {recomments
+                    .filter((recomment) => comment.comment_id === recomment.comment_id)
+                    .map((recomment) => (
+                      <div>
+                        <DetailCommentForm
+                          key={recomment.comment_id}
+                          id={recomment.comment_id}
+                          recommentId={recomment.id}
+                          createdAt={recomment.createdAt}
+                          name={recomment.name}
+                          profileImg={recomment.profileImg}
+                          comment={recomment.recomment}
+                          userId={userId}
+                          authId={recomment.auth_id}
+                          loadingHandler={loadingHandler}
+                          on={true}
+                        />
+                      </div>
+                    ))}
+                </>
+              ))}
+              <div className="pagiNation-wrap">
+                <DetailPagination
+                  postsPerpage={postPerPage}
+                  totalPosts={comment.length}
+                  paginate={paginate}
+                  currentPage={currentPage}
+                />
+              </div>
             </>
-          ))}
-
-          <div className="pagiNation-wrap">
-            <DetailPagination
-              postsPerpage={postPerPage}
-              totalPosts={comment.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
-          </div>
+          ) : (
+            <div style={{ marginTop: '20px' }} className="loading-box">
+              <Loading />
+            </div>
+          )}
         </div>
       ) : null}
     </>

@@ -2,61 +2,31 @@ import React, { createContext, useContext, useReducer, useState } from 'react';
 
 const initalUpload = [];
 
-const hashContents = [
-  {
-    id: 1,
-    tag: '#감성카페',
-    title: '스타벅스',
-    image:
-      'https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80',
-  },
-  {
-    id: 2,
-    tag: '#이쁜카페',
-    title: '망원다방',
-    image:
-      'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80',
-  },
-  {
-    id: 3,
-    tag: '#분위기 좋은 카페',
-    title: '빽다방',
-    image:
-      'https://images.unsplash.com/photo-1493857671505-72967e2e2760?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-  },
-  {
-    id: 3,
-    tag: '#프랜차이즈',
-    title: '이디야',
-    image: 'https://images.pexels.com/photos/2506993/pexels-photo-2506993.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-  },
-];
-
 const example = [
   {
     question: '오늘의 기분은 어떠신가요??????????????',
     answer: [
-      { value: 'a. 목이 "와! 찹다"라고 느낄정도로 시원한 아메리카노', type: [3, 0, 4, 5] },
+      { value: 'a. 목이 "와! 찹다"라고 느낄정도로 시원한 아메리카노', type: [2, 0, 4, 5] },
       { value: 'b. 오늘은 몸이 차가우니깐 따뜻하게 모카라떼', type: [1, 2, 3] },
       { value: 'c. 너무 오늘 우울행, 버그가 너무 많앙 상큼한 오렌지에이드', type: [5, 3, 1] },
-      { value: 'd. 너무 신나는 이 텐션 유지하구싶어 완전홍시', type: [5, 6] },
+      { value: 'd. 너무 신나는 이 텐션 유지하구싶어 완전홍시', type: [4, 0] },
     ],
   },
   {
     question: '아니 이거를 내가 무슨 재주로 만들지???',
     answer: [
-      { value: 'a. 내 재주는 디자인인가?? 개발인가? 왜케 덥지?', type: [1, 3, 0] },
-      { value: 'b. 오늘 짱 덥네, 그러게 말이다.', type: [3, 6] },
-      { value: 'c. 아니 이 사람들 뭔가 수상한데, 이상해 이상해', type: [2, 6, 3, 5] },
-      { value: 'd. 뭔가 덥고 이상하네 이거를 또 만들어야하네', type: [1, 5] },
+      { value: 'a. 내 재주는 디자인인가?? 개발인가? 왜케 덥지?', type: [1, 2, 0] },
+      { value: 'b. 오늘 짱 덥네, 그러게 말이다.', type: [3, 5] },
+      { value: 'c. 아니 이 사람들 뭔가 수상한데, 이상해 이상해', type: [2, 4, 3, 5] },
+      { value: 'd. 뭔가 덥고 이상하네 이거를 또 만들어야하네', type: [1, 4] },
     ],
   },
   {
     question: '질문을 뭘로 해야하지??',
     answer: [
-      { value: 'a. 질문질문이 어려움', type: [1, 6, 2, 3] },
-      { value: 'b. 흠 이걸 에프파이브하면은 인식해줘야하나?', type: [2, 5, 3, 1] },
-      { value: 'c. 오늘따라 그 소녀가 왜이렇게 보고싶을까?', type: [5, 3] },
+      { value: 'a. 질문질문이 어려움', type: [1, 0, 2, 3] },
+      { value: 'b. 흠 이걸 에프파이브하면은 인식해줘야하나?', type: [2, 5, 4, 1] },
+      { value: 'c. 오늘따라 그 소녀가 왜이렇게 보고싶을까?', type: [4, 3] },
       { value: 'd. 비에 젖은 단발머리 그 소녀', type: [2, 5, 0] },
     ],
   },
@@ -65,35 +35,35 @@ const example = [
     answer: [
       { value: 'a. 이걸언제 다시 다 고치냐?', type: [3, 2, 5] },
       { value: 'b. 그냥 대충 만들고 나중에 다시 고치자', type: [5, 0, 4, 1] },
-      { value: 'c. 뭐 대충 만들어 대충대충', type: [6, 5, 2] },
-      { value: 'd. 지금은 그럴단계야', type: [4, 2] },
+      { value: 'c. 뭐 대충 만들어 대충대충', type: [1, 5, 2] },
+      { value: 'd. 지금은 그럴단계야', type: [4, 3, 0] },
     ],
   },
   {
     question: '문별이의 솔로곡 중 아닌것은?',
     answer: [
-      { value: 'a. 달달 빛나는 반짝이는 달', type: [5, 0, 6] },
+      { value: 'a. 달달 빛나는 반짝이는 달', type: [5, 0, 4] },
       { value: 'b. 달이 태양을 가릴때는 이클립스', type: [2, 1] },
-      { value: 'c. 자유로운 삶을 위해서 셀피쉬', type: [3, 5, 6] },
-      { value: 'd. 눈이 오네요 벌써 12월인가봅니다 눈', type: [2, 1, 6] },
+      { value: 'c. 자유로운 삶을 위해서 셀피쉬', type: [3, 5, 4] },
+      { value: 'd. 눈이 오네요 벌써 12월인가봅니다 눈', type: [2, 1, 0] },
     ],
   },
   {
     question: '마마무 노래가 아닌것은 무엇일까요?',
     answer: [
       { value: 'a. 너와 나 똑닮은 데칼? 코마니!', type: [5, 2, 1, 3] },
-      { value: 'b. 부장님은 아재개그를 좋아하시지 왜냐고? 부장이니깐', type: [2, 4, 5] },
-      { value: 'c. 별이 빛나는 밤은 언제일까? 후 어렵구만', type: [1, 6, 5] },
-      { value: 'd. 어린시절이 그리운 그날 피터팬처럼', type: [5, 4, 3] },
+      { value: 'b. 부장님은 아재개그를 좋아하시지 왜냐고? 부장이니깐', type: [2, 4, 0] },
+      { value: 'c. 별이 빛나는 밤은 언제일까? 후 어렵구만', type: [1, 0, 5] },
+      { value: 'd. 어린시절이 그리운 그날 피터팬처럼', type: [1, 4, 3] },
     ],
   },
   {
     question: '이거를 몇번째 반복해야하는거여',
     answer: [
-      { value: 'a. 근데 이거를 돈받고 이걸 의뢰하나?', type: [2, 1, 5] },
+      { value: 'a. 근데 이거를 돈받고 이걸 의뢰하나?', type: [0, 1, 5] },
       { value: 'b. 더 어렵게 만들었으니깐 의로를하겠찌?', type: [3, 4, 5] },
       { value: 'c. 메스맥스랑 메스민을 쓰면은 가능하지않을까?', type: [4, 2] },
-      { value: 'd. 아유 개발자가 힘들구만 힘들구마잉', type: [6, 0, 2] },
+      { value: 'd. 아유 개발자가 힘들구만 힘들구마잉', type: [1, 0, 2] },
     ],
   },
 ];
@@ -178,15 +148,13 @@ export function Context({ children }) {
 
   return (
     <orderBoxContext.Provider value={orderBox}>
-      <hashContentsContext.Provider value={hashContents}>
-        <uploadDispatchContext.Provider value={uploadDispatch}>
-          <uploadStateContext.Provider value={uploadState}>
-            <foodGameExampleContext.Provider value={example}>
-              <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
-            </foodGameExampleContext.Provider>
-          </uploadStateContext.Provider>
-        </uploadDispatchContext.Provider>
-      </hashContentsContext.Provider>
+      <uploadDispatchContext.Provider value={uploadDispatch}>
+        <uploadStateContext.Provider value={uploadState}>
+          <foodGameExampleContext.Provider value={example}>
+            <foodGameResultContext.Provider value={result}>{children}</foodGameResultContext.Provider>
+          </foodGameExampleContext.Provider>
+        </uploadStateContext.Provider>
+      </uploadDispatchContext.Provider>
     </orderBoxContext.Provider>
   );
 }

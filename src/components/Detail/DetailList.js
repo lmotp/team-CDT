@@ -14,9 +14,11 @@ const DetailList = ({ category, noticeList, setCurrentPage }) => {
           <DetailListBoard list={list} i={i} setCurrentPage={setCurrentPage} />
         ))}
 
-      <button>
-        <Link to="/">홈으로</Link>
-      </button>
+      <div className="DetailList-button-box">
+        <button>
+          <Link to="/">홈으로</Link>
+        </button>
+      </div>
     </div>
   );
 };

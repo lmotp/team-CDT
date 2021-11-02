@@ -17,6 +17,7 @@ function FoodGame() {
   }, []);
 
   const countPlus = (e) => {
+    window.scrollTo(0, 0);
     const id = e.target.id;
     const target = foodGameExample[count].answer[id].type;
 
@@ -26,6 +27,7 @@ function FoodGame() {
 
     if (count === 6) {
       const result = array.indexOf(Math.max(...array));
+
       history.push(`/foodgame/${result}`);
       setArray(
         Array(7)

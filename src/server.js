@@ -394,6 +394,7 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
           break;
         }
       }
+
       res.send(list);
     });
   }
@@ -444,6 +445,7 @@ app.post('/share/list/heart', (req, res) => {
 });
 
 // -------------------------------------- 마이페이지 api -------------------------------------------------
+
 app.get('/mypage/list/:id/:value', (req, res) => {
   const { id, value } = req.params;
   let category;
@@ -569,6 +571,18 @@ app.put('/mypage/profile', upload.single('image'), (req, res) => {
       res.send('성공');
     },
   );
+});
+
+// -------------------------------------- 결과창 api -------------------------------------------------
+app.get('/foodgame/:category', (req, res) => {
+  const { category } = req.params;
+
+  connection.query('SELECT * FROM coffee_item WHERE coffee_category = ? limit 10;', [category], (err, row) => {
+    if (err) {
+      console.log('게임결과창 에러', err);
+    }
+    res.send(row);
+  });
 });
 
 // 유저 로직-*-----*-*--------------------
