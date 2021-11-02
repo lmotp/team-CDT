@@ -9,11 +9,11 @@ const MysqlStore = require('express-mysql-session')(session);
 require('dotenv').config({ path: __dirname + '/.env' });
 
 const options = {
-  host: process.env.DB_HOST,
+  host: '39.123.4.119',
   port: '3306',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  user: 'abc',
+  password: '123456789a',
+  database: 'scdt',
 };
 
 const sessionStore = new MysqlStore(options);
@@ -21,11 +21,11 @@ const sessionStore = new MysqlStore(options);
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
+  host: '39.123.4.119',
   port: '3306',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  user: 'abc',
+  password: '123456789a',
+  database: 'scdt',
 });
 
 connection.connect();
@@ -593,18 +593,15 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/user/login', (req, res) => {
-  connection.query('select * from auth', (err, rows) => {
+  connection.query('select * from auth where username=?', [req.body.user_name], (err, rows) => {
     if (err) {
       throw err;
     } else {
-      const authUsername = rows.filter((user) => {
-        return req.body.user_name === user.username;
-      })[0];
       const authPwd = rows.filter((user) => {
         return req.body.user_pwd === user.password;
       })[0];
 
-      if (authUsername && authPwd) {
+      if (rows[0].password === req.body.user_pwd) {
         req.session.isLogin = true;
         req.session.user_name = authPwd.name;
         req.session.user_profileImg = authPwd.profileImg;
