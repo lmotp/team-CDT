@@ -24,6 +24,8 @@ function HashTagContents({ data, userId, on, category }) {
     }
     if (on.includes(data.id_coffee_item) && userId) {
       setHeartState(true);
+    } else {
+      setHeartState(false);
     }
   }, [on, data.id_coffee_item, userId]);
 

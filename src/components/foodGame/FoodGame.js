@@ -43,7 +43,7 @@ function FoodGame() {
           category = 'Sparkling';
           break;
         case 4:
-          category = 'Fruit-drink';
+          category = 'FruitDrink';
           break;
         case 5:
           category = 'Tea';

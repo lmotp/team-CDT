@@ -22,6 +22,7 @@ export default function Board() {
   const { board } = useParams();
 
   useEffect(() => {
+    setLoading(false);
     axios.post('/notice/list', { board }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
