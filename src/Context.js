@@ -70,47 +70,55 @@ const example = [
 
 const result = [
   {
-    brand: '스타벅스',
-    drink: '자몽허니블랙티',
+    drink: '아메리카노',
     category: 'Coffee',
-    image: 'https://www.elandrs.com/upload/prd/img/389/600/2005457389_0000001.jpg',
-    tmi: '자몽허니블랙티를 고른 당신? 너무 날씨가 춥군요',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_201905220142317090.png',
+    tmi: `가장 기초가 되는 맛은 쓴맛. 물론 다양한 기호에 맞게 각국의 커피 맛이 어느 정도는 다르거니와 신맛을 포함해서 
+입 안에서 느껴지는 다른 맛과 향도 커피 평가에서 중요하지만, 커피에게 쓴맛은 거의 기본이나 다름없다. 
+커피가 인간이 매우 매우 사랑하는 음료로 간단하게 입가심이 필요하실때는, 커피한잔의 여유`,
   },
   {
-    brand: '빽다방',
-    drink: '완전홍시',
+    drink: '카페라떼',
     category: 'Latte',
-    image:
-      'https://post-phinf.pstatic.net/MjAyMDA2MjZfMjE1/MDAxNTkzMTUzMjExNTY1.HZnyuGL_oiVog7Ye-LlgmPEz2YtH1ZM3qqjEiASB4QAg.-MIggOCcDfipwkPpej_eBzuH0ggUyFuOynIZWXXT760g.JPEG/83740417_3260403803999491_5520350097119285264_o.jpg?type=w1200',
-    tmi: '완전 홍시가 나오다니 벌써 가을이네요옹?',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_201905220139212410.png',
+    tmi: `이탈리아어로 우유를 뜻하는 단어지만 스타벅스의 성공 이후 라떼=카페라테의 의미로 널리 쓰이게 되었다. 
+국내에서는 흔히 음료 이름에 '라떼'가 붙어 있으면 대부분 커피(에스프레소)가 포함된 음료이다. 
+유럽권 국가에서 ‘라떼’를 주문하면 관광객의 표현에 익숙한 점원이거나 스타벅스가 널리 퍼진 국가가 아닌 이상 
+우유를 받게될 수 있으니 조심하자 하지만 우리는 국내기 때문에 상괸이 없다. 
+커피는 쓰고 우유는 너무 달짝지근할때 그 중간 맛이 생각나면은 라떼란 말이야!`,
   },
   {
-    brand: '메가커피',
-    drink: '헤이즐넛아메리카노',
+    drink: '콜드브루 할리치노',
     category: 'Ccino',
-    image: 'http://image.auction.co.kr/itemimage/19/a7/42/19a742c146.jpg',
-    tmi: '헤이즐넛아메리카노는 달콤쌉사름함을 즐길 줄 아는 진정한 어른이시군요',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_201706161031192200.png',
+    tmi: `각종 재료를 얼음과 같이 갈아서 만드는 음료로 여러 재료를 사용하여 색상을 이용한 플레이팅도 가능해, 
+맛도 맛이지만 눈으로 봐도 이쁘다. 다양한 브랜드에서 브랜드의 이름을 걸고 치노를 만드는 경우도 종종 볼 수 있다. 그리고 각종 재료를 사용하기 때문에 재료에 제한이 없어 이벤트성 메뉴로도 많이 보인다.
+새로운 맛에 도전 해 보고싶으시면은 한번 치노도 어떠신지?`,
   },
   {
-    brand: '메가커피',
-    drink: '민트프라페',
+    drink: '복숭아 자두 스파클링',
     category: 'Sparkling',
-    image: 'http://image.auction.co.kr/itemimage/15/5f/6a/155f6a27f6.jpg',
-    tmi: '치약을 음료에서까지 찾는 당신 상당히 치아 건강에 신경을 두고있네요',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_201805310537345500.png',
+    tmi: `스파클링이란? 거품이 일어난다는 의미, 기존의 탄산음료와 다르게 청량감을 유지하면서도 단맛을 최소화해 
+자극적이지 않은 음료를 선호하는 사람들에게 좋은 반응을 얻고 있다.
+그러니 오늘같이 답답한 날 속을 뻥 뚫어줄 음료!! 스파클링은 어떠신가요??`,
   },
   {
-    brand: '컴포즈',
-    drink: '헤이즐러넛라떼',
-    category: 'Fruit-drink',
-    image: 'http://img.danawa.com/prod_img/500000/291/960/img/7960291_1.jpg?shrink=360:360&_v=20190521111347',
-    tmi: '라떼를 찾은 당신 상당히 꼰대끼가 있으시군요. 혹시 주변에서 꼰대냐고 수군수군대지 않나 확인해보세요',
+    drink: '사과 비트 착즙 주스',
+    category: 'FruitDrink',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_202104300915048730.png',
+    tmi: `현대사회에 이르러 많은 현대인들이 각종 비타민 부족으로 몸에 지병을 앓고 있지만, 
+약으로도 가능하지만 맛도 좋은 과일주스를 통해 비타민을 얻을 수 있다.
+오늘은 카페인이나 고당도 음료보다는 내 몸을 위해 각종 비타민과 영양분이 들어가 있는 주스는 어떤가요??`,
   },
   {
-    brand: '공차',
-    drink: '망고',
+    drink: '유자 캐모마일',
     category: 'Tea',
-    image: 'http://img.danawa.com/prod_img/500000/272/056/img/3056272_1.jpg?shrink=360:360&_v=20210610125044',
-    tmi: '남미의 열정같이 뜨거운 당신과 정말 잘 어울리는 음료에요',
+    image: 'https://admin.hollys.co.kr/upload/menu/etc/menuEtc_201910240241538460.png',
+    tmi: `차는 차나무 잎을 비롯한 식물성 재료를 우려 만드는 음료이다. 카페인, 카테킨, 테아닌 등이 다량 함유되어 있고,
+테아닌에 심신안정 효과가 있어, 안정이 필요한 사람들이 많이 찾는 한편, 카페인이 강한 찻잎을 모아 
+브렉퍼스트 티처럼 이른 아침에 잠을 깨는 용도로도 마신다. 차에는 카테킨 성분이 있어 카페인이 체내 흡수되는 것을 줄여주기 때문에 커피보다는 카페인의 부작용에서 자유롭다. 카테킨은 폴리페놀이라고도 불리는데,
+이 폴리페놀은 신체 전반의 건강 및 혈관, 피부 등에 도움을 준다. 안정과 건강을 위한 차는 어떤가요?`,
   },
 ];
 

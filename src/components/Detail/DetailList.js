@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/detail.css';
 
 import DetailListBoard from './DetailListBoard';
 
 const DetailList = ({ category, noticeList, setCurrentPage }) => {
+  const [urlCategory, setUrlCategory] = useState('');
+
+  useEffect(() => {
+    if (category === '주요소식') {
+      setUrlCategory('board');
+    } else {
+      setUrlCategory('free');
+    }
+  }, [category]);
+
   return (
     <div className="DetailList-wrap">
       <h2>{category}</h2>
@@ -16,7 +26,7 @@ const DetailList = ({ category, noticeList, setCurrentPage }) => {
 
       <div className="DetailList-button-box">
         <button>
-          <Link to="/">홈으로</Link>
+          <Link to={category === '영상콘텐츠' ? `/video_list` : `/notice/${urlCategory}`}>목록으로</Link>
         </button>
       </div>
     </div>

@@ -369,11 +369,15 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
     category = 'Sparkling';
   } else if (reqCategory === 'Coffee') {
     category = 'Coffee';
+  } else if (reqCategory === 'FruitDrink') {
+    category = 'FruitDrink';
+  } else if (reqCategory === 'Tea') {
+    category = 'Tea';
   } else {
-    category = 'all';
+    category = 'All';
   }
 
-  if (category === 'all') {
+  if (category === 'All') {
     connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
       for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
         if (row[i]) {

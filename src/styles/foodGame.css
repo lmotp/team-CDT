@@ -44,7 +44,6 @@
 
 .foodGame-result-wrap .foodGame-result-box img {
   width: 30%;
-  margin-right: 21px;
 }
 
 .foodGame-result-wrap .foodGame-result-box .result-info h2 {
@@ -59,7 +58,7 @@
 
 .foodGame-result-wrap .foodGame-result-box .result-info p {
   line-height: 1.5;
-  margin-bottom: 0;
+  white-space: pre-wrap;
 }
 
 .foodGame-result-wrap .result-button-box {

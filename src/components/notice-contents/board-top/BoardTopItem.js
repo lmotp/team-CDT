@@ -27,7 +27,6 @@ export default function BoardTopItem(props) {
       }
     }
   }, [props.content]);
-  console.log(imgUrl, setImgUrl);
 
   return (
     <Link to={`/detailpage/${props.postId}`} onClick={viewsPlus}>
