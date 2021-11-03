@@ -94,7 +94,7 @@ function Share({ userId }) {
           </div>
           <div className="share-contents-wrap">
             {coffeeItem.map((v) => {
-              return <HashTagContents data={v} userId={userId} on={heartCoffee} />;
+              return <HashTagContents data={v} userId={userId} on={heartCoffee} category={category} />;
             })}
           </div>
         </>

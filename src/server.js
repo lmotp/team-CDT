@@ -363,8 +363,8 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
   let category;
   if (reqCategory === 'Latte') {
     category = 'Latte';
-  } else if (reqCategory === 'Hollyccino') {
-    category = 'Hollyccino';
+  } else if (reqCategory === 'Ccino') {
+    category = 'Ccino';
   } else if (reqCategory === 'Sparkling') {
     category = 'Sparkling';
   } else if (reqCategory === 'Coffee') {
@@ -576,8 +576,9 @@ app.put('/mypage/profile', upload.single('image'), (req, res) => {
 // -------------------------------------- 결과창 api -------------------------------------------------
 app.get('/foodgame/:category', (req, res) => {
   const { category } = req.params;
+  console.log(category);
 
-  connection.query('SELECT * FROM coffee_item WHERE coffee_category = ? limit 10;', [category], (err, row) => {
+  connection.query('SELECT * FROM coffee_item WHERE coffee_category = ? limit 8;', [category], (err, row) => {
     if (err) {
       console.log('게임결과창 에러', err);
     }

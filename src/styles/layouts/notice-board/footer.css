@@ -1,10 +1,8 @@
 .notice-board-footer {
-  position: absolute;
-  bottom: -180px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
+  margin-top: 48px;
   text-align: center;
+  padding-bottom: 20px;
 }
 
 .notice-board-footer img {
