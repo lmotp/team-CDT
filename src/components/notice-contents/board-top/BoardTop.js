@@ -1,12 +1,8 @@
 import React, { useRef, useState } from 'react';
-import moment from 'moment';
 
 import BoardTopItem from './BoardTopItem';
 
 import './../../../styles/layouts/notice-board/board-top.css';
-
-import eventThumb from './../../../images/event.png';
-import updateThumb from './../../../images/update.png';
 
 export default function BoardTop({ noticeList }) {
   const [order, setOrder] = useState(0);
@@ -17,25 +13,6 @@ export default function BoardTop({ noticeList }) {
   const boardTopRightController = useRef();
 
   const spliceNoticeList = [...noticeList].splice(order, 2);
-
-  const boardTop = spliceNoticeList.map((boardTopItem) => {
-    const date = moment(boardTopItem.createdAt).format('YYYY.MM.DD HH:mm');
-    return (
-      <BoardTopItem
-        category={boardTopItem.category}
-        bracket={boardTopItem.bracket}
-        title={boardTopItem.title}
-        thumb={boardTopItem.thumb}
-        date={date}
-        eye={boardTopItem.views}
-        heart={boardTopItem.heart}
-        count={boardTopItem.count}
-        postId={boardTopItem.post_id}
-        name={boardTopItem.name}
-        content={boardTopItem.content}
-      />
-    );
-  });
 
   const handleRightController = (e) => {
     if (boardTopOrderRef.current.textContent === '1 / 4') {
@@ -71,7 +48,23 @@ export default function BoardTop({ noticeList }) {
     <div className="board-top">
       <div className="board-top-collection">
         <ul ref={boardTopCollectionRef} className="board-top-list">
-          {boardTop}
+          {spliceNoticeList.map((boardTopItem) => {
+            return (
+              <BoardTopItem
+                category={boardTopItem.category}
+                bracket={boardTopItem.bracket}
+                title={boardTopItem.title}
+                thumb={boardTopItem.thumb}
+                date={boardTopItem.createdAt}
+                eye={boardTopItem.views}
+                heart={boardTopItem.heart}
+                count={boardTopItem.count}
+                postId={boardTopItem.post_id}
+                name={boardTopItem.name}
+                content={boardTopItem.content}
+              />
+            );
+          })}
         </ul>
       </div>
       <div className="board-top-controller">

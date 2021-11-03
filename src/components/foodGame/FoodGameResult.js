@@ -5,40 +5,34 @@ import { Link } from 'react-router-dom';
 import { useFoodGameResult } from '../../Context';
 import Loading from '../../pages/Loading';
 import NotFound from '../../pages/NotFound';
+import HashTagContents from '../HasTag/HashTagContents';
 import '../../styles/foodGame.css';
+import Footer from '../notice-contents/Footer';
 
-function FoodGameResult() {
-  const { count } = useParams();
+function FoodGameResult({ userId }) {
+  const { category } = useParams();
   const [coffeeItem, setCoffeeItem] = useState([]);
+  const [coffeeHeartList, setCoffeeHeartList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const result = useFoodGameResult();
 
+  const count = result.map((v) => v.category).indexOf(category);
+
+  const coffeeItemSet = coffeeItem.map((v) => v.id_coffee_item);
+  const heartCoffeItemSet = coffeeHeartList.map((v) => v.coffee_id);
+  const heartCoffee = coffeeItemSet.filter((v) => heartCoffeItemSet.includes(v));
+
+  useEffect(() => {
+    if (userId) {
+      axios.get(`/share/heart/${userId}`).then(({ data }) => {
+        setCoffeeHeartList(data);
+      });
+    }
+  }, [userId]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    let category;
-    switch (Number(count)) {
-      case 0:
-        category = 'Coffee';
-        break;
-      case 1:
-        category = 'Latte';
-        break;
-      case 2:
-        category = 'Ccino';
-        break;
-      case 3:
-        category = 'Sparkling';
-        break;
-      case 4:
-        category = 'Fruit-drink';
-        break;
-      case 5:
-        category = 'Tea';
-        break;
-      default:
-        break;
-    }
 
     axios.get(`/foodgame/${category}`).then(({ data }) => {
       setCoffeeItem(data);
@@ -46,20 +40,21 @@ function FoodGameResult() {
         setLoading(true);
       }, 1000);
     });
-  }, [count]);
+  }, [category]);
+
+  console.log(count);
 
   return (
     <div className="foodGame-result-wrap">
       {loading ? (
         <>
-          {count <= result.length ? (
+          {count >= 0 ? (
             <>
               <div className="foodGame-result-box">
                 <img src={result[count].image} alt={result[count].drink} />
                 <div className="result-info">
-                  <h2>
-                    {result[count].brand} - <span>{result[count].drink}</span>
-                  </h2>
+                  <h2>{result[count].category}</h2>
+                  <h3>{result[count].drink}</h3>
                   <p>
                     싹이 인간은 동력은 고행을 곳이 있을 든 인간이 기관과 끓는다. 있을 무엇을 품고 것이다. 인류의 가지에
                     같은 뜨거운지라, 얼마나 사라지지 반짝이는 위하여서, 것이다. 있으며, 이 모래뿐일 우리 무엇을 봄날의
@@ -70,9 +65,20 @@ function FoodGameResult() {
                   </p>
                 </div>
               </div>
-              <button>
-                <Link to="/">가자홈으로</Link>
-              </button>
+              <div className="foodGame-contents-wrap">
+                {coffeeItem.map((v) => {
+                  return <HashTagContents data={v} userId={userId} on={heartCoffee} />;
+                })}
+              </div>
+              <div className="result-button-box">
+                <button>
+                  <Link to="/foodgame">다시하기</Link>
+                </button>
+                <button>
+                  <Link to={`/notice/recommend/${category}`}>다른 음료도</Link>
+                </button>
+              </div>
+              <Footer />
             </>
           ) : (
             <NotFound />

@@ -15,12 +15,9 @@
 }
 
 .video-board-controller {
+  margin-top: 20px;
   display: flex;
-  position: absolute;
-  left: 50%;
-  height: 50px;
-  align-items: center;
-  transform: translateX(-50%);
+  justify-content: center;
 }
 
 .video-board-controller i {

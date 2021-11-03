@@ -72,12 +72,14 @@ const result = [
   {
     brand: '스타벅스',
     drink: '자몽허니블랙티',
+    category: 'Coffee',
     image: 'https://www.elandrs.com/upload/prd/img/389/600/2005457389_0000001.jpg',
     tmi: '자몽허니블랙티를 고른 당신? 너무 날씨가 춥군요',
   },
   {
     brand: '빽다방',
     drink: '완전홍시',
+    category: 'Latte',
     image:
       'https://post-phinf.pstatic.net/MjAyMDA2MjZfMjE1/MDAxNTkzMTUzMjExNTY1.HZnyuGL_oiVog7Ye-LlgmPEz2YtH1ZM3qqjEiASB4QAg.-MIggOCcDfipwkPpej_eBzuH0ggUyFuOynIZWXXT760g.JPEG/83740417_3260403803999491_5520350097119285264_o.jpg?type=w1200',
     tmi: '완전 홍시가 나오다니 벌써 가을이네요옹?',
@@ -85,32 +87,30 @@ const result = [
   {
     brand: '메가커피',
     drink: '헤이즐넛아메리카노',
+    category: 'Ccino',
     image: 'http://image.auction.co.kr/itemimage/19/a7/42/19a742c146.jpg',
     tmi: '헤이즐넛아메리카노는 달콤쌉사름함을 즐길 줄 아는 진정한 어른이시군요',
   },
   {
     brand: '메가커피',
     drink: '민트프라페',
+    category: 'Sparkling',
     image: 'http://image.auction.co.kr/itemimage/15/5f/6a/155f6a27f6.jpg',
     tmi: '치약을 음료에서까지 찾는 당신 상당히 치아 건강에 신경을 두고있네요',
   },
   {
     brand: '컴포즈',
     drink: '헤이즐러넛라떼',
+    category: 'Fruit-drink',
     image: 'http://img.danawa.com/prod_img/500000/291/960/img/7960291_1.jpg?shrink=360:360&_v=20190521111347',
     tmi: '라떼를 찾은 당신 상당히 꼰대끼가 있으시군요. 혹시 주변에서 꼰대냐고 수군수군대지 않나 확인해보세요',
   },
   {
     brand: '공차',
     drink: '망고',
+    category: 'Tea',
     image: 'http://img.danawa.com/prod_img/500000/272/056/img/3056272_1.jpg?shrink=360:360&_v=20210610125044',
     tmi: '남미의 열정같이 뜨거운 당신과 정말 잘 어울리는 음료에요',
-  },
-  {
-    brand: '코카콜라',
-    drink: '체리콕',
-    image: 'http://image.auction.co.kr/itemimage/1b/84/fa/1b84fabb96.jpg',
-    tmi: '어린이입맛이네요. 그냥 편의점가서 음료 사드세요.',
   },
 ];
 

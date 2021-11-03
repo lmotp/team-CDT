@@ -28,7 +28,31 @@ function FoodGame() {
     if (count === 6) {
       const result = array.indexOf(Math.max(...array));
 
-      history.push(`/foodgame/${result}`);
+      let category;
+      switch (Number(result)) {
+        case 0:
+          category = 'Coffee';
+          break;
+        case 1:
+          category = 'Latte';
+          break;
+        case 2:
+          category = 'Ccino';
+          break;
+        case 3:
+          category = 'Sparkling';
+          break;
+        case 4:
+          category = 'Fruit-drink';
+          break;
+        case 5:
+          category = 'Tea';
+          break;
+        default:
+          break;
+      }
+
+      history.push(`/foodgame/${category}`);
       setArray(
         Array(7)
           .fill(0)
