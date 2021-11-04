@@ -9,11 +9,14 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   const location = useLocation();
   const change = location.state?.change;
   const postId = location.state?.postId;
-
+  const heartChange = location.state?.heartChange;
+  const category = location.state?.category;
   const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
   const [reLogin, setReLogin] = useState(false);
   const pwdRef = useRef();
+
+  console.log(location);
 
   const handleUser_id = (e) => {
     setUser_id(e.target.value);
@@ -21,6 +24,10 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   const hanldePwd = (e) => {
     setPwd(e.target.value);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,13 +49,15 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
       pwdRef.current.focus();
       setPwd('');
       setReLogin(false);
-    } else if (isLogin === true && !change) {
+    } else if (isLogin === true && !change && !heartChange) {
       history.push('/');
       window.sessionStorage.setItem('login', true);
     } else if (isLogin === true && change) {
       history.push(`/detailpage/${postId}`);
+    } else if (isLogin === true && heartChange) {
+      history.push(`/notice/recommend/${category}`);
     }
-  }, [reLogin, isLogin, history, change, postId]);
+  }, [reLogin, isLogin, history, change, postId, heartChange, category]);
 
   return (
     <div className="login-content">

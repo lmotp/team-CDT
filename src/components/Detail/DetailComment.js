@@ -13,6 +13,10 @@ function DetailComment({ count, loadingHandler, userId, setScrollHight }) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (!value) {
+      alert('내용을 입력해주세요');
+      return;
+    }
     axios.post('/detailpage/comment', { comment: value, postId: post_id, userId }).then(() => loadingHandler());
     setValue('');
   };

@@ -363,17 +363,21 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
   let category;
   if (reqCategory === 'Latte') {
     category = 'Latte';
-  } else if (reqCategory === 'Hollyccino') {
-    category = 'Hollyccino';
+  } else if (reqCategory === 'Ccino') {
+    category = 'Ccino';
   } else if (reqCategory === 'Sparkling') {
     category = 'Sparkling';
   } else if (reqCategory === 'Coffee') {
     category = 'Coffee';
+  } else if (reqCategory === 'FruitDrink') {
+    category = 'FruitDrink';
+  } else if (reqCategory === 'Tea') {
+    category = 'Tea';
   } else {
-    category = 'all';
+    category = 'All';
   }
 
-  if (category === 'all') {
+  if (category === 'All') {
     connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
       for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
         if (row[i]) {
@@ -394,6 +398,7 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
           break;
         }
       }
+
       res.send(list);
     });
   }
@@ -444,6 +449,7 @@ app.post('/share/list/heart', (req, res) => {
 });
 
 // -------------------------------------- 마이페이지 api -------------------------------------------------
+
 app.get('/mypage/list/:id/:value', (req, res) => {
   const { id, value } = req.params;
   let category;
@@ -569,6 +575,19 @@ app.put('/mypage/profile', upload.single('image'), (req, res) => {
       res.send('성공');
     },
   );
+});
+
+// -------------------------------------- 결과창 api -------------------------------------------------
+app.get('/foodgame/:category', (req, res) => {
+  const { category } = req.params;
+  console.log(category);
+
+  connection.query('SELECT * FROM coffee_item WHERE coffee_category = ? limit 8;', [category], (err, row) => {
+    if (err) {
+      console.log('게임결과창 에러', err);
+    }
+    res.send(row);
+  });
 });
 
 // 유저 로직-*-----*-*--------------------

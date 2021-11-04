@@ -5,8 +5,7 @@
 }
 
 .share-wrap .button-box-category {
-  margin-top: 20px;
-  margin-left: 40px;
+  margin: 20px 0 20px 32px;
 }
 
 .share-wrap .button-box-category span button {
@@ -21,7 +20,7 @@
   color: burlywood;
 }
 
-.share-wrap .shard-loading-box {
+.share-wrap .loading-box {
   margin-top: 50px;
 }
 
@@ -34,33 +33,34 @@
   text-align: center;
 }
 
-.share-contents-wrap .share-contents {
+.share-contents-wrap .coffeeItem-contents {
   width: 45%;
   height: 100%;
   margin-right: 2%;
   margin-bottom: 20px;
   border: 1px solid black;
+  padding: 20px 10px;
 }
 
-.share-contents-wrap .share-contents:nth-child(2n) {
+.share-contents-wrap .contents:nth-child(2n) {
   margin-right: 0;
 }
 
-.share-contents-wrap .share-contents h2 {
+.share-contents-wrap .coffeeItem-contents .infoName {
   font-size: 21px;
 }
 
-.share-contents-wrap .share-contents img {
+.share-contents-wrap .coffeeItem-contents .infoImg {
   width: 50%;
   height: 100%;
   object-fit: cover;
   cursor: pointer;
 }
 
-.share-contents-wrap .share-contents i {
+.share-contents-wrap .coffeeItem-contents i {
   cursor: pointer;
 }
 
-.share-contents-wrap .share-contents i.fas {
+.share-contents-wrap .coffeeItem-contents i.fas {
   color: red;
 }

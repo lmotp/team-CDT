@@ -15,6 +15,7 @@ export default function BoardControll({ order, setOrder }) {
   const buttonRef5 = useRef();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (order === 0) {
       buttonRef2.current.classList.remove('on');
       buttonRef3.current.classList.remove('on');
@@ -26,7 +27,6 @@ export default function BoardControll({ order, setOrder }) {
 
   const handlePaging = (e) => {
     setOrder((e.target.id - 1) * 12);
-    window.scrollTo(0, 0);
     if (e.target.id === String(buttonValue[1])) {
       buttonRef1.current.classList.remove('on');
       buttonRef3.current.classList.remove('on');
@@ -79,6 +79,7 @@ export default function BoardControll({ order, setOrder }) {
     const newButtonValue = buttonValue.map((value) => {
       return value - 5;
     });
+
     setButtonValue(newButtonValue);
     setOrder((newButtonValue[4] - 1) * 12);
     buttonRef5.current.classList.add('on');
@@ -87,8 +88,8 @@ export default function BoardControll({ order, setOrder }) {
     buttonRef2.current.classList.remove('on');
     buttonRef1.current.classList.remove('on');
     if (newButtonValue[0] === 1) {
-      pagingLeftController.current.style.opacity = '0';
       pagingLeftController.current.style.display = 'none';
+      return;
     }
   };
 
