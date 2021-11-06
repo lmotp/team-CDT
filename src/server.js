@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const mysql = require('mysql');
 const app = express();
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
@@ -9,11 +10,11 @@ const MysqlStore = require('express-mysql-session')(session);
 require('dotenv').config({ path: __dirname + '/.env' });
 
 const options = {
-  host: '39.123.4.119',
-  port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  host: process.env.DB_HOST,
+  port: process.env.DB_HOSTPORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
 const sessionStore = new MysqlStore(options);
@@ -21,12 +22,23 @@ const sessionStore = new MysqlStore(options);
 const port = process.env.DB_PORT || 5000;
 
 const connection = mysql.createConnection({
-  host: '39.123.4.119',
-  port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+  host: process.env.DB_HOST,
+  port: process.env.DB_HOSTPORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
+
+app.use(cookieParser());
+app.use(
+  session({
+    key: process.env.SESSION_KEY,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  }),
+);
 
 connection.connect();
 
@@ -41,17 +53,16 @@ const upload = multer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
-app.use(
-  session({
-    secret: 'Secret key',
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  }),
-);
 
 app.use('/image', express.static(__dirname + '/uploads'));
+
+// app.use(express.static(path.join(__dirname, 'build')));
+
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
+
+// console.log(path.join(__dirname, 'build', 'index.html'));
 
 app.post('/thumbnail', upload.single('image'), (req, res) => {
   const image = `/image/${req.file.filename}`;
@@ -620,12 +631,20 @@ app.post('/user/login', (req, res) => {
         return req.body.user_pwd === user.password;
       })[0];
 
+      const authPwdObj = {
+        bDay: authPwd.bDay,
+        bMonth: authPwd.bMonth,
+        bYear: authPwd.bYear,
+        gender: authPwd.gender,
+        username: authPwd.username,
+      };
+
       if (rows[0].password === req.body.user_pwd) {
         req.session.isLogin = true;
         req.session.user_name = authPwd.name;
         req.session.user_profileImg = authPwd.profileImg;
         req.session.user_id = authPwd.id;
-        req.session.user = authPwd;
+        req.session.user = authPwdObj;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
       } else {
         res.send({ checkLogin: false, reLogin: true });

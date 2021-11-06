@@ -12,7 +12,6 @@ function Share({ userId }) {
   const [pages, setPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [coffeeHeartList, setCoffeeHeartList] = useState([]);
-  // const [heartCoffee,setHeartCoffee] = useState([])
   const [categories, setCategories] = useState([]);
   const [hasData, setHasData] = useState(false);
   const [loading, setLoading] = useState(false);

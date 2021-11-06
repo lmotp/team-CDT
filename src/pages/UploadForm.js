@@ -92,15 +92,13 @@ const UploadForm = ({ userId }) => {
     let board;
     if (category === '주요소식') {
       board = 'board';
-    } else if (category === '이벤트') {
-      board = 'event';
     } else if (category === '자유게시판') {
       board = 'free';
     } else if (category === '영상콘텐츠') {
       board = 'video';
     }
 
-    history.push(board === '영상콘텐츠' ? `/video_list` : `/notice/${board}`);
+    history.push(board === 'video' ? `/video_list` : `/notice/${board}`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!

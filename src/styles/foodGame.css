@@ -1,8 +1,7 @@
 .foodGame-wrap {
   width: 79.23%;
-  height: 100vh;
+  margin-top: 25%;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 }

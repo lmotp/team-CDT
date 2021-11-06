@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
 import axios from 'axios';
+import dompurify from 'dompurify';
 
 function DetailCommentForm({
   id,
@@ -89,7 +90,7 @@ function DetailCommentForm({
       {profileImg ? <img src={profileImg} alt={name} /> : <i class="far fa-user-circle user-icon"></i>}
       <div className="comment-secion-content">
         <div className="content-profile">{name}</div>
-        <p dangerouslySetInnerHTML={{ __html: dangerComment }}></p>
+        <p dangerouslySetInnerHTML={{ __html: dompurify.sanitize(dangerComment) }}></p>
         <div className="info-wrap">
           <span className="info-date">{createTime}</span>
           {!on && (

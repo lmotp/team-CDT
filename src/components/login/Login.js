@@ -16,8 +16,6 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   const [reLogin, setReLogin] = useState(false);
   const pwdRef = useRef();
 
-  console.log(location);
-
   const handleUser_id = (e) => {
     setUser_id(e.target.value);
   };
