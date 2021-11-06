@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import dompurify from 'dompurify';
 
 function DetailContent({ contents, postId, userId, heartCount, setHeartCount, isLogin }) {
   const [hashTag, setHashTag] = useState([]);
@@ -70,7 +71,15 @@ function DetailContent({ contents, postId, userId, heartCount, setHeartCount, is
 
   return (
     <section>
-      <div className="content" dangerouslySetInnerHTML={{ __html: contents.content }}></div>
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{
+          __html: dompurify.sanitize(contents.content, {
+            ADD_TAGS: ['iframe'],
+            ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+          }),
+        }}
+      ></div>
       <div className="hashTag-box">
         {hashTag.map((v, i) => (
           <span key={i}>#{v} </span>

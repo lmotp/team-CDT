@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Context } from './Context';
 import HeaderGnb from './components/HeaderGnb';
 import Contents from './components/contents/Contents';
@@ -39,49 +39,47 @@ export function App() {
 
   return (
     <Context>
-      <HashRouter>
-        <div className="contain">
-          <HeaderGnb
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-            username={username}
-            userProfileImg={userProfileImg}
-            setUsername={setUsername}
+      <div className="contain">
+        <HeaderGnb
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          username={username}
+          userProfileImg={userProfileImg}
+          setUsername={setUsername}
+        />
+        <Switch>
+          <Route exact path="/" component={Contents} />
+          <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} isLogin={isLogin} />} />
+          <Route path="/video_list" component={Video} />
+          <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
+          <Route exact path="/foodgame" component={FoodGame} />
+          <Route exact path="/foodgame/:category" render={() => <FoodGameResult userId={userId} />} />
+          <Route path="/notice/recommend/:category" render={() => <Share userId={userId} />} />
+          <Route exact path="/notice/:board" component={NoticeContents} />
+          <Route
+            path="/user"
+            render={() => (
+              <Login isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
+            )}
           />
-          <Switch>
-            <Route exact path="/" component={Contents} />
-            <Route exact path="/detailpage/:post_id" render={() => <DetailPage userId={userId} isLogin={isLogin} />} />
-            <Route path="/video_list" component={Video} />
-            <Route path="/uploadform" render={() => <UploadForm userId={userId} />} />
-            <Route exact path="/foodgame" component={FoodGame} />
-            <Route exact path="/foodgame/:category" render={() => <FoodGameResult userId={userId} />} />
-            <Route path="/notice/recommend/:category" render={() => <Share userId={userId} />} />
-            <Route exact path="/notice/:board" component={NoticeContents} />
-            <Route
-              path="/user"
-              render={() => (
-                <Login isLogin={isLogin} setIsLogin={setIsLogin} username={username} setUsername={setUsername} />
-              )}
-            />
-            <Route path="/auth" component={Auth} />
-            <Route
-              path="/mypage/:username"
-              render={() => (
-                <MyPage
-                  user={user}
-                  isLogin={isLogin}
-                  userProfileImg={userProfileImg}
-                  usernames={username}
-                  setUsername={setUsername}
-                  setUserProfileImg={setUserProfileImg}
-                  userId={userId}
-                />
-              )}
-            />
-            <Route path="/" component={NotFound} />
-          </Switch>
-        </div>
-      </HashRouter>
+          <Route path="/auth" component={Auth} />
+          <Route
+            path="/mypage/:username"
+            render={() => (
+              <MyPage
+                user={user}
+                isLogin={isLogin}
+                userProfileImg={userProfileImg}
+                usernames={username}
+                setUsername={setUsername}
+                setUserProfileImg={setUserProfileImg}
+                userId={userId}
+              />
+            )}
+          />
+          <Route path="/" component={NotFound} />
+        </Switch>
+      </div>
     </Context>
   );
 }
