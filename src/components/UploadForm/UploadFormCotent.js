@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactSummernote from 'react-summernote';
+import dompurify from 'dompurify';
 
 // imports for summernote
 import 'react-summernote/dist/react-summernote.css';
@@ -37,7 +38,7 @@ const UploadFormCotent = ({ onImageUpload, onChange, contents }) => {
         onImageUpload={onImageUpload}
         onChange={onChange}
       >
-        {contents && <div dangerouslySetInnerHTML={{ __html: contents }}></div>}
+        {contents && <div dangerouslySetInnerHTML={{ __html: dompurify.sanitize(contents) }}></div>}
       </ReactSummernote>
     </div>
   );

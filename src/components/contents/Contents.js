@@ -14,10 +14,9 @@ export default function Contents() {
   const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
-    console.log('hi');
     window.scrollTo(0, 0);
-    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
-    axios.post('/notice/list', { board: '주요소식' }).then((res) => {
+    axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
+    axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
     });

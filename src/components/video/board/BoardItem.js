@@ -11,7 +11,7 @@ export default function BoardItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
 
   const viewsPlus = () => {
-    axios.post('/detailpage/views', { postId: props.postId });
+    axios.post('/api/detailpage/views', { postId: props.postId });
   };
 
   useEffect(() => {

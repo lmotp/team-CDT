@@ -13,7 +13,7 @@ function FoodGameResult({ userId }) {
   const { category } = useParams();
   const [coffeeItem, setCoffeeItem] = useState([]);
   const [coffeeHeartList, setCoffeeHeartList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const result = useFoodGameResult();
 
@@ -25,7 +25,7 @@ function FoodGameResult({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/share/heart/${userId}`).then(({ data }) => {
+      axios.get(`/api/share/heart/${userId}`).then(({ data }) => {
         setCoffeeHeartList(data);
       });
     }
@@ -34,7 +34,7 @@ function FoodGameResult({ userId }) {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    axios.get(`/foodgame/${category}`).then(({ data }) => {
+    axios.get(`/api/foodgame/${category}`).then(({ data }) => {
       setCoffeeItem(data);
       setTimeout(() => {
         setLoading(true);

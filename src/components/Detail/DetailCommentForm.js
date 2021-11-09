@@ -55,7 +55,7 @@ function DetailCommentForm({
     const confirm = window.confirm('삭제하겠습니까?');
     if (confirm) {
       axios
-        .post('/detailpage/recomment/list/remove', { commentId: id, authId, recommentId, on })
+        .post('/api/detailpage/recomment/list/remove', { commentId: id, authId, recommentId, on })
         .then(() => loadingHandler());
     }
   };
@@ -68,13 +68,13 @@ function DetailCommentForm({
     }
     if (reComment) {
       axios
-        .post('/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
+        .post('/api/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
         .then(() => loadingHandler());
     } else if (changeComment) {
       const confirm = window.confirm('수정하겠습니까?');
       if (confirm) {
         axios
-          .post('/detailpage/recomment/list/change', { commentId: id, authId, recommentId, on, reCommentValue })
+          .post('/api/detailpage/recomment/list/change', { commentId: id, authId, recommentId, on, reCommentValue })
           .then(() => loadingHandler());
       }
     }

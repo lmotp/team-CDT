@@ -19,7 +19,7 @@ export default function Board() {
   const boardCollectionRef = useRef();
 
   useEffect(() => {
-    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => {
+    axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => {
       setBoardList(res.data);
       setLoading(true);
     });

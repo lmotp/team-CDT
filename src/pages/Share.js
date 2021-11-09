@@ -23,7 +23,7 @@ function Share({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/share/heart/${userId}`).then(({ data }) => {
+      axios.get(`/api/share/heart/${userId}`).then(({ data }) => {
         setCoffeeHeartList(data);
       });
     }
@@ -31,7 +31,7 @@ function Share({ userId }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get(`/share/categories`).then(({ data }) => {
+    axios.get(`/api/share/categories`).then(({ data }) => {
       setCategories(data);
     });
   }, []);
@@ -39,7 +39,7 @@ function Share({ userId }) {
   useEffect(() => {
     setIsLoading(false);
     const res = async () => {
-      await axios.get(`/share/list/${pages}/${category}`).then(({ data }) => {
+      await axios.get(`/api/share/list/${pages}/${category}`).then(({ data }) => {
         setCoffeeItem((prevItems) => {
           return [...new Set([...prevItems, ...data])];
         });

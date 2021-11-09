@@ -63,7 +63,7 @@
 
 .gnb-menu-item-chevron-up .menu-list {
   margin: 10px 0;
-  height: 80px;
+  height: 20px;
   opacity: 1;
   visibility: visible;
   transition: height 0.7s, visibility 0.5s, opacity 0.3s;

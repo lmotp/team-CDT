@@ -12,10 +12,10 @@ export default function GnbMenu({ scrollTop }) {
   };
 
   const listItems = [
-    { value: 'notice list items', items: ['공지사항', '2', '3', '4'], url: '/notice/board' },
-    { value: 'community list item', items: ['자유게시판', '6', '7', '8'], url: '/notice/free' },
-    { value: 'recommend list item', items: ['추천게시판', 'b', 'c', 'd'], url: '/notice/recommend/All' },
-    { value: 'video list item', items: ['영상콘텐츠', 'f', 'g', 'h'], url: '/video_list' },
+    { value: 'notice list items', items: ['공지사항'], url: '/notice/board' },
+    { value: 'community list item', items: ['자유게시판'], url: '/notice/free' },
+    { value: 'recommend list item', items: ['추천게시판'], url: '/notice/recommend/All' },
+    { value: 'video list item', items: ['영상콘텐츠'], url: '/video_list' },
   ];
   const menuList = listItems.map((item, index) => {
     return (

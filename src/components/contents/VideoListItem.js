@@ -23,7 +23,7 @@ export default function VideoListItem({ data }) {
   }, [data.content]);
 
   const viewsPlus = () => {
-    axios.post('/detailpage/views', { postId: data.post_id });
+    axios.post('/api/detailpage/views', { postId: data.post_id });
   };
 
   return (

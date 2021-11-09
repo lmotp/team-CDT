@@ -31,7 +31,7 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
     e.preventDefault();
     await axios({
       method: 'post',
-      url: '/user/login',
+      url: '/api/user/login',
       data: { user_name: user_id, user_pwd: pwd },
     }).then((response) => {
       console.log(response.data);
