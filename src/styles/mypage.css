@@ -81,7 +81,6 @@
 /* 모달창 부분 */
 .myPage-wrap .myPage-header .myPage-modal {
   text-align: left;
-  width: 680px;
   align-items: flex-start;
 }
 
@@ -156,7 +155,7 @@
 }
 
 .myPage-wrap .myPage-header .modal section {
-  height: 380px;
+  max-width: 680px;
 }
 
 .myPage-wrap .myPage-header .modal main {

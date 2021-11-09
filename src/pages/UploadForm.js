@@ -86,7 +86,7 @@ const UploadForm = ({ userId }) => {
   };
 
   const uploadClick = () => {
-    axios.post('/uploadform', submitContent).then((res) => res.data);
+    axios.post('/api/uploadform', submitContent).then((res) => res.data);
 
     uploadDispatch({ type: 'ALL_DELTE' });
     let board;
@@ -108,7 +108,7 @@ const UploadForm = ({ userId }) => {
     for (let i = 0; i < images.length; i++) {
       formdata.append('image', images[i]);
       axios
-        .post('/thumbnail', formdata)
+        .post('/api/thumbnail', formdata)
         .then((res) => insertImage(res.data))
         .catch((err) => console.log(err));
     }

@@ -27,7 +27,7 @@ export function App() {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
-    axios.get('/loginCheck').then((res) => {
+    axios.get('/api/loginCheck').then((res) => {
       console.log(res.data.checkLogin);
       setIsLogin(res.data.checkLogin);
       setUsername(res.data.username);

@@ -43,7 +43,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
     formData.append('name', value);
     formData.append('id', userId);
 
-    axios.put(`/mypage/profile`, formData).then(() => {
+    axios.put(`/api/mypage/profile`, formData).then(() => {
       setProfileThumbnail('');
       setFileName('');
       setModalOpen(false);
@@ -73,7 +73,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
 
     window.scrollTo(0, 0);
 
-    axios.get('/loginCheck').then(({ data }) => {
+    axios.get('/api/loginCheck').then(({ data }) => {
       setUsername(data.username);
       setUserProfileImg(data.userProfileImg);
       setUserId(data.userId);
@@ -83,16 +83,16 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/mypage/${userId}/content`).then(({ data }) => setConentCount(data.length));
-      axios.get(`/mypage/${userId}/comment`).then(({ data }) => setCommentCount(data.length));
-      axios.get(`/mypage/${userId}/heart`).then(({ data }) => setHeartCount(data.length));
-      axios.get(`/mypage/${userId}/coffeeheart`).then(({ data }) => setCoffeeHeartCount(data.length));
+      axios.get(`/api/mypage/${userId}/content`).then(({ data }) => setConentCount(data.length));
+      axios.get(`/api/mypage/${userId}/comment`).then(({ data }) => setCommentCount(data.length));
+      axios.get(`/api/mypage/${userId}/heart`).then(({ data }) => setHeartCount(data.length));
+      axios.get(`/api/mypage/${userId}/coffeeheart`).then(({ data }) => setCoffeeHeartCount(data.length));
     }
   }, [userId]);
 
   useEffect(() => {
     if (userId) {
-      axios.get(`/mypage/list/${userId}/${parentValue}`).then(({ data }) => {
+      axios.get(`/api/mypage/list/${userId}/${parentValue}`).then(({ data }) => {
         setContents(data);
         setLoading(true);
       });

@@ -12,7 +12,7 @@ export default function BoardTopItem(props) {
   const [imgUrl, setImgUrl] = useState([]);
 
   const viewsPlus = () => {
-    axios.post('/detailpage/views', { postId: props.postId });
+    axios.post('/api/detailpage/views', { postId: props.postId });
   };
 
   const date = moment(props.createdAt).format('YYYY.MM.DD HH:mm');

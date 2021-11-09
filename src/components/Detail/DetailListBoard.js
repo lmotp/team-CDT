@@ -25,7 +25,7 @@ function DetailListBoard({ list, i, setCurrentPage }) {
       key={i}
       onClick={() => {
         setCurrentPage(1);
-        axios.post('/detailpage/views', { postId: list.post_id });
+        axios.post('/api/detailpage/views', { postId: list.post_id });
       }}
     >
       <div className="DetailList-form">

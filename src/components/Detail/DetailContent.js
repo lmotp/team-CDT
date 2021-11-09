@@ -19,8 +19,8 @@ function DetailContent({ contents, postId, userId, heartCount, setHeartCount, is
   }, [contents]);
 
   useEffect(() => {
-    axios.post('/detailpage/heart', { postId }).then(({ data }) => setHeartCount(data.count));
-    axios.post('/detailpage/hearted', { postId, auth: userId }).then(({ data }) => {
+    axios.post('/api/detailpage/heart', { postId }).then(({ data }) => setHeartCount(data.count));
+    axios.post('/api/detailpage/hearted', { postId, auth: userId }).then(({ data }) => {
       if (data.result) {
         setHeart(true);
         setHeartInfo(data.info[0].heart_id);
@@ -44,11 +44,11 @@ function DetailContent({ contents, postId, userId, heartCount, setHeartCount, is
       if (heart) {
         const heartCancle = window.confirm('좋아요를 취소하시겠습니까?');
         if (heartCancle) {
-          axios.post('/detailpage/heart/remove', { postId, auth: userId, heartId: heartInfo }).then(({ data }) => {
+          axios.post('/api/detailpage/heart/remove', { postId, auth: userId, heartId: heartInfo }).then(({ data }) => {
             setHeart(data);
             setHeartCount(heartCount - 1);
           });
-          axios.post('/detailpage/heart/removeCount', { postId }).then((res) => {
+          axios.post('/api/detailpage/heart/removeCount', { postId }).then((res) => {
             setDisabledState(false);
           });
         } else {
@@ -56,11 +56,11 @@ function DetailContent({ contents, postId, userId, heartCount, setHeartCount, is
           return;
         }
       } else {
-        axios.post('/detailpage/heart/add', { postId, auth: userId }).then(({ data }) => {
+        axios.post('/api/detailpage/heart/add', { postId, auth: userId }).then(({ data }) => {
           setHeart(data);
           setHeartCount(heartCount + 1);
         });
-        axios.post('/detailpage/heart/addCount', { postId }).then((res) => {
+        axios.post('/api/detailpage/heart/addCount', { postId }).then((res) => {
           setTimeout(() => {
             setDisabledState(false);
           }, 500);

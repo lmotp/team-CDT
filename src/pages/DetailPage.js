@@ -25,23 +25,23 @@ function DetailPage({ userId, isLogin }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
+    axios.post('/api/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
 
   useEffect(() => {
-    axios.post('/detailpage/comment/list', { postId: post_id }).then(({ data }) => {
+    axios.post('/api/detailpage/comment/list', { postId: post_id }).then(({ data }) => {
       setIsLoading(true);
       setComment(data);
     });
 
-    axios.post('/detailpage/recomment/list', { postId: post_id }).then(({ data }) => {
+    axios.post('/api/detailpage/recomment/list', { postId: post_id }).then(({ data }) => {
       setIsLoading(true);
       setRecomments(data);
     });
 
-    axios.post('/detailpage/comment/count', { postId: post_id, count: commentCount });
+    axios.post('/api/detailpage/comment/count', { postId: post_id, count: commentCount });
 
-    axios.post('/notice/list', { board: contents?.category }).then((res) => {
+    axios.post('/api/notice/list', { board: contents?.category }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
     });
