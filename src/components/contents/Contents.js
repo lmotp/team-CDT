@@ -10,7 +10,7 @@ import './../../styles/layouts/contents.css';
 
 export default function Contents() {
   const [noticeList, setNoticeList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,7 @@ export default function Contents() {
     axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
+      console.log(res);
     });
   }, []);
 
