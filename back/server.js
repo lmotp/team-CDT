@@ -58,6 +58,7 @@ app.use('/api/image', express.static(__dirname + '/uploads'));
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
   const image = `/api/image/${req.file.filename}`;
+  console.log(image);
   res.send(image);
 });
 
@@ -698,6 +699,16 @@ app.get('/api/video/data', (req, res) => {
     }
   });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../', 'build')));
+
+  // index.html for all page routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => {
   console.log(`서버 ${port}가 열렸습니다.`);

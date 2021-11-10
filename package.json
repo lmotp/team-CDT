@@ -104,7 +104,7 @@
     "test": "node scripts/test.js",
     "server": "nodemon src/server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
-    "deploy": "aws s3 sync ./build s3://first-portfiolio-client --profile=Portfolio-client"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "eslintConfig": {
     "extends": [

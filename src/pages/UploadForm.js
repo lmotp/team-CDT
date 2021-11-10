@@ -109,7 +109,10 @@ const UploadForm = ({ userId }) => {
       formdata.append('image', images[i]);
       axios
         .post('/api/thumbnail', formdata)
-        .then((res) => insertImage(res.data))
+        .then((res) => {
+          console.log(res.data);
+          insertImage(res.data);
+        })
         .catch((err) => console.log(err));
     }
   };
