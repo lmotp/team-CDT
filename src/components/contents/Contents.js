@@ -14,6 +14,10 @@ export default function Contents() {
   const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
+    axios.get('/api/test').then((res) => console.log(res.data));
+  });
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
     axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
