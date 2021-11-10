@@ -56,6 +56,10 @@ app.use(express.json());
 
 app.use('/api/image', express.static(__dirname + '/uploads'));
 
+app.get('/test', (req, res) => {
+  res.send('제발용 ㅜㅜ');
+});
+
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
   const image = `/api/image/${req.file.filename}`;
   console.log(image);
