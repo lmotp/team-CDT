@@ -20,7 +20,7 @@ const options = {
 
 const sessionStore = new MysqlStore(options);
 
-const port = process.env.DB_PORT || 5000;
+const port = process.env.PORT || 5000;
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
