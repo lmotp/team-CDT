@@ -19,7 +19,6 @@ export default function Contents() {
     axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
-      console.log(res);
     });
   }, []);
 

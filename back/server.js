@@ -3,6 +3,7 @@ const multer = require('multer');
 const mysql = require('mysql');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
@@ -55,10 +56,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use('/api/image', express.static(__dirname + '/uploads'));
-
-app.get('/test', (req, res) => {
-  res.send('제발용 ㅜㅜ');
-});
+app.use(cors());
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
   const image = `/api/image/${req.file.filename}`;
