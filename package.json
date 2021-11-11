@@ -101,7 +101,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "server": "nodemon src/server.js",
+    "server": "nodemon back/server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },

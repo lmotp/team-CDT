@@ -22,6 +22,10 @@ export default function Contents() {
     });
   }, []);
 
+  useEffect(() => {
+    axios.get('/api/test').then((res) => console.log(res.data));
+  }, []);
+
   return (
     <div className="contents">
       {loading ? (
