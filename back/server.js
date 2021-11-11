@@ -59,7 +59,7 @@ app.use('/api/image', express.static(__dirname + '/uploads'));
 app.use(cors());
 
 app.get('/api/test', (req, res) => {
-  res.send('테스트입니다!');
+  res.send('Test!!!');
 });
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
