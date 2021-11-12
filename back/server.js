@@ -41,7 +41,23 @@ app.use(
   }),
 );
 
-connection.connect();
+function handleDisconnect() {
+  connection.connect(function(err) {            
+    if(err) {                            
+      console.log('error when connecting to connection:', err);
+      setTimeout(handleDisconnect, 2000); 
+    }                                   
+  });                                 
+                                         
+  connection.on('error', function(err) {
+    console.log('connection error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+      return handleDisconnect();                      
+    } else {                                    
+      throw err;                              
+    }
+  });
+}
 
 const upload = multer({
   storage: multer.diskStorage({
