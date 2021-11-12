@@ -12,7 +12,6 @@ export default function Contents() {
   const [noticeList, setNoticeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [boardList, setBoardList] = useState([]);
-  const [count, setCount] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

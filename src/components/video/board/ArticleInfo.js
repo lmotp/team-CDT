@@ -22,7 +22,7 @@ export default function ArticleInfo(props) {
       </span>
       <span className="comment-box">
         <i class="far fa-comment-dots comment-icon"></i>
-        <span class="comment-count">13</span>
+        <span class="comment-count">{props.count}</span>
       </span>
     </div>
   );
