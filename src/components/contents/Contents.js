@@ -10,20 +10,20 @@ import './../../styles/layouts/contents.css';
 
 export default function Contents() {
   const [noticeList, setNoticeList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => setBoardList(res.data));
-    axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
-      setNoticeList(res.data);
-      setLoading(true);
+    axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => {
+      console.log('위', res.data);
+      setBoardList(res.data);
     });
-  }, []);
-
-  useEffect(() => {
-    axios.get('/api/test').then((res) => console.log(res.data));
+    axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
+      console.log('아래', res.data);
+      setNoticeList(res.data);
+      setTimeout(() => setLoading(true), 300);
+    });
   }, []);
 
   return (
