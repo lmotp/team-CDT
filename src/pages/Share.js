@@ -46,7 +46,7 @@ function Share({ userId }) {
         setHasData(data.length > 0);
       });
       setIsLoading(true);
-      setLoading(true);
+      setTimeout(() => setLoading(true), 500);
     };
     res();
   }, [pages, category]);

@@ -41,7 +41,25 @@ app.use(
   }),
 );
 
-connection.connect();
+function handleDisconnect() {
+  connection.connect(function (err) {
+    if (err) {
+      console.log('error when connecting to connection:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+
+  connection.on('error', function (err) {
+    console.log('connection error', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      return handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -57,10 +75,6 @@ app.use(express.json());
 
 app.use('/api/image', express.static(__dirname + '/uploads'));
 app.use(cors());
-
-app.get('/api/test', (req, res) => {
-  res.send('오세용');
-});
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
   const image = `/api/image/${req.file.filename}`;
@@ -714,6 +728,7 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../', 'build', 'index.html'));
   });
+  console.log('hi');
 }
 
 app.listen(port, () => {
