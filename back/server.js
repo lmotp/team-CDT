@@ -41,25 +41,25 @@ app.use(
   }),
 );
 
-function handleDisconnect() {
-  connection.connect(function (err) {
-    if (err) {
-      console.log('error when connecting to connection:', err);
-      setTimeout(handleDisconnect, 2000);
-    }
-  });
+// function handleDisconnect() {
+//   connection.connect(function (err) {
+//     if (err) {
+//       console.log('error when connecting to connection:', err);
+//       setTimeout(handleDisconnect, 2000);
+//     }
+//   });
 
-  connection.on('error', function (err) {
-    console.log('connection error', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      return handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
+//   connection.on('error', function (err) {
+//     console.log('connection error', err);
+//     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+//       return handleDisconnect();
+//     } else {
+//       throw err;
+//     }
+//   });
+// }
 
-handleDisconnect();
+// handleDisconnect();
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -73,11 +73,11 @@ const upload = multer({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/api/image', express.static(__dirname + '/uploads'));
+app.use('/image', express.static(__dirname + '/uploads'));
 app.use(cors());
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
-  const image = `/api/image/${req.file.filename}`;
+  const image = `/image/${req.file.filename}`;
   console.log(image);
   res.send(image);
 });
