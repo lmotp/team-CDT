@@ -41,25 +41,13 @@ app.use(
   }),
 );
 
-// function handleDisconnect() {
-//   connection.connect(function (err) {
-//     if (err) {
-//       console.log('error when connecting to connection:', err);
-//       setTimeout(handleDisconnect, 2000);
-//     }
-//   });
-
-//   connection.on('error', function (err) {
-//     console.log('connection error', err);
-//     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-//       return handleDisconnect();
-//     } else {
-//       throw err;
-//     }
-//   });
-// }
-
-// handleDisconnect();
+connection.on('error', function (err) {
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    return connection.connect();
+  } else {
+    throw err;
+  }
+});
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -98,12 +86,16 @@ app.post('/api/uploadform', (req, res) => {
       },
     );
   } else {
-    connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
-      if (err) {
-        console.log(err);
-      }
-      res.send(row);
-    });
+    connection.query(
+      'INSERT INTO post(auth_id,title,content,hashTag,createdAt,updatedAt,category,bracket,views,heart,count) VALUES (?,?,?,?,NOW(),NOW(),?,?,0,0,0)',
+      params,
+      (err, row) => {
+        if (err) {
+          console.log(err);
+        }
+        res.send(row);
+      },
+    );
   }
 });
 
@@ -725,10 +717,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../', 'build')));
 
   // index.html for all page routes
-  app.get('/*', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../', 'build', 'index.html'));
   });
-  console.log('hi');
 }
 
 app.listen(port, () => {
