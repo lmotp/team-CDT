@@ -42,7 +42,6 @@ app.use(
 );
 
 connection.on('error', function (err) {
-  console.log('hi');
   if (err.code === 'PROTOCOL_CONNECTION_LOST') {
     return connection.connect();
   } else {
