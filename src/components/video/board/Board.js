@@ -25,8 +25,8 @@ export default function Board() {
     });
   }, []);
 
-  const spliceBoardList = [...boardList].splice(order, 12);
-  const spliceSearchBoardList = [...newData].splice(order, 12);
+  const spliceBoardList = [...boardList].splice(order, 9);
+  const spliceSearchBoardList = [...newData].splice(order, 9);
 
   const boards = spliceBoardList.map((boardItem, index) => {
     return (
