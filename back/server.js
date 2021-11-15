@@ -48,12 +48,12 @@ function handleDisconnect() {
 
   connection.connect(function (err) {
     if (err) {
-      console.log('error when connecting to db:', err);
+      console.log('나 윗집콘솔', err);
       setTimeout(handleDisconnect, 2000);
     }
   });
   connection.on('error', function (err) {
-    console.log('db error', err);
+    console.log('나 아랫집콘솔', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       handleDisconnect();
     } else {
@@ -591,7 +591,7 @@ app.get('/api/mypage/:id/coffeeheart', (req, res) => {
 app.put('/api/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
 
-  const image = req.file ? `/api/image/${req.file?.filename}` : req.body.image;
+  const image = req.file ? `/image/${req.file?.filename}` : req.body.image;
   const nickname = name ? name : req.body.name;
 
   connection.query(
