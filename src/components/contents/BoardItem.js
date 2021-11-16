@@ -41,8 +41,8 @@ export default function BoardItem(props) {
           ) : null}
         </div>
         <div className="comment">
-          <i class="far fa-comment-dots comment-icon"></i>
-          <p class="comment-number">{props.count}</p>
+          <i className="far fa-comment-dots comment-icon"></i>
+          <p className="comment-number">{props.count}</p>
         </div>
       </Link>
       <ArticleInfo

@@ -155,12 +155,20 @@
   text-indent: -9999px;
 }
 
+.myPage-wrap .myPage-header .myPage-modal .myPageError {
+  margin-top: 4px;
+  padding-left: 4px;
+  color: darkred;
+  position: absolute;
+  font-size: 12px;
+}
+
 .myPage-wrap .myPage-header .modal section {
   height: 380px;
 }
 
 .myPage-wrap .myPage-header .modal main {
-  padding: 40px 40px 30px;
+  padding: 40px 40px 50px;
 }
 
 .myPage-wrap .myPage-header .modal footer {

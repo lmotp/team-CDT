@@ -19,6 +19,7 @@ function TopAuth({ isLogin, setIsLogin, username, userProfileImg }) {
       setIsLogin(true);
     }
   };
+
   return (
     <>
       {isLogin ? (

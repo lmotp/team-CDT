@@ -1,5 +1,8 @@
 const express = require('express');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
+const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -8,34 +11,68 @@ const MysqlStore = require('express-mysql-session')(session);
 
 require('dotenv').config({ path: __dirname + '/.env' });
 
-const options = {
-  host: '39.123.4.119',
-  port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
+const port = process.env.PORT || 5000;
+
+const db_config = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_HOSTPORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
-const sessionStore = new MysqlStore(options);
+const sessionStore = new MysqlStore(db_config);
 
-const port = process.env.DB_PORT || 5000;
+let connection;
 
-const connection = mysql.createConnection({
-  host: '39.123.4.119',
-  port: '3306',
-  user: 'abc',
-  password: '123456789a',
-  database: 'scdt',
-});
+function handleDisconnect() {
+  connection = mysql.createConnection(db_config);
+
+  connection.connect(function (err) {
+    if (err) {
+      console.log('나 윗집콘솔', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+  connection.on('error', function (err) {
+    console.log('나 아랫집콘솔', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 connection.connect();
 
+app.use(cookieParser());
+app.use(
+  session({
+    key: process.env.SESSION_KEY,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  }),
+);
+
+const s3bucket = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: __dirname + '/uploads',
-    filename: function (req, file, cb) {
+  storage: multerS3({
+    s3: s3bucket,
+    bucket: process.env.S3_BUCKET_NAME,
+    key: function (req, file, cb) {
       cb(null, new Date().valueOf() + '-' + file.originalname);
     },
+    acl: 'public-read',
   }),
 });
 
@@ -51,10 +88,11 @@ app.use(
   }),
 );
 
-app.use('/image', express.static(__dirname + '/uploads'));
+app.use(cors());
 
-app.post('/thumbnail', upload.single('image'), (req, res) => {
-  const image = `/image/${req.file.filename}`;
+app.post('/api/thumbnail', upload.single('image'), (req, res) => {
+  const image = `/image/${req.file.location}`;
+  console.log(image);
   res.send(image);
 });
 
@@ -554,7 +592,7 @@ app.get('/mypage/:id/coffeeheart', (req, res) => {
 app.put('/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
 
-  const image = req.file ? `/image/${req.file?.filename}` : req.body.image;
+  const image = req.file ? `/image/${req.file?.location}` : req.body.image;
   const nickname = name ? name : req.body.name;
 
   connection.query(

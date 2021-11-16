@@ -93,7 +93,7 @@ function Auth({ history }) {
     return rePwdTestCheck();
   });
   const nameFs = useFocus(false, () => {
-    return testCheck(/^[가-힣a-zA-Z]{1,20}$/, name, nameFs);
+    return testCheck(/^[가-힣a-zA-Z0-9]{1,5}$/gm, name, nameFs);
   });
   const genderFs = useFocus(false);
   const bYearFs = useFocus(false);
@@ -345,7 +345,7 @@ function Auth({ history }) {
               name="name"
               value={name.inputValue}
               onChange={name.handleInputValue}
-              maxLength="20"
+              maxLength="5"
               onBlur={nameFs.handleFocus}
             ></input>
             {nameFs.focus ? <span className="inputError">필수정보입니다.</span> : null}

@@ -11,7 +11,7 @@
 
 .news-collection {
   display: flex;
-  width: 400%;
+  width: 100%;
   transition: all 0.5s;
 }
 

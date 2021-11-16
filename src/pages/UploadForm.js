@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import UploadFormButtonBox from '../components/UploadForm/UploadFormButtonBox';
 import UploadFormCategory from '../components/UploadForm/UploadFormCategory';
@@ -17,9 +17,7 @@ const UploadForm = ({ userId }) => {
   const hashTagState = useUploadState();
   const uploadDispatch = useUploadDispatch();
   const [titleValue, setTitleValue] = useState(!changeStateLocation ? '' : contentsLocation.title);
-  const [category, setCategory] = useState(
-    !changeStateLocation ? '게시판을 선택해 주세요.' : contentsLocation.category,
-  );
+  const [category, setCategory] = useState(!changeStateLocation ? '자유게시판' : contentsLocation.category);
   const [brackets, setBrackets] = useState(!contentsLocation?.bracket ? '말머리를 선택' : contentsLocation.bracket);
   const [disabled, setDisabled] = useState(!contentsLocation?.bracket ? true : false);
   const [mainCategoryStatus, setMainCategoryStatus] = useState(false);
@@ -36,6 +34,12 @@ const UploadForm = ({ userId }) => {
     postId: contentsLocation?.post_id,
     changeStateLocation,
   };
+
+  useEffect(() => {
+    if (!changeStateLocation) {
+      uploadDispatch({ type: 'ALL_DELTE' });
+    }
+  }, [changeStateLocation, uploadDispatch]);
 
   // 말머리,게시판 선택 이벤트 !!!!
   // 카테고리 바꾸기 로직
@@ -86,9 +90,27 @@ const UploadForm = ({ userId }) => {
   };
 
   const uploadClick = () => {
-    axios.post('/uploadform', submitContent).then((res) => res.data);
+    if (category === '영상콘텐츠' && value.includes('img')) {
+      window.alert('영상에 이미지 올리지마세요!');
+      return;
+    } else if (category !== '영상콘텐츠' && value.includes('iframe')) {
+      window.alert('카테고리 바꿔주세요');
+      return;
+    }
+
+    if (titleValue.length < 2) {
+      window.alert('타이틀을 2자 이상 입력 바랍니다.');
+      return;
+    }
+    if (value.length < 2) {
+      window.alert('내용은 최소 2자 이상 입력 바랍니다.');
+      return;
+    }
+
+    axios.post('/api/uploadform', submitContent).then((res) => res.data);
 
     uploadDispatch({ type: 'ALL_DELTE' });
+
     let board;
     if (category === '주요소식') {
       board = 'board';

@@ -24,6 +24,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   const [profileThumbnail, setProfileThumbnail] = useState('');
   const [status, setStatus] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [changeName, setChangeName] = useState(true);
   const history = useHistory();
 
   const on = true;
@@ -33,7 +34,9 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
   };
 
   const closeModal = () => {
+    setChangeName(true);
     setModalOpen(false);
+    setValue(usernames);
     setProfileThumbnail('');
   };
 
@@ -42,13 +45,18 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
     formData.append('image', fileName ? fileName : userProfileImg);
     formData.append('name', value);
     formData.append('id', userId);
-
-    axios.put(`/mypage/profile`, formData).then(() => {
-      setProfileThumbnail('');
-      setFileName('');
-      setModalOpen(false);
-      setStatus(false);
-    });
+    const checkTest = /^[가-힣a-zA-Z0-9]{1,5}$/gm;
+    if (checkTest.test(value)) {
+      axios.put(`/api/mypage/profile`, formData).then(() => {
+        setProfileThumbnail('');
+        setFileName('');
+        setModalOpen(false);
+        setStatus(false);
+        setChangeName(true);
+      });
+    } else {
+      setChangeName(false);
+    }
   };
 
   const chnageProfileImg = (e) => {
@@ -123,6 +131,7 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
                   value={value}
                   chnageHandler={chnageProfileImg}
                   profileThumbnail={profileThumbnail}
+                  changeName={changeName}
                 />
               </Modals>
               <div className="myPage-profile-info">
@@ -149,13 +158,13 @@ function MyPage({ user, isLogin, userProfileImg, usernames, setUsername, setUser
             {parentValue !== '좋아요 한 커피메뉴' ? (
               <div>
                 {contents.map((content, index) => {
-                  return <MyPageContents contents={content} index={index} usernames={usernames} />;
+                  return <MyPageContents contents={content} index={index} usernames={usernames} key={index} />;
                 })}
               </div>
             ) : (
               <div className="myPage-coffee-wrap">
                 {contents.map((content, index) => {
-                  return <MyPageCoffee content={content} />;
+                  return <MyPageCoffee content={content} key={index} />;
                 })}
               </div>
             )}

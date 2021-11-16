@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ModalMyPage({ userProfileImg, setValue, value, chnageHandler, profileThumbnail }) {
+function ModalMyPage({ userProfileImg, setValue, value, chnageHandler, profileThumbnail, changeName }) {
   return (
     <div className="myPage-modal">
       <h2>SCDT</h2>
@@ -26,6 +26,7 @@ function ModalMyPage({ userProfileImg, setValue, value, chnageHandler, profileTh
             onChange={(e) => {
               setValue(e.target.value);
             }}
+            maxLength="5"
             placeholder="닉네임을 입력해 주세요."
           />
           <button
@@ -35,6 +36,9 @@ function ModalMyPage({ userProfileImg, setValue, value, chnageHandler, profileTh
           >
             x
           </button>
+          {!changeName ? (
+            <div className="myPageError">한글과 영문 대소문자를 사용하세요.(특수문자, 공백 불가)</div>
+          ) : null}
         </div>
       </div>
     </div>

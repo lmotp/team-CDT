@@ -25,8 +25,7 @@ export default function BoardControll({ order, setOrder }) {
   }, [order]);
 
   const handlePaging = (e) => {
-    setOrder((e.target.id - 1) * 12);
-    window.scrollTo(0, 0);
+    setOrder((e.target.id - 1) * 9);
     if (e.target.id === String(buttonValue[1])) {
       buttonRef1.current.classList.remove('on');
       buttonRef3.current.classList.remove('on');
@@ -65,7 +64,7 @@ export default function BoardControll({ order, setOrder }) {
       return value + 5;
     });
     setButtonValue(newButtonValue);
-    setOrder((newButtonValue[0] - 1) * 12);
+    setOrder((newButtonValue[0] - 1) * 9);
     buttonRef5.current.classList.remove('on');
     buttonRef4.current.classList.remove('on');
     buttonRef3.current.classList.remove('on');
@@ -80,7 +79,7 @@ export default function BoardControll({ order, setOrder }) {
       return value - 5;
     });
     setButtonValue(newButtonValue);
-    setOrder((newButtonValue[4] - 1) * 12);
+    setOrder((newButtonValue[4] - 1) * 9);
     buttonRef5.current.classList.add('on');
     buttonRef4.current.classList.remove('on');
     buttonRef3.current.classList.remove('on');

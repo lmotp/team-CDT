@@ -10,8 +10,8 @@ function MyPageTapBox({ parentValue, setParentValue }) {
 
   return (
     <div className="tag-box">
-      {buttonValues.map((value) => (
-        <MyPageButton value={value} parentValue={parentValue} clickHandler={clickHandler} />
+      {buttonValues.map((value, index) => (
+        <MyPageButton value={value} parentValue={parentValue} clickHandler={clickHandler} key={index} />
       ))}
     </div>
   );

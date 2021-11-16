@@ -2,6 +2,7 @@
   position: relative;
   border-bottom: 1px solid rgba(219, 216, 216, 0.5);
   padding: 12px 0;
+  width: 100%;
 }
 
 .main-news-list-item p {
@@ -32,12 +33,12 @@
 .comment {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 0px;
   transform: translateY(-50%);
   font-size: 25px;
   height: 50px;
   color: #999;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .comment-number {

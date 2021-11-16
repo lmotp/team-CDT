@@ -5,8 +5,7 @@
 }
 
 .share-wrap .button-box-category {
-  margin-top: 20px;
-  margin-left: 40px;
+  margin: 20px 0 20px 42px;
 }
 
 .share-wrap .button-box-category span button {
@@ -42,7 +41,7 @@
   border: 1px solid black;
 }
 
-.share-contents-wrap .share-contents:nth-child(2n) {
+.share-contents-wrap .coffeeItem-contents:nth-child(2n) {
   margin-right: 0;
 }
 
