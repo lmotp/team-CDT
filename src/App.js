@@ -20,7 +20,7 @@ import axios from 'axios';
 import MyPage from './pages/MyPage';
 
 export function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(window.sessionStorage.getItem('login'));
   const [username, setUsername] = useState('');
   const [userProfileImg, setUserProfileImg] = useState('');
   const [userId, setUserId] = useState('');
@@ -28,8 +28,7 @@ export function App() {
 
   useEffect(() => {
     axios.get('/api/loginCheck').then((res) => {
-      console.log(res.data.checkLogin);
-      setIsLogin(res.data.checkLogin);
+      setIsLogin(window.sessionStorage.getItem('login'));
       setUsername(res.data.username);
       setUserProfileImg(res.data.userProfileImg);
       setUserId(res.data.userId);

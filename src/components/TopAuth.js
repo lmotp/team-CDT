@@ -15,10 +15,10 @@ function TopAuth({ isLogin, setIsLogin, username, userProfileImg }) {
       await axios.get('/api/logout');
       window.sessionStorage.removeItem('login');
       setIsLogin(false);
-    } else {
-      setIsLogin(true);
     }
   };
+
+  console.log(isLogin);
   return (
     <>
       {isLogin ? (

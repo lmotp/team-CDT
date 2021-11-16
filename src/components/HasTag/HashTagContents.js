@@ -39,7 +39,7 @@ function HashTagContents({ data, userId, on, category }) {
       }
     }
     setHeartState(!heartState);
-    axios.post('/share/list/heart', { userId, coffeeId: data.id_coffee_item }).then((res) => console.log(res));
+    axios.post('/api/share/list/heart', { userId, coffeeId: data.id_coffee_item }).then((res) => console.log(res));
   };
 
   return (

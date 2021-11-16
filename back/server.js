@@ -22,13 +22,13 @@ const sessionStore = new MysqlStore(options);
 
 const port = process.env.PORT || 5000;
 
-const connection = mysql.createConnection({
+const db_config = {
   host: process.env.DB_HOST,
   port: process.env.DB_HOSTPORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-});
+};
 
 app.use(cookieParser());
 app.use(
@@ -41,13 +41,28 @@ app.use(
   }),
 );
 
-connection.on('error', function (err) {
-  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-    return connection.connect();
-  } else {
-    throw err;
-  }
-});
+let connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection(db_config);
+
+  connection.connect(function (err) {
+    if (err) {
+      console.log('나 윗집콘솔', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+  connection.on('error', function (err) {
+    console.log('나 아랫집콘솔', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -576,7 +591,7 @@ app.get('/api/mypage/:id/coffeeheart', (req, res) => {
 app.put('/api/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
 
-  const image = req.file ? `/api/image/${req.file?.filename}` : req.body.image;
+  const image = req.file ? `/image/${req.file?.filename}` : req.body.image;
   const nickname = name ? name : req.body.name;
 
   connection.query(
