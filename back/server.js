@@ -31,7 +31,6 @@ function handleDisconnect() {
 
   connection.connect(function (err) {
     if (err) {
-      console.log('나 윗집콘솔', err);
       setTimeout(handleDisconnect, 2000);
     }
   });
