@@ -105,7 +105,7 @@
     "server": "nodemon back/server.js",
     "frontend": "node scripts/start.js",
     "dev": "concurrently \"npm run server\" \"npm run frontend\"",
-    "heroku-postbuild": "npm install --prefix back && npm install &&  && npm run build && "
+    "heroku-postbuild": "npm install --prefix back && npm install && npm run build "
   },
   "eslintConfig": {
     "extends": [
