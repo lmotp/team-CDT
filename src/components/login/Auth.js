@@ -156,7 +156,7 @@ function Auth({ history }) {
     }
 
     if (check()) {
-      const authUsername = await axios.post('/auth/username', { username: e.target.value });
+      const authUsername = await axios.post('/api/auth/username', { username: e.target.value });
 
       if (authUsername.data.repeat && e.target.value.length !== 0) {
         setRepeatUsername(true);
@@ -228,7 +228,7 @@ function Auth({ history }) {
 
   const submitJoin = async (e) => {
     e.preventDefault();
-    await axios.post('/auth/join', {
+    await axios.post('/api/auth/join', {
       username: username.inputValue,
       pwd: pwd.inputValue,
       name: name.inputValue,

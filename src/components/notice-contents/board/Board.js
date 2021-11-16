@@ -22,9 +22,11 @@ export default function Board() {
   const { board } = useParams();
 
   useEffect(() => {
-    axios.post('/notice/list', { board }).then((res) => {
+    setLoading(false);
+    axios.post('/api/notice/list', { board }).then((res) => {
       setNoticeList(res.data);
-      setLoading(true);
+      console.log(res.data);
+      setTimeout(() => setLoading(true), 500);
     });
   }, [board, setLoading]);
 

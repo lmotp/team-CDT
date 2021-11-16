@@ -114,14 +114,13 @@ const UploadForm = ({ userId }) => {
     let board;
     if (category === '주요소식') {
       board = 'board';
-    } else if (category === '이벤트') {
-      board = 'event';
     } else if (category === '자유게시판') {
       board = 'free';
     } else if (category === '영상콘텐츠') {
       board = 'video';
     }
-    history.push(board === '영상콘텐츠' ? `/notice/${board}` : `/video_list`);
+
+    history.push(board === 'video' ? `/video_list` : `/notice/${board}`);
   };
 
   // 썸머노트 컨텐츠 이벤트 !!
@@ -131,8 +130,11 @@ const UploadForm = ({ userId }) => {
     for (let i = 0; i < images.length; i++) {
       formdata.append('image', images[i]);
       axios
-        .post('/thumbnail', formdata)
-        .then((res) => insertImage(res.data))
+        .post('/api/thumbnail', formdata)
+        .then((res) => {
+          console.log(res.data);
+          insertImage(res.data);
+        })
         .catch((err) => console.log(err));
     }
   };

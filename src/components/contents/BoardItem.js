@@ -23,7 +23,7 @@ export default function BoardItem(props) {
   }, [props.content]);
 
   const viewsPlus = () => {
-    axios.post('/detailpage/views', { postId: props.postId });
+    axios.post('/api/detailpage/views', { postId: props.postId });
   };
 
   return (

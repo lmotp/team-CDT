@@ -19,14 +19,14 @@ export default function Board() {
   const boardCollectionRef = useRef();
 
   useEffect(() => {
-    axios.post('/notice/list', { board: '영상콘텐츠' }).then((res) => {
+    axios.post('/api/notice/list', { board: '영상콘텐츠' }).then((res) => {
       setBoardList(res.data);
       setLoading(true);
     });
   }, []);
 
-  const spliceBoardList = [...boardList].splice(order, 12);
-  const spliceSearchBoardList = [...newData].splice(order, 12);
+  const spliceBoardList = [...boardList].splice(order, 9);
+  const spliceSearchBoardList = [...newData].splice(order, 9);
 
   const boards = spliceBoardList.map((boardItem, index) => {
     return (

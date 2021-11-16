@@ -5,6 +5,8 @@ const AWS = require('aws-sdk');
 const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
+const path = require('path');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
@@ -46,7 +48,28 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-connection.connect();
+let connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection(db_config);
+
+  connection.connect(function (err) {
+    if (err) {
+      console.log('나 윗집콘솔', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+  connection.on('error', function (err) {
+    console.log('나 아랫집콘솔', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 app.use(cookieParser());
 app.use(
@@ -78,15 +101,6 @@ const upload = multer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
-app.use(
-  session({
-    secret: 'Secret key',
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  }),
-);
 
 app.use(cors());
 
@@ -96,7 +110,7 @@ app.post('/api/thumbnail', upload.single('image'), (req, res) => {
   res.send(image);
 });
 
-app.post('/uploadform', (req, res) => {
+app.post('/api/uploadform', (req, res) => {
   const { id, title, category, brackets, value, hashTag, changeStateLocation, postId } = req.body;
   const params = [id, title, value, hashTag, category, brackets];
 
@@ -112,16 +126,20 @@ app.post('/uploadform', (req, res) => {
       },
     );
   } else {
-    connection.query('INSERT INTO post VALUES (null,?,?,?,?,NOW(),NOW(),?,?,0,0,0)', params, (err, row) => {
-      if (err) {
-        console.log(err);
-      }
-      res.send(row);
-    });
+    connection.query(
+      'INSERT INTO post(auth_id,title,content,hashTag,createdAt,updatedAt,category,bracket,views,heart,count) VALUES (?,?,?,?,NOW(),NOW(),?,?,0,0,0)',
+      params,
+      (err, row) => {
+        if (err) {
+          console.log(err);
+        }
+        res.send(row);
+      },
+    );
   }
 });
 
-app.post('/detailpage', (req, res) => {
+app.post('/api/detailpage', (req, res) => {
   const { postId } = req.body;
   connection.query(
     'SELECT post.post_id,post.auth_id,category,bracket,title,post.createdAt,profileImg,name,views,heart,hashTag,content FROM post LEFT JOIN auth ON post.auth_id = auth.id where post_id = ?',
@@ -135,7 +153,7 @@ app.post('/detailpage', (req, res) => {
   );
 });
 
-app.post('/detailpage/remove', (req, res) => {
+app.post('/api/detailpage/remove', (req, res) => {
   const { postId, authId } = req.body;
   connection.query('DELETE FROM post WHERE post_id = ? AND auth_id = ?;', [Number(postId), authId], (err, row) => {
     if (err) {
@@ -145,7 +163,7 @@ app.post('/detailpage/remove', (req, res) => {
   });
 });
 
-app.post('/detailpage/views', (req, res) => {
+app.post('/api/detailpage/views', (req, res) => {
   const { postId } = req.body;
   connection.query('UPDATE post SET views = views + 1 WHERE post_id = ?;', [Number(postId)], (err, row) => {
     if (err) {
@@ -155,7 +173,7 @@ app.post('/detailpage/views', (req, res) => {
   });
 });
 
-app.post('/detailpage/comment/count', (req, res) => {
+app.post('/api/detailpage/comment/count', (req, res) => {
   const { postId, count } = req.body;
   connection.query('UPDATE post SET count = ? WHERE post_id = ?', [Number(count), Number(postId)], (err, row) => {
     if (err) {
@@ -165,7 +183,7 @@ app.post('/detailpage/comment/count', (req, res) => {
   });
 });
 
-app.post('/detailpage/comment', (req, res) => {
+app.post('/api/detailpage/comment', (req, res) => {
   const { comment, postId, userId } = req.body;
 
   connection.query(
@@ -180,7 +198,7 @@ app.post('/detailpage/comment', (req, res) => {
   );
 });
 
-app.post('/detailpage/comment/list', (req, res) => {
+app.post('/api/detailpage/comment/list', (req, res) => {
   const { postId } = req.body;
 
   connection.query(
@@ -195,7 +213,7 @@ app.post('/detailpage/comment/list', (req, res) => {
   );
 });
 
-app.post('/detailpage/recomment', (req, res) => {
+app.post('/api/detailpage/recomment', (req, res) => {
   const { reComment, commentId, userId } = req.body;
 
   connection.query(
@@ -210,7 +228,7 @@ app.post('/detailpage/recomment', (req, res) => {
   );
 });
 
-app.post('/detailpage/recomment/list', (req, res) => {
+app.post('/api/detailpage/recomment/list', (req, res) => {
   const { postId } = req.body;
 
   connection.query(
@@ -225,7 +243,7 @@ app.post('/detailpage/recomment/list', (req, res) => {
   );
 });
 
-app.post('/detailpage/recomment/list/remove', (req, res) => {
+app.post('/api/detailpage/recomment/list/remove', (req, res) => {
   const { commentId, authId, recommentId, on } = req.body;
 
   if (on) {
@@ -255,7 +273,7 @@ app.post('/detailpage/recomment/list/remove', (req, res) => {
   console.log(req.body);
 });
 
-app.post('/detailpage/recomment/list/change', (req, res) => {
+app.post('/api/detailpage/recomment/list/change', (req, res) => {
   const { commentId, authId, recommentId, on, reCommentValue } = req.body;
 
   if (on) {
@@ -283,7 +301,7 @@ app.post('/detailpage/recomment/list/change', (req, res) => {
   }
 });
 
-app.post('/detailpage/heart', (req, res) => {
+app.post('/api/detailpage/heart', (req, res) => {
   const { postId } = req.body;
 
   connection.query('SELECT * FROM post_heartbox WHERE post_id = ?', [postId], (err, row) => {
@@ -294,7 +312,7 @@ app.post('/detailpage/heart', (req, res) => {
   });
 });
 
-app.post('/detailpage/hearted', (req, res) => {
+app.post('/api/detailpage/hearted', (req, res) => {
   const { postId, auth } = req.body;
 
   connection.query('SELECT * FROM post_heartbox WHERE post_id = ? AND auth_id = ?', [postId, auth], (err, row) => {
@@ -310,7 +328,7 @@ app.post('/detailpage/hearted', (req, res) => {
   });
 });
 
-app.post('/detailpage/heart/add', (req, res) => {
+app.post('/api/detailpage/heart/add', (req, res) => {
   const { postId, auth } = req.body;
 
   connection.query('INSERT INTO post_heartbox VALUES (null,?,?,NOW(),NOW())', [auth, postId], (err, row) => {
@@ -321,7 +339,7 @@ app.post('/detailpage/heart/add', (req, res) => {
   });
 });
 
-app.post('/detailpage/heart/addCount', (req, res) => {
+app.post('/api/detailpage/heart/addCount', (req, res) => {
   const { postId } = req.body;
 
   connection.query('UPDATE post SET heart=heart+1 WHERE post_id=?;', [postId], (err, row) => {
@@ -332,7 +350,7 @@ app.post('/detailpage/heart/addCount', (req, res) => {
   });
 });
 
-app.post('/detailpage/heart/remove', (req, res) => {
+app.post('/api/detailpage/heart/remove', (req, res) => {
   const { postId, auth, heartId } = req.body;
 
   connection.query(
@@ -347,7 +365,7 @@ app.post('/detailpage/heart/remove', (req, res) => {
   );
 });
 
-app.post('/detailpage/heart/removeCount', (req, res) => {
+app.post('/api/detailpage/heart/removeCount', (req, res) => {
   const { postId } = req.body;
 
   connection.query('UPDATE post SET heart=heart-1 WHERE post_id=?;', [postId], (err, row) => {
@@ -358,7 +376,7 @@ app.post('/detailpage/heart/removeCount', (req, res) => {
   });
 });
 
-app.post('/notice/list', (req, res) => {
+app.post('/api/notice/list', (req, res) => {
   const { board } = req.body;
 
   let category;
@@ -384,7 +402,7 @@ app.post('/notice/list', (req, res) => {
 
 // -------------------------------------- 추천게시판 api -------------------------------------------------
 
-app.get('/share/categories', (req, res) => {
+app.get('/api/share/categories', (req, res) => {
   connection.query('SELECT coffee_category FROM coffee_categories', (err, row) => {
     if (err) {
       console.log('카테고리 가져오기 에러');
@@ -393,7 +411,7 @@ app.get('/share/categories', (req, res) => {
   });
 });
 
-app.get('/share/list/:pages/:reqCategory', (req, res) => {
+app.get('/api/share/list/:pages/:reqCategory', (req, res) => {
   console.log('몇번찍히나요?,커피아이템');
   const { pages, reqCategory } = req.params;
   const list = [];
@@ -401,17 +419,21 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
   let category;
   if (reqCategory === 'Latte') {
     category = 'Latte';
-  } else if (reqCategory === 'Hollyccino') {
-    category = 'Hollyccino';
+  } else if (reqCategory === 'Ccino') {
+    category = 'Ccino';
   } else if (reqCategory === 'Sparkling') {
     category = 'Sparkling';
   } else if (reqCategory === 'Coffee') {
     category = 'Coffee';
+  } else if (reqCategory === 'FruitDrink') {
+    category = 'FruitDrink';
+  } else if (reqCategory === 'Tea') {
+    category = 'Tea';
   } else {
-    category = 'all';
+    category = 'All';
   }
 
-  if (category === 'all') {
+  if (category === 'All') {
     connection.query('SELECT * FROM coffee_item', [category], (err, row) => {
       for (let i = Number(pages) * 10; i < Number(pages) * 10 + 10; i++) {
         if (row[i]) {
@@ -432,12 +454,13 @@ app.get('/share/list/:pages/:reqCategory', (req, res) => {
           break;
         }
       }
+
       res.send(list);
     });
   }
 });
 
-app.get('/share/heart/:userId', (req, res) => {
+app.get('/api/share/heart/:userId', (req, res) => {
   const { userId } = req.params;
   connection.query('SELECT coffee_id FROM coffee_heartbox WHERE auth_id = ?', [Number(userId)], (err, row) => {
     if (err) {
@@ -447,7 +470,7 @@ app.get('/share/heart/:userId', (req, res) => {
   });
 });
 
-app.post('/share/list/heart', (req, res) => {
+app.post('/api/share/list/heart', (req, res) => {
   const { userId, coffeeId } = req.body;
 
   connection.query(
@@ -482,7 +505,8 @@ app.post('/share/list/heart', (req, res) => {
 });
 
 // -------------------------------------- 마이페이지 api -------------------------------------------------
-app.get('/mypage/list/:id/:value', (req, res) => {
+
+app.get('/api/mypage/list/:id/:value', (req, res) => {
   const { id, value } = req.params;
   let category;
 
@@ -539,7 +563,7 @@ app.get('/mypage/list/:id/:value', (req, res) => {
   }
 });
 
-app.get('/mypage/:id', (req, res) => {
+app.get('/api/mypage/:id', (req, res) => {
   const { id } = req.params;
   connection.query('SELECT * FROM auth WHERE id = ?', [Number(id)], (err, row) => {
     if (err) {
@@ -549,7 +573,7 @@ app.get('/mypage/:id', (req, res) => {
   });
 });
 
-app.get('/mypage/:id/content', (req, res) => {
+app.get('/api/mypage/:id/content', (req, res) => {
   const { id } = req.params;
   connection.query('SELECT * FROM post WHERE auth_id = ?', [Number(id)], (err, row) => {
     if (err) {
@@ -559,7 +583,7 @@ app.get('/mypage/:id/content', (req, res) => {
   });
 });
 
-app.get('/mypage/:id/comment', (req, res) => {
+app.get('/api/mypage/:id/comment', (req, res) => {
   const { id } = req.params;
   connection.query('SELECT * FROM post_comment WHERE auth_id = ?', [Number(id)], (err, row) => {
     if (err) {
@@ -569,7 +593,7 @@ app.get('/mypage/:id/comment', (req, res) => {
   });
 });
 
-app.get('/mypage/:id/heart', (req, res) => {
+app.get('/api/mypage/:id/heart', (req, res) => {
   const { id } = req.params;
   connection.query('SELECT * FROM post_heartbox WHERE auth_id = ?', [Number(id)], (err, row) => {
     if (err) {
@@ -579,7 +603,7 @@ app.get('/mypage/:id/heart', (req, res) => {
   });
 });
 
-app.get('/mypage/:id/coffeeheart', (req, res) => {
+app.get('/api/mypage/:id/coffeeheart', (req, res) => {
   const { id } = req.params;
   connection.query('SELECT * FROM coffee_heartbox WHERE auth_id = ?', [Number(id)], (err, row) => {
     if (err) {
@@ -589,7 +613,7 @@ app.get('/mypage/:id/coffeeheart', (req, res) => {
   });
 });
 
-app.put('/mypage/profile', upload.single('image'), (req, res) => {
+app.put('/api/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
 
   const image = req.file ? `/image/${req.file?.location}` : req.body.image;
@@ -609,9 +633,22 @@ app.put('/mypage/profile', upload.single('image'), (req, res) => {
   );
 });
 
+// -------------------------------------- 결과창 api -------------------------------------------------
+app.get('/api/foodgame/:category', (req, res) => {
+  const { category } = req.params;
+  console.log(category);
+
+  connection.query('SELECT * FROM coffee_item WHERE coffee_category = ? limit 8;', [category], (err, row) => {
+    if (err) {
+      console.log('게임결과창 에러', err);
+    }
+    res.send(row);
+  });
+});
+
 // 유저 로직-*-----*-*--------------------
 
-app.get('/loginCheck', (req, res) => {
+app.get('/api/loginCheck', (req, res) => {
   if (req.session.isLogin) {
     res.send({
       checkLogin: true,
@@ -625,12 +662,12 @@ app.get('/loginCheck', (req, res) => {
   }
 });
 
-app.get('/logout', (req, res) => {
+app.get('/api/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
 });
 
-app.post('/user/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
   connection.query('select * from auth where username=?', [req.body.user_name], (err, rows) => {
     if (err) {
       throw err;
@@ -639,12 +676,20 @@ app.post('/user/login', (req, res) => {
         return req.body.user_pwd === user.password;
       })[0];
 
+      const authPwdObj = {
+        bDay: authPwd.bDay,
+        bMonth: authPwd.bMonth,
+        bYear: authPwd.bYear,
+        gender: authPwd.gender,
+        username: authPwd.username,
+      };
+
       if (rows[0].password === req.body.user_pwd) {
         req.session.isLogin = true;
         req.session.user_name = authPwd.name;
         req.session.user_profileImg = authPwd.profileImg;
         req.session.user_id = authPwd.id;
-        req.session.user = authPwd;
+        req.session.user = authPwdObj;
         res.send({ checkLogin: true, nickname: req.body.user_name, reLogin: false });
       } else {
         res.send({ checkLogin: false, reLogin: true });
@@ -653,7 +698,7 @@ app.post('/user/login', (req, res) => {
   });
 });
 
-app.post('/auth/join', (req, res) => {
+app.post('/api/auth/join', (req, res) => {
   connection.query(
     'INSERT INTO auth(username, password, name, gender, bYear, bMonth, bDay, phoneNumber) Values(?, ?, ?, ?, ?, ?, ?, ?)',
     [
@@ -677,7 +722,7 @@ app.post('/auth/join', (req, res) => {
   res.send('회원가입 성공');
 });
 
-app.post('/auth/username', (req, res) => {
+app.post('/api/auth/username', (req, res) => {
   connection.query('select username from auth', (err, rows, fields) => {
     if (err) {
       throw err;
@@ -697,7 +742,7 @@ app.post('/auth/username', (req, res) => {
 
 // video 로직
 
-app.get('/video/data', (req, res) => {
+app.get('/api/video/data', (req, res) => {
   connection.query('select * from video', (err, rows) => {
     if (err) {
       console.log('err');
@@ -706,6 +751,16 @@ app.get('/video/data', (req, res) => {
     }
   });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../', 'build')));
+
+  // index.html for all page routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => {
   console.log(`서버 ${port}가 열렸습니다.`);

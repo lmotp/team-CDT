@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
 import axios from 'axios';
+import dompurify from 'dompurify';
 
 function DetailCommentForm({
   id,
@@ -54,25 +55,31 @@ function DetailCommentForm({
     const confirm = window.confirm('삭제하겠습니까?');
     if (confirm) {
       axios
-        .post('/detailpage/recomment/list/remove', { commentId: id, authId, recommentId, on })
+        .post('/api/detailpage/recomment/list/remove', { commentId: id, authId, recommentId, on })
         .then(() => loadingHandler());
     }
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (!reCommentValue) {
+      alert('내용을 입력해주세요');
+      return;
+    }
     if (reComment) {
       axios
-        .post('/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
+        .post('/api/detailpage/recomment', { reComment: reCommentValue, commentId: id, userId })
         .then(() => loadingHandler());
     } else if (changeComment) {
       const confirm = window.confirm('수정하겠습니까?');
       if (confirm) {
         axios
-          .post('/detailpage/recomment/list/change', { commentId: id, authId, recommentId, on, reCommentValue })
+          .post('/api/detailpage/recomment/list/change', { commentId: id, authId, recommentId, on, reCommentValue })
           .then(() => loadingHandler());
       }
     }
+    setReComment(false);
+    setChangeComment(false);
     setReCommentValue('');
   };
 
@@ -83,7 +90,7 @@ function DetailCommentForm({
       {profileImg ? <img src={profileImg} alt={name} /> : <i class="far fa-user-circle user-icon"></i>}
       <div className="comment-secion-content">
         <div className="content-profile">{name}</div>
-        <p dangerouslySetInnerHTML={{ __html: dangerComment }}></p>
+        <p dangerouslySetInnerHTML={{ __html: dompurify.sanitize(dangerComment) }}></p>
         <div className="info-wrap">
           <span className="info-date">{createTime}</span>
           {!on && (

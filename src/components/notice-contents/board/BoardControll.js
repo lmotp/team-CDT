@@ -15,6 +15,7 @@ export default function BoardControll({ order, setOrder }) {
   const buttonRef5 = useRef();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (order === 0) {
       buttonRef2.current.classList.remove('on');
       buttonRef3.current.classList.remove('on');
@@ -25,7 +26,6 @@ export default function BoardControll({ order, setOrder }) {
   }, [order]);
 
   const handlePaging = (e) => {
-    window.scrollTo(0, 0);
     setOrder((e.target.id - 1) * 10);
     if (e.target.id === String(buttonValue[1])) {
       buttonRef1.current.classList.remove('on');

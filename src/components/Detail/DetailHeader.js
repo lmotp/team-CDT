@@ -19,7 +19,7 @@ function DetailHeader({ contents, userId, postId }) {
   const delteValue = () => {
     const confirm = window.confirm('삭제하겠습니까?');
     if (confirm) {
-      axios.post('/detailpage/remove', { postId, authId: auth_id }).then(() => history.push('/'));
+      axios.post('/api/detailpage/remove', { postId, authId: auth_id }).then(() => history.push('/'));
     }
   };
 

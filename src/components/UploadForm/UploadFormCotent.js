@@ -14,7 +14,7 @@ const UploadFormCotent = ({ onImageUpload, onChange, contents }) => {
   return (
     <div className="content-wrap">
       <ReactSummernote
-        value="내용을 입력해주세요"
+        value="내용을 입력하여주세요"
         options={{
           lang: 'ko-KR',
           height: 400,

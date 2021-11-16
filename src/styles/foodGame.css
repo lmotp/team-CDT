@@ -1,8 +1,7 @@
 .foodGame-wrap {
   width: 79.23%;
-  height: 100vh;
+  margin-top: 25%;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
@@ -27,26 +26,108 @@
 
 /* Result 페이지  */
 
-.foodGame-wrap.result {
-  padding-top: 50px;
+.foodGame-result-wrap {
+  width: 79.23%;
+  margin-top: 87px;
+  padding: 50px 30px 24px;
 }
 
-.foodGame-wrap.result img {
+.foodGame-result-wrap .foodGame-result-box {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 50px;
+}
+
+.foodGame-result-wrap .foodGame-result-box img {
   width: 30%;
+}
+
+.foodGame-result-wrap .foodGame-result-box .result-info h2 {
+  margin-bottom: 24px;
+  font-size: 33px;
+}
+
+.foodGame-result-wrap .foodGame-result-box .result-info h3 {
   margin-bottom: 20px;
+  margin-top: 50px;
 }
 
-.foodGame-wrap.result h2 {
-  margin-bottom: 12px;
+.foodGame-result-wrap .foodGame-result-box .result-info p {
+  line-height: 1.5;
+  white-space: pre-wrap;
 }
 
-.foodGame-wrap.result p {
-  margin-bottom: 20px;
+.foodGame-result-wrap .result-button-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.foodGame-wrap.result button {
-  border: burlywood 1px solid;
+.foodGame-result-wrap .result-button-box button {
   background: none;
   outline: none;
-  padding: 10px 5px;
+  padding: 10px 0 5px;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.foodGame-result-wrap .result-button-box button + button {
+  margin-left: 21px;
+}
+
+.foodGame-result-wrap .result-button-box button:hover {
+  border-bottom: 1px solid burlywood;
+}
+
+/* Result 페이지  밑에 얘들 */
+
+.foodGame-result-wrap .foodGame-contents-wrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.foodGame-result-wrap .foodGame-contents-wrap .coffeeItem-contents {
+  width: 23.5%;
+  margin: 24px 2% 0 0;
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 20px 10px;
+  position: relative;
+}
+
+.foodGame-result-wrap .foodGame-contents-wrap .coffeeItem-contents:nth-child(4n) {
+  margin-right: 0;
+}
+
+.foodGame-result-wrap .foodGame-contents-wrap .coffeeItem-contents .infoImg {
+  width: 100%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.foodGame-result-wrap .foodGame-contents-wrap .coffeeItem-contents .infoName {
+  font-size: 16px;
+  text-align: center;
+}
+
+.foodGame-result-wrap .foodGame-contents-wrap .coffeeItem-contents i {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  top: 14px;
+  right: 12px;
+}
+
+.foodGame-result-wrap .notice-board-footer {
+  padding-bottom: 0;
+}
+
+/* 모달창 수정 */
+.foodGame-contents-wrap .coffeeItem-contents main {
+  text-align: center;
 }

@@ -15,7 +15,7 @@ function DetailPage({ userId, isLogin }) {
   const [contents, setContents] = useState('');
   const [recomments, setRecomments] = useState([]);
   const [comment, setComment] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [noticeList, setNoticeList] = useState([]);
   const [scorllHight, setScrollHight] = useState(0);
@@ -25,23 +25,23 @@ function DetailPage({ userId, isLogin }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.post('/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
+    axios.post('/api/detailpage', { postId: post_id }).then((res) => setContents(res.data[0]));
   }, [post_id]);
 
   useEffect(() => {
-    axios.post('/detailpage/comment/list', { postId: post_id }).then(({ data }) => {
+    axios.post('/api/detailpage/comment/list', { postId: post_id }).then(({ data }) => {
       setIsLoading(true);
       setComment(data);
     });
 
-    axios.post('/detailpage/recomment/list', { postId: post_id }).then(({ data }) => {
+    axios.post('/api/detailpage/recomment/list', { postId: post_id }).then(({ data }) => {
       setIsLoading(true);
       setRecomments(data);
     });
 
-    axios.post('/detailpage/comment/count', { postId: post_id, count: commentCount });
+    axios.post('/api/detailpage/comment/count', { postId: post_id, count: commentCount });
 
-    axios.post('/notice/list', { board: contents?.category }).then((res) => {
+    axios.post('/api/notice/list', { board: contents?.category }).then((res) => {
       setNoticeList(res.data);
       setLoading(true);
     });
@@ -72,19 +72,16 @@ function DetailPage({ userId, isLogin }) {
                 userId={userId}
                 setScrollHight={setScrollHight}
               />
-              {isLoading ? (
-                <DetailCommentSection
-                  userId={userId}
-                  loadingHandler={loadingHandler}
-                  comment={comment}
-                  recomments={recomments}
-                  scorllHight={scorllHight}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                />
-              ) : (
-                <Loading />
-              )}
+              <DetailCommentSection
+                userId={userId}
+                loadingHandler={loadingHandler}
+                comment={comment}
+                recomments={recomments}
+                scorllHight={scorllHight}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                isLoading={isLoading}
+              />
               <DetailList category={contents.category} noticeList={noticeList} setCurrentPage={setCurrentPage} />
             </>
           ) : (
