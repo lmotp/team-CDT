@@ -22,7 +22,7 @@ export default function Contents() {
     axios.post('/api/notice/list', { board: '주요소식' }).then((res) => {
       console.log('아래', res.data);
       setNoticeList(res.data);
-      setTimeout(() => setLoading(true), 300);
+      setLoading(true);
     });
   }, []);
 

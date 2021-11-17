@@ -26,7 +26,7 @@ export default function Board() {
     axios.post('/api/notice/list', { board }).then((res) => {
       setNoticeList(res.data);
       console.log(res.data);
-      setTimeout(() => setLoading(true), 500);
+      setLoading(true);
     });
   }, [board, setLoading]);
 
