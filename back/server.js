@@ -70,7 +70,7 @@ const upload = multer({
     key: function (req, file, cb) {
       cb(null, new Date().valueOf() + '-' + file.originalname);
     },
-    acl: 'public-read',
+    acl: 'public-read-write',
   }),
 });
 
@@ -80,7 +80,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/api/thumbnail', upload.single('image'), (req, res) => {
-  const image = `/image/${req.file.location}`;
+  const image = `${req.file.location}`;
   console.log(image);
   res.send(image);
 });
@@ -591,7 +591,7 @@ app.get('/api/mypage/:id/coffeeheart', (req, res) => {
 app.put('/api/mypage/profile', upload.single('image'), (req, res) => {
   const { name, id } = req.body;
 
-  const image = req.file ? `/image/${req.file?.location}` : req.body.image;
+  const image = req.file ? `${req.file?.location}` : req.body.image;
   const nickname = name ? name : req.body.name;
 
   connection.query(
