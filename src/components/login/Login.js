@@ -14,6 +14,7 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
   const [user_id, setUser_id] = useState('');
   const [pwd, setPwd] = useState('');
   const [reLogin, setReLogin] = useState(false);
+  const [error, setError] = useState('');
   const pwdRef = useRef();
 
   const handleUser_id = (e) => {
@@ -33,12 +34,22 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
       method: 'post',
       url: '/api/user/login',
       data: { user_name: user_id, user_pwd: pwd },
-    }).then((response) => {
-      console.log(response.data);
-      setIsLogin(response.data.checkLogin);
-      setReLogin(response.data.reLogin);
-      setUsername(response.data.nickname);
-    });
+    })
+      .then((response) => {
+        console.log(response.data);
+        setIsLogin(response.data.checkLogin);
+        setReLogin(response.data.reLogin);
+        setUsername(response.data.nickname);
+      })
+      .catch(
+        ({
+          response: {
+            data: { message },
+          },
+        }) => {
+          setError(message);
+        },
+      );
   };
 
   useEffect(() => {
@@ -93,6 +104,9 @@ function Login({ isLogin, setIsLogin, history, username, setUsername }) {
               onChange={hanldePwd}
             ></input>
           </div>
+
+          <div className={`error-message ${error ? 'on' : ''}`}>* {error}</div>
+
           <button type="submit" className="login-submit">
             로그인
           </button>

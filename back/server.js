@@ -27,6 +27,7 @@ const sessionStore = new MysqlStore(db_config);
 let connection;
 
 function handleDisconnect() {
+  console.log('나 다시 연결할꺼야');
   connection = mysql.createConnection(db_config);
 
   connection.connect(function (err) {
@@ -644,8 +645,11 @@ app.get('/api/logout', (req, res) => {
 
 app.post('/api/user/login', (req, res) => {
   connection.query('select * from auth where username=?', [req.body.user_name], (err, rows) => {
-    if (err) {
-      throw err;
+    if (err || !rows.length) {
+      return res.status(403).json({
+        loginSuccess: false,
+        message: '로그인에 실패하셨습니다.',
+      });
     } else {
       const authPwd = rows.filter((user) => {
         return req.body.user_pwd === user.password;
